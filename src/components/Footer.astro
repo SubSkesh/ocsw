@@ -1,0 +1,158 @@
+---
+const anno = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="riga">
+    <div class="colonna marchio">
+      <p class="logo" aria-hidden="true">OCSW<span class="punto">.</span></p>
+      <p class="etichetta nome">Oscar Costanzelli Software</p>
+      <p class="slogan">
+        Innovazione digitale per le imprese.<br />
+        Soluzioni web e software progettate ad hoc.
+      </p>
+    </div>
+
+    <nav class="colonna" aria-label="Piè di pagina">
+      <p class="etichetta titolo">Sito</p>
+      <ul>
+        <li><a href="/#servizi">Servizi</a></li>
+        <li><a href="/#metodo">Metodo</a></li>
+        <li><a href="/progetti/carandina">Progetti</a></li>
+        <li><a href="/#laboratorio">Laboratorio</a></li>
+        <li><a href="/contatti">Contatti</a></li>
+      </ul>
+    </nav>
+
+    <div class="colonna">
+      <p class="etichetta titolo">Contatti</p>
+      <address>
+        <p>Oscar Costanzelli — Sviluppatore software</p>
+        <p><a href="tel:+393473108273">+39 347 310 8273</a></p>
+        <p>PEC <a href="mailto:oscar.costanzelli@pec.it">oscar.costanzelli@pec.it</a></p>
+        <p>Email [DA DEFINIRE]</p>
+      </address>
+    </div>
+  </div>
+
+  <div class="base">
+    <p>© {anno} OCSW — Oscar Costanzelli Software</p>
+    <p>P.IVA 02210020380</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--nero);
+    color: var(--bianco);
+    border-top: var(--bordo);
+  }
+
+  .riga {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .colonna {
+    flex: 1 1 260px;
+    padding: var(--pad-y) var(--pad-x);
+    border-right: var(--bordo-scuro);
+  }
+
+  .colonna:last-child {
+    border-right: 0;
+  }
+
+  .marchio {
+    flex-grow: 1.4;
+  }
+
+  .logo {
+    font-size: clamp(3rem, 2rem + 4vw, 5.5rem);
+    font-weight: var(--peso-extrabold);
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  .nome {
+    margin-top: 1.25rem;
+    color: var(--oro);
+  }
+
+  .slogan {
+    margin-top: 1.5rem;
+    max-width: 32ch;
+    color: var(--grigio-testo-scuro);
+    font-weight: var(--peso-light);
+  }
+
+  .titolo {
+    margin-bottom: 1.25rem;
+    color: var(--grigio-testo-scuro);
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  ul a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-weight: var(--peso-medium);
+    text-decoration: none;
+    transition: opacity var(--durata) var(--easing);
+  }
+
+  ul a:hover {
+    opacity: 0.7;
+  }
+
+  address {
+    font-style: normal;
+    color: var(--grigio-testo-scuro);
+  }
+
+  address p + p {
+    margin-top: 0.5rem;
+  }
+
+  address a {
+    color: var(--bianco);
+    text-underline-offset: 3px;
+    text-decoration-color: var(--linea-scura);
+    transition: text-decoration-color var(--durata) var(--easing);
+  }
+
+  address a:hover {
+    text-decoration-color: var(--oro);
+  }
+
+  .base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem var(--gap);
+    padding: 20px var(--pad-x);
+    border-top: var(--bordo-scuro);
+    color: var(--grigio-testo-scuro);
+    font-size: var(--testo-small);
+  }
+
+  @media (max-width: 768px) {
+    .colonna {
+      flex-basis: 100%;
+      border-right: 0;
+      border-bottom: var(--bordo-scuro);
+    }
+
+    .colonna:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>

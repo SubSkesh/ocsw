@@ -1,0 +1,246 @@
+---
+const voci = [
+  { href: "/#servizi", label: "Servizi" },
+  { href: "/#metodo", label: "Metodo" },
+  { href: "/#progetti", label: "Progetti" },
+  { href: "/#laboratorio", label: "Laboratorio" },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const attiva = (href: string) => {
+  const sezione = href.replace("/#", "/");
+  return path === sezione || path.startsWith(`${sezione}/`);
+};
+const contattiAttivo = path === "/contatti";
+---
+
+<header class="header">
+  <a class="logo" href="/" aria-label="OCSW — Home">OCSW<span class="punto">.</span></a>
+
+  <button
+    class="toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="nav-principale"
+  >
+    <span class="toggle-testo">Menu</span>
+  </button>
+
+  <nav id="nav-principale" class="nav" aria-label="Principale">
+    <ul>
+      {
+        voci.map((v) => (
+          <li>
+            <a
+              href={v.href}
+              class:list={["voce", { attiva: attiva(v.href) }]}
+              aria-current={attiva(v.href) ? "page" : undefined}
+            >
+              {v.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a
+          href="/contatti"
+          class:list={["contatti", { attiva: contattiAttivo }]}
+          aria-current={contattiAttivo ? "page" : undefined}
+        >
+          Contatti
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(".header .toggle");
+  const nav = document.getElementById("nav-principale");
+
+  if (toggle && nav) {
+    const imposta = (aperto: boolean) => {
+      toggle.setAttribute("aria-expanded", String(aperto));
+      toggle.querySelector(".toggle-testo")!.textContent = aperto ? "Chiudi" : "Menu";
+      nav.classList.toggle("aperta", aperto);
+    };
+
+    toggle.addEventListener("click", () => {
+      imposta(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    nav.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("a")) imposta(false);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        imposta(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>
+
+<style>
+  .header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap);
+    min-height: 88px;
+    padding: 0 var(--pad-x);
+    background: var(--nero);
+    color: var(--bianco);
+    border-bottom: var(--bordo-scuro);
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 1.75rem;
+    font-weight: var(--peso-extrabold);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  .nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 2.5rem);
+    padding: 0;
+    list-style: none;
+  }
+
+  .voce,
+  .contatti {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--altezza-pulsante-nav);
+    font-size: var(--testo-small);
+    font-weight: var(--peso-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity var(--durata) var(--easing), color var(--durata) var(--easing);
+  }
+
+  .voce {
+    position: relative;
+    color: var(--grigio-testo-scuro);
+  }
+
+  .voce:hover,
+  .voce.attiva {
+    color: var(--bianco);
+  }
+
+  .voce.attiva::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    height: 2px;
+    background: var(--oro);
+  }
+
+  .contatti {
+    padding: 0 22px;
+    border: 1px solid var(--bianco);
+    color: var(--bianco);
+    transition: background-color var(--durata) var(--easing), color var(--durata) var(--easing);
+  }
+
+  .contatti:hover {
+    background: var(--bianco);
+    color: var(--nero);
+  }
+
+  /* Unica campitura oro ammessa: Contatti attivo nella pagina Contatti */
+  .contatti.attiva {
+    background: var(--oro);
+    border-color: var(--oro);
+    color: var(--nero);
+  }
+
+  .toggle {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      min-height: 72px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      min-height: var(--altezza-pulsante-nav);
+      padding: 0 18px;
+      background: transparent;
+      border: 1px solid var(--bianco);
+      font-size: var(--testo-small);
+      font-weight: var(--peso-semibold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: var(--nero);
+      border-top: var(--bordo-scuro);
+      border-bottom: var(--bordo-scuro);
+    }
+
+    .nav.aperta {
+      display: block;
+    }
+
+    .nav ul {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .nav li + li {
+      border-top: var(--bordo-scuro);
+    }
+
+    .voce,
+    .contatti {
+      width: 100%;
+      min-height: 56px;
+      padding: 0 var(--pad-x);
+      font-size: 1rem;
+    }
+
+    .voce.attiva::after {
+      left: var(--pad-x);
+      right: auto;
+      width: 24px;
+      bottom: 12px;
+    }
+
+    .contatti {
+      border: 0;
+    }
+  }
+</style>

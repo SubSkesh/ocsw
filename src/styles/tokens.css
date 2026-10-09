@@ -1,0 +1,75 @@
+/*
+ * Design token di ocsw.it — "Dual-Tone Architetturale".
+ * Unica fonte per colori, tipografia e spaziature (vedi CLAUDE.md).
+ */
+
+:root {
+  /* Colori — gli unici ammessi */
+  --nero: #0d0d0d;
+  --bianco: #ffffff;
+  --oro: #cda443; /* SOLO accento: mai testo oro su bianco */
+  --grigio-testo-chiaro: #4d4d4d; /* testo secondario su bianco */
+  --grigio-testo-scuro: #bfbfbf; /* testo secondario su nero */
+  --linea-scura: #333333; /* bordi interni ai blocchi neri */
+  --grigio-numeri-chiaro: #d9d9d9; /* numeri decorativi grandi su bianco */
+  --grigio-numeri-scuro: #2b2b2b; /* numeri decorativi grandi su nero */
+  --placeholder: #f0f0f0;
+
+  /* Linee strutturali */
+  --bordo: 1px solid var(--nero);
+  --bordo-scuro: 1px solid var(--linea-scura);
+
+  /* Tipografia — un solo font */
+  --font: "Poppins", "Helvetica Neue", sans-serif;
+
+  --peso-light: 300;
+  --peso-regular: 400;
+  --peso-medium: 500;
+  --peso-semibold: 600;
+  --peso-bold: 700;
+  --peso-extrabold: 800;
+
+  /* Scala fluida (390px → 1440px) */
+  --testo-etichetta: clamp(0.6875rem, 0.66rem + 0.1vw, 0.8125rem); /* 11 → 13px */
+  --testo-small: 0.875rem; /* 14px: pulsanti, nav */
+  --testo-base: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem); /* 15 → 17px */
+  --testo-lead: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem); /* 18 → 22px */
+  --testo-h3: clamp(1.375rem, 1.2rem + 0.75vw, 1.875rem); /* 22 → 30px */
+  --testo-h2: clamp(2rem, 1.5rem + 2.2vw, 3.5rem); /* 32 → 56px */
+  --testo-h1: clamp(2.5rem, 1.6rem + 4vw, 5rem); /* 40 → 80px */
+  --testo-display: clamp(5rem, 2rem + 13vw, 13.75rem); /* 80 → 220px */
+
+  --interlinea-display: 0.88;
+  --interlinea-titolo: 1.02;
+  --interlinea-testo: 1.65;
+
+  --spaziatura-display: -0.04em; /* ~-8px sul display più grande */
+  --spaziatura-titolo: -0.025em;
+  --spaziatura-etichetta: 0.2em; /* 2–2.6px su 11–13px */
+
+  /* Spaziature */
+  --pad-x: 40px; /* padding orizzontale dei blocchi */
+  --pad-y: clamp(3rem, 2rem + 4vw, 6rem);
+  --gap: clamp(1rem, 0.8rem + 1vw, 2rem);
+
+  /* Componenti */
+  --altezza-pulsante: 56px;
+  --altezza-pulsante-nav: 44px;
+  --raggio: 0; /* angoli vivi ovunque */
+
+  /* Movimento: solo transizioni brevi di opacità/colore */
+  --durata: 200ms;
+  --easing: ease-out;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --pad-x: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --durata: 0ms;
+  }
+}
