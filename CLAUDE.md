@@ -125,8 +125,8 @@ Metà nera con titolo e dati; metà bianca con form (tipo di progetto a pulsanti
 Dati di contatto (pubblici):
 - Oscar Costanzelli — Sviluppatore software
 - Tel +39 347 310 8273
-- PEC oscar.costanzelli@pec.it
-- Email di contatto: [DA DEFINIRE]
+- Email di contatto: oscarcostanzelli@gmail.com (canale preferito per i contatti)
+- PEC oscar.costanzelli@pec.it (solo uso amministrativo: non mostrarla come canale di contatto)
 - P.IVA 02210020380
 - ocsw.it
 

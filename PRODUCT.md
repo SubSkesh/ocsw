@@ -37,7 +37,7 @@ The Laboratorio holds demos and personal projects with sample data, which show c
 
 - Astro static site, content in Markdown/MDX (content collections); no CMS. Details are in CLAUDE.md.
 - Language: Italian.
-- Open decisions: public contact email `[DA DEFINIRE]`, response times `[TEMPI DI RISPOSTA]`, how the form is sent (backend/service not yet chosen).
+- Open decisions: response times `[TEMPI DI RISPOSTA]`, how the form is sent (backend/service not yet chosen).
 
 ## Brand Commitments
 
@@ -45,7 +45,7 @@ The Laboratorio holds demos and personal projects with sample data, which show c
 - Slogans (verbatim): "Innovazione digitale per le imprese" · "Soluzioni web e software progettate ad hoc".
 - Tone: professional, direct, no superlatives.
 - The visual identity "Dual-Tone Architetturale" is binding and defined in CLAUDE.md (palette, Poppins, layout, anti-patterns).
-- Public details: Tel +39 347 310 8273 · PEC oscar.costanzelli@pec.it · P.IVA 02210020380 · ocsw.it.
+- Public details: email oscarcostanzelli@gmail.com (preferred contact channel) · Tel +39 347 310 8273 · P.IVA 02210020380 · ocsw.it.
 
 ## Evidence on Hand
 

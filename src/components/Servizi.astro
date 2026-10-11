@@ -1,0 +1,185 @@
+---
+const servizi = [
+  {
+    numero: "01",
+    slug: "siti-web",
+    titolo: "Siti web",
+    testo:
+      "Siti aziendali e cataloghi prodotti chiari, veloci e facili da aggiornare. Costruiti sui contenuti dell'azienda, non su un tema preconfezionato.",
+  },
+  {
+    numero: "02",
+    slug: "applicazioni-web",
+    titolo: "Applicazioni web",
+    testo:
+      "Strumenti che si usano dal browser: aree riservate, portali, gestione di dati e documenti. Disegnati sui processi interni di chi li usa ogni giorno.",
+  },
+  {
+    numero: "03",
+    slug: "software-su-misura",
+    titolo: "Software su misura",
+    testo:
+      "Gestionali e integrazioni scritti per un'esigenza precisa, quando i programmi pronti non bastano. Collegati ai sistemi che l'azienda usa già.",
+  },
+];
+---
+
+<section id="servizi" class="servizi" aria-labelledby="servizi-titolo">
+  <div class="intestazione su-bianco">
+    <h2 id="servizi-titolo">Servizi<span class="punto" aria-hidden="true">.</span></h2>
+    <p class="intro">
+      Tre ambiti, un solo modo di lavorare: capire il problema prima di
+      scrivere il codice.
+    </p>
+  </div>
+
+  <ol class="colonne">
+    {
+      servizi.map((s, i) => (
+        <li class:list={["colonna", i === 1 ? "scura" : "chiara su-bianco"]}>
+          <span class="numero" aria-hidden="true">{s.numero}</span>
+          <h3>{s.titolo}</h3>
+          <p class="testo">{s.testo}</p>
+          <a class="scopri" href={`/servizi/${s.slug}`}>
+            Scopri<span class="visually-hidden"> {s.titolo}</span>
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+              <path d="M2 8h12M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+            </svg>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .servizi {
+    border-bottom: var(--bordo);
+    scroll-margin-top: 0;
+  }
+
+  .intestazione {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem var(--gap);
+    padding: var(--pad-y) var(--pad-x) calc(var(--pad-y) * 0.6);
+    border-bottom: var(--bordo);
+  }
+
+  h2 {
+    font-size: var(--testo-h2);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  .intro {
+    max-width: 36ch;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .colonne {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style: none;
+  }
+
+  .colonna {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .colonna + .colonna {
+    border-left: var(--bordo);
+  }
+
+  .chiara {
+    background: var(--bianco);
+    color: var(--nero);
+  }
+
+  .scura {
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  .numero {
+    font-size: clamp(5rem, 3rem + 6vw, 9rem);
+    font-weight: var(--peso-extrabold);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: var(--grigio-numeri-chiaro);
+  }
+
+  .scura .numero {
+    color: var(--grigio-numeri-scuro);
+  }
+
+  h3 {
+    margin-top: 2.5rem;
+    font-size: var(--testo-h3);
+    font-weight: var(--peso-bold);
+  }
+
+  .testo {
+    flex: 1;
+    max-width: 38ch;
+    margin-top: 1rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .scura .testo {
+    color: var(--grigio-testo-scuro);
+  }
+
+  .scopri {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.6rem;
+    min-height: 44px;
+    margin-top: 2rem;
+    font-size: var(--testo-small);
+    font-weight: var(--peso-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 6px;
+    transition: text-decoration-color var(--durata) var(--easing);
+  }
+
+  .scopri:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .scura .scopri:hover {
+    text-decoration-color: var(--oro);
+  }
+
+  /* Tre colonne o una: mai una riga da due più una orfana */
+  @media (max-width: 900px) {
+    .colonna {
+      flex-basis: 100%;
+    }
+
+    .colonna + .colonna {
+      border-left: 0;
+      border-top: var(--bordo);
+    }
+
+    h3 {
+      margin-top: 1.5rem;
+    }
+  }
+</style>
