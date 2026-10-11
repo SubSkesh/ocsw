@@ -37,7 +37,7 @@ The Laboratorio holds demos and personal projects with sample data, which show c
 
 - Astro static site, content in Markdown/MDX (content collections); no CMS. Details are in CLAUDE.md.
 - Language: Italian.
-- Open decisions: response times `[TEMPI DI RISPOSTA]`, how the form is sent (backend/service not yet chosen).
+- Response time promised to visitors: 48 hours. Form sent via Web3Forms to oscarcostanzelli@gmail.com (key in .env as PUBLIC_WEB3FORMS_KEY).
 
 ## Brand Commitments
 

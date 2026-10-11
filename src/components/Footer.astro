@@ -39,7 +39,7 @@ const anno = new Date().getFullYear();
 
   <div class="base">
     <p>© {anno} OCSW — Oscar Costanzelli Software</p>
-    <p>P.IVA 02210020380</p>
+    <p>P.IVA 02210020380 · <a href="/privacy">Privacy</a></p>
   </div>
 </footer>
 
@@ -167,6 +167,14 @@ const anno = new Date().getFullYear();
     border-top: var(--bordo-scuro);
     color: var(--grigio-testo-scuro);
     font-size: var(--testo-small);
+  }
+
+  .base a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--bianco);
+    text-underline-offset: 3px;
   }
 
   @media (max-width: 768px) {

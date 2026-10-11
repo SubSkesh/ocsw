@@ -1,0 +1,138 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+/*
+ * BOZZA da far verificare a un professionista prima della pubblicazione.
+ * Descrive il funzionamento reale del sito: form inoltrato da Web3Forms
+ * alla casella Gmail, nessun cookie di profilazione, nessuna statistica.
+ * Segnaposto aperti: [INDIRIZZO SEDE], [HOSTING].
+ */
+const aggiornamento = "11 ottobre 2026";
+---
+
+<BaseLayout
+  title="Informativa privacy"
+  description="Informativa sul trattamento dei dati personali raccolti dal sito ocsw.it di Oscar Costanzelli."
+>
+  <section class="testata">
+    <h1>Informativa privacy<span class="punto">.</span></h1>
+    <p class="etichetta agg">Ultimo aggiornamento: {aggiornamento}</p>
+  </section>
+
+  <article class="testo su-bianco">
+    <p class="lead">
+      Questa pagina spiega quali dati personali raccoglie il sito ocsw.it, perché,
+      e quali diritti hai, ai sensi del Regolamento UE 2016/679 (GDPR).
+    </p>
+
+    <h2>Titolare del trattamento</h2>
+    <p>
+      Oscar Costanzelli — OCSW, P.IVA 02210020380, [INDIRIZZO SEDE].<br />
+      Email: <a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a> ·
+      PEC: <a href="mailto:oscar.costanzelli@pec.it">oscar.costanzelli@pec.it</a>
+    </p>
+
+    <h2>Quali dati raccolgo</h2>
+    <p>
+      Solo quelli che inserisci nel modulo della pagina Contatti: nome e
+      cognome, email, messaggio e tipo di progetto; facoltativamente azienda e
+      telefono. Se mi scrivi o mi chiami direttamente, tratto i dati contenuti
+      nella comunicazione.
+    </p>
+
+    <h2>Perché li uso e su quale base</h2>
+    <p>
+      Per rispondere alla tua richiesta ed eventualmente preparare una proposta.
+      La base giuridica è l'esecuzione di misure precontrattuali adottate su tua
+      richiesta (art. 6.1.b GDPR). Non uso i dati per newsletter o pubblicità e
+      non li cedo a terzi.
+    </p>
+
+    <h2>Chi altro li tratta</h2>
+    <p>
+      Il messaggio del modulo viene inoltrato alla mia casella email tramite il
+      servizio Web3Forms e conservato nella casella Gmail (Google). Il sito è
+      ospitato da [HOSTING]. Questi fornitori trattano i dati solo per erogare il
+      servizio; alcuni possono trovarsi fuori dall'Unione Europea, nel rispetto
+      delle garanzie previste dal GDPR.
+    </p>
+
+    <h2>Per quanto tempo</h2>
+    <p>
+      Per il tempo necessario a gestire la richiesta e, se non nasce una
+      collaborazione, non oltre 12 mesi. Se nasce un incarico, i dati seguono i
+      tempi di conservazione previsti dalla normativa fiscale.
+    </p>
+
+    <h2>Cookie</h2>
+    <p>
+      Il sito non usa cookie di profilazione né strumenti di statistica. Font e
+      contenuti sono serviti direttamente dal sito, senza collegamenti a servizi
+      di tracciamento.
+    </p>
+
+    <h2>I tuoi diritti</h2>
+    <p>
+      Puoi chiedere in qualsiasi momento di accedere ai tuoi dati, correggerli,
+      cancellarli, limitarne il trattamento, opporti o riceverli in un formato
+      portabile (artt. 15–22 GDPR), scrivendo a
+      <a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a>.
+      Hai anche diritto di presentare reclamo al Garante per la protezione dei
+      dati personali (<a href="https://www.garanteprivacy.it" rel="noopener">garanteprivacy.it</a>).
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .testata {
+    padding: var(--pad-y) var(--pad-x);
+    background: var(--nero);
+    color: var(--bianco);
+    border-bottom: var(--bordo);
+  }
+
+  h1 {
+    font-size: var(--testo-h1);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  .agg {
+    margin-top: 1.5rem;
+    color: var(--grigio-testo-scuro);
+  }
+
+  .testo {
+    max-width: calc(68ch + 2 * var(--pad-x));
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .lead {
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  h2 {
+    margin-top: 2.75rem;
+    padding-top: 1.25rem;
+    border-top: var(--bordo);
+    font-size: var(--testo-h3);
+    font-weight: var(--peso-bold);
+  }
+
+  .testo p:not(.lead) {
+    margin-top: 0.75rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .testo a {
+    color: var(--nero);
+    font-weight: var(--peso-medium);
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+</style>
