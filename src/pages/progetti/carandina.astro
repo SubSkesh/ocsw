@@ -1,0 +1,528 @@
+---
+import { Image } from "astro:assets";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PrimaDopo from "../../components/PrimaDopo.astro";
+import Viewer3D from "../../components/Viewer3D.astro";
+
+import primaHome from "../../assets/progetti/carandina/prima-home.png";
+import dopoHome from "../../assets/progetti/carandina/dopo-home.png";
+import dopoMobile from "../../assets/progetti/carandina/dopo-mobile.png";
+import famiglie3d from "../../assets/progetti/carandina/famiglie-3d.png";
+import catalogo from "../../assets/progetti/carandina/catalogo.png";
+import schedaProdotto from "../../assets/progetti/carandina/scheda-prodotto.png";
+import betek from "../../assets/progetti/carandina/betek.png";
+
+const meta = [
+  { voce: "Settore", valore: "Utensili di perforazione per fondazioni speciali" },
+  { voce: "Ambito", valore: "Restyling, catalogo prodotti, visualizzatore 3D" },
+  { voce: "Piattaforma", valore: "WordPress con codice su misura" },
+  { voce: "Anno", valore: "2026" },
+];
+
+const galleria = [
+  { src: famiglie3d, alt: "Le quattro famiglie di prodotti in homepage, ognuna con il proprio modello 3D", didascalia: "Le famiglie di prodotto in homepage, ciascuna con il suo modello 3D." },
+  { src: catalogo, alt: "Pagina Catalogue con menu per famiglie e schede prodotto a griglia", didascalia: "Il catalogo: menu per famiglie e sottocategorie, schede a griglia." },
+  { src: schedaProdotto, alt: "Scheda del prodotto Bucket HD ACS con pulsanti 3D View e Scheda tecnica PDF", didascalia: "La scheda prodotto: descrizione, vista 3D, scheda tecnica PDF e foto dall'officina." },
+  { src: betek, alt: "Sezione dedicata agli utensili di taglio Betek con i codici dei pezzi", didascalia: "La sezione dedicata agli utensili di taglio Betek." },
+];
+---
+
+<BaseLayout
+  title="Caso studio Carandina"
+  description="Come è stato rifatto il sito di Carandina, produttore di utensili di perforazione: restyling, catalogo prodotti con schede tecniche PDF e visualizzatore 3D. WordPress con codice su misura."
+>
+  <nav class="breadcrumb" aria-label="Percorso">
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li><a href="/#progetti">Progetti</a></li>
+      <li aria-current="page">Carandina</li>
+    </ol>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <p class="etichetta tipo">Caso studio · Cliente</p>
+    <h1>Carandina<span class="punto">.</span></h1>
+    <p class="intro">
+      Un'azienda manifatturiera dal 1968, con un sito fermo a molti anni fa e
+      nessun catalogo online. Il nuovo sito presenta i prodotti come li
+      cercano i clienti: per famiglia, con schede tecniche e modelli 3D.
+    </p>
+    <dl class="meta">
+      {
+        meta.map((m) => (
+          <div class="riga">
+            <dt class="etichetta">{m.voce}</dt>
+            <dd>{m.valore}</dd>
+          </div>
+        ))
+      }
+      <div class="riga">
+        <dt class="etichetta">Sito</dt>
+        <dd><a href="https://carandina.it" rel="noopener">carandina.it ↗</a></dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- Prima / dopo -->
+  <section class="confronto-sezione" aria-labelledby="confronto-titolo">
+    <div class="testa">
+      <h2 id="confronto-titolo">Prima e dopo<span class="punto">.</span></h2>
+      <p>
+        A sinistra la homepage precedente, a destra quella nuova, alla stessa
+        larghezza. Sposta il cursore per confrontarle.
+      </p>
+    </div>
+    <PrimaDopo
+      prima={primaHome}
+      dopo={dopoHome}
+      altPrima="La vecchia homepage di Carandina: slider fotografico e testi in due lingue uno sotto l'altro"
+      altDopo="La nuova homepage di Carandina: titolo Drilling Equipment & Drilling Tools e due pulsanti verso prodotti e consulenza"
+    />
+  </section>
+
+  <!-- 01 — Visualizzatore 3D -->
+  <section class="intervento scuro" aria-labelledby="int-1">
+    <div class="intervento-testo">
+      <span class="numero" aria-hidden="true">01</span>
+      <h2 id="int-1">Visualizzatore 3D</h2>
+      <p>
+        Gli utensili Carandina sono pezzi tecnici: una foto non basta a capirne
+        la geometria. Ho integrato i modelli 3D (.glb) nel sito, così ogni
+        prodotto si può ruotare ed esaminare direttamente nel browser, senza
+        installare nulla.
+      </p>
+      <ul class="punti">
+        <li>Modelli 3D nelle famiglie di prodotto in homepage e nelle schede</li>
+        <li>Pulsante "3D View" in ogni scheda prodotto</li>
+        <li>Funziona da computer e da telefono</li>
+      </ul>
+    </div>
+    <div class="intervento-media viewer-box">
+      <Viewer3D
+        src="/modelli/carandina-bkt100.glb"
+        alt="Modello 3D interattivo di un utensile di perforazione Carandina"
+      />
+    </div>
+  </section>
+
+  <!-- 02 — Restyling -->
+  <section class="intervento chiaro su-bianco" aria-labelledby="int-2">
+    <div class="intervento-testo">
+      <span class="numero" aria-hidden="true">02</span>
+      <h2 id="int-2">Restyling</h2>
+      <p>
+        Il vecchio sito si apriva con uno slider di foto e lunghi testi in
+        inglese e italiano, uno sotto l'altro. Il nuovo parte da cosa fa
+        l'azienda e porta subito alle due azioni che contano: vedere i prodotti
+        o chiedere una consulenza tecnica.
+      </p>
+      <ul class="punti">
+        <li>Messaggio chiaro in apertura e due percorsi principali</li>
+        <li>Famiglie di prodotto subito visibili</li>
+        <li>Impaginazione pensata anche per il telefono</li>
+      </ul>
+    </div>
+    <div class="intervento-media mobile-box">
+      <Image
+        src={dopoMobile}
+        alt="La nuova homepage di Carandina vista da telefono"
+        widths={[390, 780]}
+        sizes="390px"
+      />
+    </div>
+  </section>
+
+  <!-- 03 — Catalogo e schede PDF -->
+  <section class="intervento chiaro su-bianco bordo-alto" aria-labelledby="int-3">
+    <div class="intervento-testo">
+      <span class="numero" aria-hidden="true">03</span>
+      <h2 id="int-3">Catalogo e schede PDF</h2>
+      <p>
+        Prima il sito non aveva un catalogo. Ora ogni prodotto ha la sua
+        scheda, organizzata per famiglia e sottocategoria, con descrizione,
+        vista 3D, scheda tecnica in PDF da scaricare e foto reali dall'officina.
+      </p>
+      <ul class="punti">
+        <li>Catalogo per famiglie: Big Diameter, C.F.A. System, Small Diameter, Spare Parts</li>
+        <li>Scheda tecnica PDF scaricabile da ogni prodotto</li>
+        <li>Elenco del materiale pronto in magazzino in PDF</li>
+      </ul>
+    </div>
+    <div class="intervento-media">
+      <Image
+        src={schedaProdotto}
+        alt="Scheda prodotto con pulsanti 3D View e Scheda tecnica PDF"
+        widths={[600, 900, 1200]}
+        sizes="(max-width: 900px) 100vw, 55vw"
+      />
+    </div>
+  </section>
+
+  <!-- Galleria -->
+  <section class="galleria" aria-labelledby="galleria-titolo">
+    <h2 id="galleria-titolo">Galleria<span class="punto">.</span></h2>
+    <div class="griglia">
+      {
+        galleria.map((g) => (
+          <figure>
+            <Image src={g.src} alt={g.alt} widths={[600, 900, 1200]} sizes="(max-width: 900px) 100vw, 50vw" />
+            <figcaption>{g.didascalia}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Invito -->
+  <section class="invito su-bianco">
+    <span class="quadratino" aria-hidden="true"></span>
+    <h2>Hai un catalogo da portare online?</h2>
+    <p>
+      Prodotti tecnici, schede da aggiornare, modelli 3D: raccontami da dove
+      parti.
+    </p>
+    <a class="pulsante pulsante-primario" href="/contatti">Parliamo del progetto</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .punto {
+    color: var(--oro);
+  }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    padding: 0 var(--pad-x);
+    background: var(--nero);
+    border-bottom: var(--bordo-scuro);
+  }
+
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style: none;
+    font-size: var(--testo-small);
+    color: var(--grigio-testo-scuro);
+  }
+
+  .breadcrumb li {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .breadcrumb li + li::before {
+    content: "/";
+    margin: 0 0.75rem;
+    color: var(--linea-scura);
+  }
+
+  .breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--bianco);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--oro);
+    text-underline-offset: 4px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: var(--pad-y) var(--pad-x);
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  .tipo {
+    color: var(--oro);
+  }
+
+  h1 {
+    margin-top: 1rem;
+    font-size: clamp(3.5rem, 1.5rem + 9vw, 10rem);
+    font-weight: var(--peso-extrabold);
+    line-height: var(--interlinea-display);
+    letter-spacing: var(--spaziatura-display);
+  }
+
+  .intro {
+    max-width: 52ch;
+    margin-top: 2rem;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-scuro);
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin-top: 3rem;
+    border-top: var(--bordo-scuro);
+  }
+
+  .meta .riga {
+    padding: 1.25rem 1.5rem 1.25rem 0;
+    border-bottom: var(--bordo-scuro);
+  }
+
+  .meta dt {
+    color: var(--grigio-testo-scuro);
+  }
+
+  .meta dd {
+    margin: 0.4rem 0 0;
+    font-weight: var(--peso-medium);
+  }
+
+  .meta a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: -10px;
+    text-decoration-color: var(--linea-scura);
+    text-underline-offset: 5px;
+  }
+
+  .meta a:hover {
+    text-decoration-color: var(--oro);
+  }
+
+  /* Prima / dopo */
+  .confronto-sezione {
+    padding: 0 var(--pad-x) var(--pad-y);
+    background: var(--nero);
+    color: var(--bianco);
+    border-bottom: var(--bordo);
+  }
+
+  .testa {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem var(--gap);
+    padding: var(--pad-y) 0 2rem;
+    border-top: var(--bordo-scuro);
+  }
+
+  .testa h2,
+  .galleria h2 {
+    font-size: var(--testo-h2);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .testa p {
+    max-width: 40ch;
+    color: var(--grigio-testo-scuro);
+  }
+
+  /* Interventi */
+  .intervento {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: var(--bordo);
+  }
+
+  .intervento-testo {
+    flex: 1 1 40%;
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .intervento-media {
+    flex: 1 1 55%;
+    min-width: 0;
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .scuro {
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  .chiaro {
+    background: var(--bianco);
+  }
+
+  .scuro .intervento-media {
+    border-left: var(--bordo-scuro);
+  }
+
+  .chiaro .intervento-media {
+    background: var(--placeholder);
+    border-left: var(--bordo);
+  }
+
+  .numero {
+    display: block;
+    font-size: clamp(4rem, 2.5rem + 5vw, 8rem);
+    font-weight: var(--peso-extrabold);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: var(--grigio-numeri-chiaro);
+  }
+
+  .scuro .numero {
+    color: var(--grigio-numeri-scuro);
+  }
+
+  .intervento h2 {
+    margin-top: 2rem;
+    font-size: var(--testo-h2);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .intervento-testo > p {
+    max-width: 44ch;
+    margin-top: 1.25rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .scuro .intervento-testo > p {
+    color: var(--grigio-testo-scuro);
+  }
+
+  .punti {
+    max-width: 44ch;
+    margin-top: 2rem;
+    padding: 0;
+    list-style: none;
+    border-top: var(--bordo);
+  }
+
+  .scuro .punti {
+    border-top-color: var(--linea-scura);
+  }
+
+  .punti li {
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.85rem 0;
+    border-bottom: var(--bordo);
+    font-weight: var(--peso-medium);
+  }
+
+  .scuro .punti li {
+    border-bottom-color: var(--linea-scura);
+  }
+
+  .punti li::before {
+    content: "";
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin-top: 0.6em;
+    background: var(--oro);
+  }
+
+  .viewer-box {
+    position: relative;
+    min-height: 520px;
+    padding: 0;
+  }
+
+  .mobile-box {
+    display: flex;
+    justify-content: center;
+  }
+
+  .mobile-box :global(img) {
+    width: min(100%, 360px);
+    border: var(--bordo);
+  }
+
+  .intervento-media :global(img) {
+    border: var(--bordo);
+  }
+
+  /* Galleria */
+  .galleria {
+    padding: var(--pad-y) var(--pad-x);
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  .griglia {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: var(--gap);
+    margin-top: 2.5rem;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  figure :global(img) {
+    width: 100%;
+    border: var(--bordo-scuro);
+  }
+
+  figcaption {
+    margin-top: 0.75rem;
+    font-size: var(--testo-small);
+    color: var(--grigio-testo-scuro);
+  }
+
+  /* Invito */
+  .invito {
+    padding: var(--pad-y) var(--pad-x);
+    background: var(--bianco);
+  }
+
+  .quadratino {
+    display: block;
+    width: 12px;
+    height: 12px;
+    margin-bottom: 1.75rem;
+    background: var(--oro);
+  }
+
+  .invito h2 {
+    max-width: 16ch;
+    font-size: var(--testo-h2);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .invito p {
+    max-width: 40ch;
+    margin-top: 1.25rem;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .invito .pulsante {
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .intervento-testo,
+    .intervento-media {
+      flex-basis: 100%;
+    }
+
+    .scuro .intervento-media,
+    .chiaro .intervento-media {
+      border-left: 0;
+    }
+
+    .scuro .intervento-media {
+      border-top: var(--bordo-scuro);
+    }
+
+    .chiaro .intervento-media {
+      border-top: var(--bordo);
+    }
+
+    .viewer-box {
+      min-height: 380px;
+    }
+  }
+</style>

@@ -1,0 +1,156 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  prima: ImageMetadata;
+  dopo: ImageMetadata;
+  altPrima: string;
+  altDopo: string;
+}
+
+const { prima, dopo, altPrima, altDopo } = Astro.props;
+const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<figure class="confronto" style="--pos: 50%">
+  <div class="cornice">
+    <Image class="img" src={prima} alt={altPrima} widths={[720, 1080, 1440]} sizes="100vw" />
+    <div class="dopo">
+      <Image class="img" src={dopo} alt={altDopo} widths={[720, 1080, 1440]} sizes="100vw" />
+    </div>
+    <span class="linea" aria-hidden="true"></span>
+    <span class="etichetta tag tag-prima" aria-hidden="true">Prima</span>
+    <span class="etichetta tag tag-dopo" aria-hidden="true">Dopo</span>
+  </div>
+
+  <div class="controllo">
+    <label class="etichetta" for={id}>Sposta per confrontare</label>
+    <input id={id} type="range" min="0" max="100" value="50" aria-valuetext="50% versione nuova" />
+  </div>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".confronto").forEach((box) => {
+    const range = box.querySelector<HTMLInputElement>("input[type=range]")!;
+    const aggiorna = () => {
+      box.style.setProperty("--pos", `${range.value}%`);
+      range.setAttribute("aria-valuetext", `${100 - Number(range.value)}% versione nuova`);
+    };
+    range.addEventListener("input", aggiorna);
+    aggiorna();
+  });
+</script>
+
+<style>
+  .confronto {
+    margin: 0;
+  }
+
+  .cornice {
+    position: relative;
+    overflow: hidden;
+    border: var(--bordo-scuro);
+    aspect-ratio: 1440 / 900;
+    background: var(--nero);
+  }
+
+  .cornice :global(.img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* La versione nuova copre la vecchia a destra del cursore */
+  .dopo {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 0 0 var(--pos));
+  }
+
+  .linea {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    width: 2px;
+    margin-left: -1px;
+    background: var(--oro);
+    pointer-events: none;
+  }
+
+  .tag {
+    position: absolute;
+    top: 16px;
+    padding: 6px 10px;
+    background: var(--nero);
+    color: var(--bianco);
+    pointer-events: none;
+  }
+
+  .tag-prima {
+    left: 16px;
+  }
+
+  .tag-dopo {
+    right: 16px;
+    color: var(--oro);
+  }
+
+  .controllo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .controllo label {
+    color: var(--grigio-testo-scuro);
+  }
+
+  input[type="range"] {
+    flex: 1 1 240px;
+    height: 44px;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    cursor: ew-resize;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 2px;
+    background: var(--linea-scura);
+  }
+
+  input[type="range"]::-moz-range-track {
+    height: 2px;
+    background: var(--linea-scura);
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    margin-top: -9px;
+    background: var(--oro);
+    border: 0;
+    border-radius: 0;
+    appearance: none;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--oro);
+    border: 0;
+    border-radius: 0;
+  }
+
+  input[type="range"]:focus-visible {
+    outline: 2px solid var(--oro);
+    outline-offset: 2px;
+  }
+</style>
