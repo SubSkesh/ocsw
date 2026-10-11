@@ -1,0 +1,237 @@
+---
+const interventi = [
+  "Restyling del sito",
+  "Visualizzatore 3D dei prodotti",
+  "Catalogo e schede tecniche PDF",
+];
+---
+
+<section id="progetti" class="progetti" aria-labelledby="progetti-titolo">
+  <div class="intestazione">
+    <h2 id="progetti-titolo">Progetti<span class="punto" aria-hidden="true">.</span></h2>
+    <p class="intro">
+      Ogni progetto raccontato per quello che è: il problema, le scelte, il
+      risultato.
+    </p>
+  </div>
+
+  <div class="griglia">
+    <article class="caso">
+      <!-- [IMMAGINE CARANDINA: screenshot della nuova homepage, da fornire] -->
+      <div class="anteprima" role="img" aria-label="Anteprima del sito Carandina (immagine in arrivo)">
+        <span class="etichetta">[Immagine Carandina]</span>
+      </div>
+
+      <div class="corpo">
+        <p class="etichetta tipo">Caso studio · Cliente</p>
+        <h3>Carandina</h3>
+        <ol class="interventi">
+          {
+            interventi.map((v, i) => (
+              <li>
+                <span class="n" aria-hidden="true">0{i + 1}</span>
+                {v}
+              </li>
+            ))
+          }
+        </ol>
+        <a class="link" href="https://www.carandina.it" rel="noopener">
+          Visita carandina.it
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path d="M3 13L13 3M6 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <aside class="invito su-bianco" aria-labelledby="invito-titolo">
+      <span class="quadratino" aria-hidden="true"></span>
+      <h3 id="invito-titolo">Il prossimo potrebbe essere il tuo.</h3>
+      <p>
+        Raccontami cosa deve fare il tuo sito o il tuo software: la prima
+        conversazione serve a capire se e come posso aiutarti.
+      </p>
+      <a class="pulsante pulsante-primario" href="/contatti">Parliamo del progetto</a>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .progetti {
+    background: var(--nero);
+    color: var(--bianco);
+    border-bottom: var(--bordo);
+  }
+
+  .intestazione {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem var(--gap);
+    padding: var(--pad-y) var(--pad-x) calc(var(--pad-y) * 0.6);
+    border-bottom: var(--bordo-scuro);
+  }
+
+  h2 {
+    font-size: var(--testo-h2);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  .intro {
+    max-width: 36ch;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-scuro);
+  }
+
+  .griglia {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  /* Card Carandina: immagine + dati, occupa due terzi */
+  .caso {
+    flex: 2 1 0;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    border-right: var(--bordo-scuro);
+  }
+
+  .anteprima {
+    flex: 1 1 320px;
+    display: grid;
+    place-items: center;
+    min-height: 320px;
+    background: var(--placeholder);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .corpo {
+    flex: 1 1 280px;
+    display: flex;
+    flex-direction: column;
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .tipo {
+    color: var(--oro);
+  }
+
+  h3 {
+    font-size: var(--testo-h3);
+    font-weight: var(--peso-bold);
+  }
+
+  .caso h3 {
+    margin-top: 1rem;
+    font-size: clamp(2rem, 1.5rem + 2vw, 3.25rem);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .interventi {
+    flex: 1;
+    margin-top: 2rem;
+    padding: 0;
+    list-style: none;
+    border-top: var(--bordo-scuro);
+  }
+
+  .interventi li {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: var(--bordo-scuro);
+    font-weight: var(--peso-medium);
+  }
+
+  .n {
+    color: var(--grigio-testo-scuro);
+    font-size: var(--testo-small);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.6rem;
+    min-height: 44px;
+    margin-top: 2rem;
+    font-size: var(--testo-small);
+    font-weight: var(--peso-semibold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 6px;
+    transition: text-decoration-color var(--durata) var(--easing);
+  }
+
+  .link:hover {
+    text-decoration-color: var(--oro);
+  }
+
+  /* Card bianca verso i contatti */
+  .invito {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    background: var(--bianco);
+    color: var(--nero);
+  }
+
+  .quadratino {
+    width: 12px;
+    height: 12px;
+    margin-bottom: 1.75rem;
+    background: var(--oro);
+  }
+
+  .invito h3 {
+    max-width: 14ch;
+    font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .invito p {
+    max-width: 36ch;
+    margin-top: 1.25rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .invito .pulsante {
+    align-self: flex-start;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 1100px) {
+    .caso,
+    .invito {
+      flex-basis: 100%;
+    }
+
+    .caso {
+      border-right: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .anteprima {
+      min-height: 220px;
+    }
+
+    .invito .pulsante {
+      align-self: stretch;
+    }
+  }
+</style>
