@@ -143,8 +143,8 @@ textarea {
 }
 
 .pulsante-primario:hover {
-  background: var(--bianco);
-  color: var(--nero);
+  background: var(--linea-scura);
+  border-color: var(--linea-scura);
 }
 
 .pulsante-secondario {

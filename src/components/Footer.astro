@@ -7,10 +7,13 @@ const anno = new Date().getFullYear();
     <div class="colonna marchio">
       <p class="logo" aria-hidden="true">OCSW<span class="punto">.</span></p>
       <p class="etichetta nome">Oscar Costanzelli Software</p>
-      <p class="slogan">
-        Innovazione digitale per le imprese.<br />
-        Soluzioni web e software progettate ad hoc.
-      </p>
+      <ol class="metodo" aria-label="Metodo di lavoro">
+        <li>Analisi</li>
+        <li>Progetto</li>
+        <li>Sviluppo</li>
+        <li>Supporto</li>
+      </ol>
+      <p class="slogan">Un unico referente, dall'analisi al supporto.</p>
     </div>
 
     <nav class="colonna" aria-label="Piè di pagina">
@@ -18,7 +21,7 @@ const anno = new Date().getFullYear();
       <ul>
         <li><a href="/#servizi">Servizi</a></li>
         <li><a href="/#metodo">Metodo</a></li>
-        <li><a href="/progetti/carandina">Progetti</a></li>
+        <li><a href="/#progetti">Progetti</a></li>
         <li><a href="/#laboratorio">Laboratorio</a></li>
         <li><a href="/contatti">Contatti</a></li>
       </ul>
@@ -30,7 +33,7 @@ const anno = new Date().getFullYear();
         <p>Oscar Costanzelli — Sviluppatore software</p>
         <p><a href="tel:+393473108273">+39 347 310 8273</a></p>
         <p>PEC <a href="mailto:oscar.costanzelli@pec.it">oscar.costanzelli@pec.it</a></p>
-        <p>Email [DA DEFINIRE]</p>
+        <!-- Email [DA DEFINIRE]: aggiungere qui quando l'indirizzo è deciso -->
       </address>
     </div>
   </div>
@@ -83,8 +86,31 @@ const anno = new Date().getFullYear();
     color: var(--oro);
   }
 
-  .slogan {
+  .metodo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
     margin-top: 1.5rem;
+    padding: 0;
+    list-style: none;
+    font-weight: var(--peso-semibold);
+  }
+
+  .metodo li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .metodo li::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--oro);
+  }
+
+  .slogan {
+    margin-top: 0.75rem;
     max-width: 32ch;
     color: var(--grigio-testo-scuro);
     font-weight: var(--peso-light);

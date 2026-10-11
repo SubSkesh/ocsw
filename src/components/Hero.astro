@@ -11,8 +11,9 @@
     <span class="quadratino" aria-hidden="true"></span>
     <h1 id="hero-titolo">Innovazione digitale per le imprese.</h1>
     <p class="lead">
-      Soluzioni web e software progettate ad hoc: siti, applicazioni web e
-      gestionali, con un unico referente dall'analisi al supporto.
+      Siti web, applicazioni web e software su misura per aziende e
+      professionisti. Parli direttamente con chi scrive il codice,
+      dall'analisi al supporto.
     </p>
     <div class="azioni">
       <a class="pulsante pulsante-primario" href="/contatti">Parliamo del progetto</a>
@@ -21,6 +22,16 @@
     <p class="diretto">
       Oppure chiama: <a href="tel:+393473108273">+39 347 310 8273</a>
     </p>
+
+    <a class="prova" href="https://www.carandina.it" rel="noopener">
+      <span class="etichetta prova-etichetta">Ultimo progetto</span>
+      <span class="prova-testo">
+        Carandina — restyling, catalogo e visualizzatore 3D
+        <svg class="freccia" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path d="M3 13L13 3M6 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+        </svg>
+      </span>
+    </a>
   </div>
 </section>
 
@@ -84,7 +95,7 @@
   }
 
   .lead {
-    max-width: 38ch;
+    max-width: 40ch;
     margin-top: 1.75rem;
     font-size: var(--testo-lead);
     font-weight: var(--peso-light);
@@ -110,6 +121,42 @@
     text-underline-offset: 4px;
   }
 
+  /* Prova concreta: l'unico progetto cliente pubblicabile */
+  .prova {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    max-width: 40ch;
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: var(--bordo);
+    text-decoration: none;
+  }
+
+  .prova-etichetta {
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .prova-testo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    font-weight: var(--peso-semibold);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 5px;
+    transition: text-decoration-color var(--durata) var(--easing);
+  }
+
+  .prova:hover .prova-testo {
+    text-decoration-color: var(--nero);
+  }
+
+  .freccia {
+    flex: none;
+  }
+
   @media (max-width: 768px) {
     .hero > div {
       flex-basis: 100%;
@@ -117,11 +164,34 @@
 
     .marchio {
       min-height: auto;
+      gap: 1.5rem;
+      padding-block: 32px;
+    }
+
+    .display {
+      font-size: 4rem;
+    }
+
+    .nome {
+      padding-top: 1rem;
     }
 
     .testo {
       border-left: 0;
       border-top: var(--bordo);
+      padding-top: 32px;
+    }
+
+    .quadratino {
+      margin-bottom: 1.25rem;
+    }
+
+    .lead {
+      margin-top: 1.25rem;
+    }
+
+    .azioni {
+      margin-top: 1.75rem;
     }
   }
 </style>

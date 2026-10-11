@@ -43,7 +43,7 @@
   --interlinea-titolo: 1.02;
   --interlinea-testo: 1.65;
 
-  --spaziatura-display: -0.04em; /* ~-8px sul display più grande */
+  --spaziatura-display: -0.036em; /* ≤ -8px sul display più grande */
   --spaziatura-titolo: -0.025em;
   --spaziatura-etichetta: 0.2em; /* 2–2.6px su 11–13px */
 

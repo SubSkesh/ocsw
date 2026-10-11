@@ -73,6 +73,15 @@ const contattiAttivo = path === "/contatti";
       if ((e.target as HTMLElement).closest("a")) imposta(false);
     });
 
+    document.addEventListener("click", (e) => {
+      if (
+        toggle.getAttribute("aria-expanded") === "true" &&
+        !(e.target as HTMLElement).closest(".header")
+      ) {
+        imposta(false);
+      }
+    });
+
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
         imposta(false);
@@ -182,6 +191,24 @@ const contattiAttivo = path === "/contatti";
 
     .logo {
       font-size: 1.5rem;
+    }
+
+    /* Senza JavaScript il menu resta visibile e il pulsante sparisce */
+    :global(html:not(.js)) .header {
+      flex-wrap: wrap;
+      padding-block: 14px;
+    }
+
+    :global(html:not(.js)) .toggle {
+      display: none;
+    }
+
+    :global(html:not(.js)) .nav {
+      display: block;
+      position: static;
+      flex-basis: 100%;
+      margin-inline: calc(var(--pad-x) * -1);
+      border-bottom: 0;
     }
 
     .toggle {
