@@ -113,3 +113,52 @@ textarea {
 .skip-link:focus {
   transform: none;
 }
+
+::selection {
+  background: var(--oro);
+  color: var(--nero);
+}
+
+/* Pulsanti: rettangolari, 56px, testo 14px 600 maiuscolo */
+.pulsante {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: var(--altezza-pulsante);
+  padding: 0 28px;
+  border: var(--bordo);
+  font-size: var(--testo-small);
+  font-weight: var(--peso-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--durata) var(--easing), color var(--durata) var(--easing);
+}
+
+.pulsante-primario {
+  background: var(--nero);
+  color: var(--bianco);
+}
+
+.pulsante-primario:hover {
+  background: var(--bianco);
+  color: var(--nero);
+}
+
+.pulsante-secondario {
+  background: transparent;
+  color: var(--nero);
+}
+
+.pulsante-secondario:hover {
+  background: var(--nero);
+  color: var(--bianco);
+}
+
+@media (max-width: 768px) {
+  .pulsante {
+    width: 100%;
+  }
+}
