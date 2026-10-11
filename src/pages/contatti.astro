@@ -1,0 +1,539 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Chiave pubblica di Web3Forms (inoltra i messaggi a oscarcostanzelli@gmail.com).
+// Va messa in .env come PUBLIC_WEB3FORMS_KEY=...
+const chiave = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
+
+const tipi = ["Sito web", "Applicazione web", "Software su misura", "Non lo so ancora"];
+
+const passi = [
+  {
+    titolo: "Leggo la richiesta",
+    testo: "La leggo io, non un sistema automatico.",
+  },
+  {
+    titolo: "Ti ricontatto",
+    testo: "Entro [TEMPI DI RISPOSTA], via email o telefono, come preferisci.",
+  },
+  {
+    titolo: "Primo confronto",
+    testo: "Capiamo insieme se e come posso aiutarti. Se si parte, il lavoro inizia dall'analisi.",
+  },
+];
+---
+
+<BaseLayout
+  title="Contatti"
+  description="Contatta OCSW — Oscar Costanzelli Software per un sito web, un'applicazione web o un software su misura. Email oscarcostanzelli@gmail.com, telefono +39 347 310 8273."
+>
+  <section class="split" aria-labelledby="contatti-titolo">
+    <div class="lato">
+      <h1 id="contatti-titolo">Parliamo del tuo progetto<span class="punto">.</span></h1>
+      <p class="intro">
+        Compila il modulo o scrivimi direttamente. Rispondo personalmente a ogni
+        richiesta.
+      </p>
+
+      <dl class="dati">
+        <div class="riga">
+          <dt class="etichetta">Email</dt>
+          <dd><a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a></dd>
+        </div>
+        <div class="riga">
+          <dt class="etichetta">Telefono</dt>
+          <dd><a href="tel:+393473108273">+39 347 310 8273</a></dd>
+        </div>
+        <div class="riga">
+          <dt class="etichetta">P.IVA</dt>
+          <dd>02210020380</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="modulo su-bianco">
+      <form
+        id="form-contatti"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        novalidate
+        data-chiave={chiave}
+      >
+        <input type="hidden" name="access_key" value={chiave} />
+        <input type="hidden" name="subject" value="Nuova richiesta dal sito ocsw.it" />
+        <input type="hidden" name="from_name" value="ocsw.it" />
+        <!-- Trappola per bot: gli utenti non la vedono -->
+        <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
+
+        <fieldset class="tipi">
+          <legend class="etichetta">Di cosa hai bisogno?</legend>
+          <div class="opzioni">
+            {
+              tipi.map((t, i) => (
+                <label class="opzione">
+                  <input type="radio" name="tipo_progetto" value={t} checked={i === 0} />
+                  <span>{t}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <div class="campi">
+          <div class="campo">
+            <label for="nome">Nome e cognome *</label>
+            <input id="nome" name="nome" type="text" autocomplete="name" required />
+            <p class="errore" id="nome-errore" hidden>Scrivi il tuo nome.</p>
+          </div>
+          <div class="campo">
+            <label for="azienda">Azienda</label>
+            <input id="azienda" name="azienda" type="text" autocomplete="organization" />
+          </div>
+          <div class="campo">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+            <p class="errore" id="email-errore" hidden>Serve un indirizzo email valido, es. nome@azienda.it.</p>
+          </div>
+          <div class="campo">
+            <label for="telefono">Telefono</label>
+            <input id="telefono" name="telefono" type="tel" autocomplete="tel" />
+          </div>
+          <div class="campo intero">
+            <label for="messaggio">Messaggio *</label>
+            <textarea id="messaggio" name="messaggio" rows="6" required
+              placeholder="Cosa deve fare il progetto, per chi, entro quando."></textarea>
+            <p class="errore" id="messaggio-errore" hidden>Scrivi due righe sul progetto.</p>
+          </div>
+        </div>
+
+        <div class="consenso">
+          <input id="privacy" name="privacy" type="checkbox" required />
+          <label for="privacy">
+            Ho letto l'<a href="/privacy">informativa privacy</a> e acconsento al
+            trattamento dei dati per ricevere una risposta. *
+          </label>
+        </div>
+        <p class="errore" id="privacy-errore" hidden>Serve il consenso per poterti rispondere.</p>
+
+        <button class="pulsante pulsante-primario invia" type="submit">Invia la richiesta</button>
+
+        <p class="esito" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="dopo" aria-labelledby="dopo-titolo">
+    <h2 id="dopo-titolo">Cosa succede dopo<span class="punto">.</span></h2>
+    <ol class="passi">
+      {
+        passi.map((p, i) => (
+          <li class="passo">
+            <span class="numero" aria-hidden="true">0{i + 1}</span>
+            <h3>{p.titolo}</h3>
+            <p>{p.testo}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById("form-contatti") as HTMLFormElement | null;
+
+  if (form) {
+    const esito = form.querySelector<HTMLElement>(".esito")!;
+    const invia = form.querySelector<HTMLButtonElement>(".invia")!;
+    const fallback =
+      'Non sono riuscito a inviare il messaggio. Scrivimi a <a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a> o chiama il <a href="tel:+393473108273">+39 347 310 8273</a>.';
+
+    const regole: Record<string, (el: HTMLInputElement) => boolean> = {
+      nome: (el) => el.value.trim().length > 1,
+      email: (el) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()),
+      messaggio: (el) => el.value.trim().length > 9,
+      privacy: (el) => el.checked,
+    };
+
+    const controlla = (nome: string) => {
+      const el = form.elements.namedItem(nome) as HTMLInputElement;
+      const ok = regole[nome](el);
+      const msg = document.getElementById(`${nome}-errore`)!;
+      msg.hidden = ok;
+      el.setAttribute("aria-invalid", String(!ok));
+      if (ok) el.removeAttribute("aria-describedby");
+      else el.setAttribute("aria-describedby", msg.id);
+      return ok;
+    };
+
+    // Dopo il primo errore, il campo si ricontrolla mentre si scrive
+    for (const nome of Object.keys(regole)) {
+      const el = form.elements.namedItem(nome) as HTMLInputElement;
+      el.addEventListener(nome === "privacy" ? "change" : "input", () => {
+        if (el.getAttribute("aria-invalid") === "true") controlla(nome);
+      });
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const errati = Object.keys(regole).filter((n) => !controlla(n));
+      if (errati.length) {
+        (form.elements.namedItem(errati[0]) as HTMLElement).focus();
+        return;
+      }
+
+      if (!form.dataset.chiave) {
+        esito.className = "esito errore-invio";
+        esito.innerHTML = fallback;
+        return;
+      }
+
+      invia.disabled = true;
+      invia.textContent = "Invio in corso…";
+      esito.className = "esito";
+      esito.textContent = "";
+
+      try {
+        const risposta = await fetch(form.action, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form),
+        });
+        const dati = await risposta.json();
+        if (!risposta.ok || !dati.success) throw new Error(dati.message);
+
+        form.reset();
+        esito.className = "esito inviato";
+        esito.textContent = "Richiesta inviata. Ti rispondo personalmente al più presto.";
+      } catch {
+        esito.className = "esito errore-invio";
+        esito.innerHTML = fallback;
+      } finally {
+        invia.disabled = false;
+        invia.textContent = "Invia la richiesta";
+      }
+    });
+  }
+</script>
+
+<style>
+  .split {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: var(--bordo);
+  }
+
+  .lato,
+  .modulo {
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .lato {
+    flex: 1 1 38%;
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  .modulo {
+    flex: 1 1 55%;
+    background: var(--bianco);
+  }
+
+  h1 {
+    max-width: 12ch;
+    font-size: var(--testo-h1);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  .intro {
+    max-width: 34ch;
+    margin-top: 1.5rem;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-scuro);
+  }
+
+  .dati {
+    margin-top: 3rem;
+  }
+
+  .riga {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 0;
+    border-bottom: var(--bordo-scuro);
+  }
+
+  .riga:first-child {
+    border-top: var(--bordo-scuro);
+  }
+
+  dt {
+    color: var(--grigio-testo-scuro);
+  }
+
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-medium);
+  }
+
+  dd a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration-color: var(--linea-scura);
+    text-underline-offset: 6px;
+    transition: text-decoration-color var(--durata) var(--easing);
+  }
+
+  dd a:hover {
+    text-decoration-color: var(--oro);
+  }
+
+  /* Form */
+  form {
+    max-width: 720px;
+  }
+
+  fieldset {
+    padding: 0;
+    border: 0;
+  }
+
+  legend {
+    margin-bottom: 1rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .opzioni {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+  }
+
+  .opzione {
+    position: relative;
+  }
+
+  .opzione input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .opzione span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--altezza-pulsante);
+    padding: 0 16px;
+    border: var(--bordo);
+    font-size: var(--testo-small);
+    font-weight: var(--peso-semibold);
+    text-align: center;
+    transition: background-color var(--durata) var(--easing), color var(--durata) var(--easing);
+  }
+
+  .opzione input:hover + span {
+    background: var(--placeholder);
+  }
+
+  .opzione input:checked + span {
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  .opzione input:focus-visible + span {
+    outline: 2px solid var(--nero);
+    outline-offset: 3px;
+  }
+
+  .campi {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem var(--gap);
+    margin-top: 2.5rem;
+  }
+
+  .intero {
+    grid-column: 1 / -1;
+  }
+
+  .campo label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: var(--testo-small);
+    font-weight: var(--peso-semibold);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    width: 100%;
+    min-height: var(--altezza-pulsante);
+    padding: 14px 16px;
+    background: var(--bianco);
+    border: var(--bordo);
+    font-size: 1rem;
+    line-height: 1.5;
+    caret-color: var(--nero);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  textarea::placeholder {
+    color: var(--grigio-testo-chiaro);
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--nero);
+    outline-offset: 0;
+  }
+
+  [aria-invalid="true"] {
+    border-width: 2px;
+  }
+
+  .errore {
+    margin-top: 0.4rem;
+    font-size: var(--testo-small);
+    font-weight: var(--peso-semibold);
+    color: var(--nero);
+  }
+
+  .errore::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 0.5rem;
+    background: var(--oro);
+  }
+
+  .consenso {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    font-size: var(--testo-small);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .consenso input {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    accent-color: var(--nero);
+  }
+
+  .consenso a {
+    color: var(--nero);
+    text-underline-offset: 3px;
+  }
+
+  .invia {
+    margin-top: 2rem;
+  }
+
+  .invia:disabled {
+    cursor: progress;
+    opacity: 0.7;
+  }
+
+  .esito:empty {
+    display: none;
+  }
+
+  .esito {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    border: var(--bordo);
+    font-weight: var(--peso-medium);
+  }
+
+  .esito.inviato {
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  .esito :global(a) {
+    color: inherit;
+    font-weight: var(--peso-semibold);
+  }
+
+  /* Cosa succede dopo */
+  .dopo {
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .dopo h2 {
+    font-size: var(--testo-h2);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .passi {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    margin-top: 2.5rem;
+    padding: 0;
+    list-style: none;
+    border-top: var(--bordo);
+  }
+
+  .passo {
+    padding: 2rem var(--gap) 0 0;
+  }
+
+  .numero {
+    font-size: clamp(3rem, 2rem + 3vw, 5rem);
+    font-weight: var(--peso-extrabold);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--grigio-numeri-chiaro);
+  }
+
+  .passo h3 {
+    margin-top: 1rem;
+    font-size: var(--testo-h3);
+  }
+
+  .passo p {
+    max-width: 32ch;
+    margin-top: 0.5rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  @media (max-width: 900px) {
+    .lato,
+    .modulo {
+      flex-basis: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .campi {
+      grid-template-columns: 1fr;
+    }
+
+    .opzioni {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .invia {
+      width: 100%;
+    }
+  }
+</style>
