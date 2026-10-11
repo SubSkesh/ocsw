@@ -1,0 +1,109 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+---
+
+<div class="viewer" data-src={src}>
+  <model-viewer
+    alt={alt}
+    camera-controls
+    disable-zoom
+    interaction-prompt="none"
+    shadow-intensity="0.6"
+    exposure="1.05"
+    camera-orbit="35deg 70deg auto"
+    loading="lazy"
+    reveal="auto"
+  >
+  </model-viewer>
+  <p class="stato etichetta" aria-live="polite">Modello 3D · caricamento</p>
+  <p class="aiuto etichetta">Trascina per ruotare</p>
+</div>
+
+<script>
+  // Il viewer (three.js + model-viewer) si scarica solo quando entra nello schermo
+  const viewers = document.querySelectorAll<HTMLElement>(".viewer[data-src]");
+
+  const avvia = async (box: HTMLElement) => {
+    await import("@google/model-viewer");
+    const mv = box.querySelector("model-viewer") as HTMLElement & { src?: string };
+    const stato = box.querySelector(".stato")!;
+    const fermo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!fermo) {
+      mv.setAttribute("auto-rotate", "");
+      mv.setAttribute("rotation-per-second", "18deg");
+    }
+    mv.addEventListener("load", () => box.classList.add("pronto"), { once: true });
+    mv.addEventListener("error", () => {
+      stato.textContent = "Modello 3D non disponibile";
+    });
+    mv.src = box.dataset.src;
+  };
+
+  const osservatore = new IntersectionObserver(
+    (voci) => {
+      for (const v of voci) {
+        if (v.isIntersecting) {
+          osservatore.unobserve(v.target);
+          avvia(v.target as HTMLElement);
+        }
+      }
+    },
+    { rootMargin: "200px" },
+  );
+
+  viewers.forEach((v) => osservatore.observe(v));
+</script>
+
+<style>
+  .viewer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    background: var(--nero);
+  }
+
+  model-viewer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    --poster-color: transparent;
+    --progress-bar-color: var(--oro);
+    --progress-bar-height: 2px;
+    opacity: 0;
+    transition: opacity var(--durata) var(--easing);
+  }
+
+  .pronto model-viewer {
+    opacity: 1;
+  }
+
+  model-viewer:focus-visible {
+    outline: 2px solid var(--oro);
+    outline-offset: -2px;
+  }
+
+  .stato,
+  .aiuto {
+    position: absolute;
+    left: 20px;
+    bottom: 16px;
+    color: var(--grigio-testo-scuro);
+    pointer-events: none;
+  }
+
+  .aiuto,
+  .pronto .stato {
+    display: none;
+  }
+
+  .pronto .aiuto {
+    display: block;
+  }
+</style>
