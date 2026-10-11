@@ -1,0 +1,153 @@
+---
+const fasi = [
+  {
+    sigla: "P1",
+    titolo: "Analisi",
+    testo:
+      "Capisco come lavora l'azienda e cosa deve risolvere il progetto. Ne esce una proposta scritta con obiettivi e priorità.",
+  },
+  {
+    sigla: "P2",
+    titolo: "Progetto",
+    testo:
+      "Struttura, contenuti e interfaccia si definiscono prima del codice, quando cambiare idea costa poco.",
+  },
+  {
+    sigla: "P3",
+    titolo: "Sviluppo",
+    testo:
+      "Scrivo il software e mostro i progressi durante il lavoro, non solo alla consegna.",
+  },
+  {
+    sigla: "P4",
+    titolo: "Supporto",
+    testo:
+      "Dopo la consegna resto il riferimento per manutenzione, aggiornamenti e nuove esigenze.",
+  },
+];
+---
+
+<section id="metodo" class="metodo" aria-labelledby="metodo-titolo">
+  <div class="lato">
+    <h2 id="metodo-titolo">Metodo<span class="punto" aria-hidden="true">.</span></h2>
+    <p class="intro">
+      Quattro fasi, un solo referente: chi analizza il problema è la stessa
+      persona che scrive il codice e lo segue nel tempo.
+    </p>
+  </div>
+
+  <ol class="fasi su-bianco">
+    {
+      fasi.map((f) => (
+        <li class="fase">
+          <p class="sigla etichetta">
+            <span class="quadratino" aria-hidden="true" />
+            {f.sigla}
+          </p>
+          <h3>{f.titolo}</h3>
+          <p class="testo">{f.testo}</p>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .metodo {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: var(--bordo);
+  }
+
+  .lato {
+    flex: 1 1 33%;
+    padding: var(--pad-y) var(--pad-x);
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  h2 {
+    font-size: var(--testo-h2);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  .intro {
+    max-width: 30ch;
+    margin-top: 1.5rem;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-scuro);
+  }
+
+  .fasi {
+    flex: 2 1 60%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0;
+    list-style: none;
+    background: var(--bianco);
+  }
+
+  .fase {
+    padding: clamp(2rem, 1.5rem + 2vw, 3.5rem) var(--pad-x);
+    border-bottom: var(--bordo);
+  }
+
+  .fase:nth-child(odd) {
+    border-right: var(--bordo);
+  }
+
+  .fase:nth-last-child(-n + 2) {
+    border-bottom: 0;
+  }
+
+  .sigla {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .quadratino {
+    width: 12px;
+    height: 12px;
+    background: var(--oro);
+  }
+
+  h3 {
+    margin-top: 1.5rem;
+    font-size: var(--testo-h3);
+    font-weight: var(--peso-bold);
+  }
+
+  .testo {
+    max-width: 36ch;
+    margin-top: 0.75rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  @media (max-width: 900px) {
+    .lato,
+    .fasi {
+      flex-basis: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .fasi {
+      grid-template-columns: 1fr;
+    }
+
+    .fase:nth-child(odd) {
+      border-right: 0;
+    }
+
+    .fase:nth-last-child(2) {
+      border-bottom: var(--bordo);
+    }
+  }
+</style>
