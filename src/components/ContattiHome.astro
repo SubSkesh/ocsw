@@ -1,0 +1,153 @@
+---
+---
+
+<section id="contatti" class="contatti" aria-labelledby="contatti-titolo">
+  <div class="invito su-bianco">
+    <span class="quadratino" aria-hidden="true"></span>
+    <h2 id="contatti-titolo">Costruiamo qualcosa di solido.</h2>
+    <p class="intro">
+      Scrivimi cosa ti serve, anche in poche righe. Ti rispondo personalmente.
+    </p>
+    <a class="pulsante pulsante-primario" href="/contatti">Scrivi la tua richiesta</a>
+  </div>
+
+  <div class="dati">
+    <dl>
+      <div class="riga">
+        <dt class="etichetta">Email</dt>
+        <dd><a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a></dd>
+      </div>
+      <div class="riga">
+        <dt class="etichetta">Telefono</dt>
+        <dd><a href="tel:+393473108273">+39 347 310 8273</a></dd>
+      </div>
+      <div class="riga">
+        <dt class="etichetta">Referente</dt>
+        <dd>Oscar Costanzelli — Sviluppatore software</dd>
+      </div>
+      <div class="riga">
+        <dt class="etichetta">P.IVA</dt>
+        <dd>02210020380</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .contatti {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .invito,
+  .dati {
+    flex: 1 1 50%;
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .invito {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--bianco);
+    color: var(--nero);
+  }
+
+  .quadratino {
+    width: 12px;
+    height: 12px;
+    margin-bottom: 2rem;
+    background: var(--oro);
+  }
+
+  h2 {
+    max-width: 11ch;
+    font-size: var(--testo-h2);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .intro {
+    max-width: 34ch;
+    margin-top: 1.5rem;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .invito .pulsante {
+    align-self: flex-start;
+    margin-top: 2.5rem;
+  }
+
+  .dati {
+    display: flex;
+    align-items: center;
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  dl {
+    width: 100%;
+  }
+
+  .riga {
+    display: grid;
+    grid-template-columns: minmax(7rem, 1fr) 3fr;
+    gap: 0.5rem var(--gap);
+    align-items: baseline;
+    padding: 1.25rem 0;
+    border-bottom: var(--bordo-scuro);
+  }
+
+  .riga:first-child {
+    border-top: var(--bordo-scuro);
+  }
+
+  dt {
+    color: var(--grigio-testo-scuro);
+  }
+
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-medium);
+  }
+
+  dd a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: underline;
+    text-decoration-color: var(--linea-scura);
+    text-underline-offset: 6px;
+    transition: text-decoration-color var(--durata) var(--easing);
+  }
+
+  dd a:hover {
+    text-decoration-color: var(--oro);
+  }
+
+  @media (max-width: 900px) {
+    .invito,
+    .dati {
+      flex-basis: 100%;
+    }
+
+    /* Mobile: nero sopra, bianco sotto */
+    .dati {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .invito .pulsante {
+      align-self: stretch;
+    }
+
+    .riga {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>
