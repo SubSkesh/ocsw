@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import carandinaDopo from "../assets/progetti/carandina-dopo.jpg";
+
 const interventi = [
   "Restyling del sito",
   "Visualizzatore 3D dei prodotti",
@@ -17,9 +20,13 @@ const interventi = [
 
   <div class="griglia">
     <article class="caso">
-      <!-- [IMMAGINE CARANDINA: screenshot della nuova homepage, da fornire] -->
-      <div class="anteprima" role="img" aria-label="Anteprima del sito Carandina (immagine in arrivo)">
-        <span class="etichetta">[Immagine Carandina]</span>
+      <div class="anteprima">
+        <Image
+          src={carandinaDopo}
+          alt="Il nuovo sito Carandina: sezione documentazione tecnica con le schede dei prodotti"
+          widths={[480, 800, 1200]}
+          sizes="(max-width: 1100px) 100vw, 33vw"
+        />
       </div>
 
       <div class="corpo">
@@ -48,8 +55,9 @@ const interventi = [
       <span class="quadratino" aria-hidden="true"></span>
       <h3 id="invito-titolo">Il prossimo potrebbe essere il tuo.</h3>
       <p>
-        Raccontami cosa deve fare il tuo sito o il tuo software: la prima
-        conversazione serve a capire se e come posso aiutarti.
+        Raccontami cosa deve fare il tuo sito o il tuo software. Dal primo
+        contatto capiamo se e come posso aiutarti; l'analisi vera e propria è
+        la prima fase del lavoro.
       </p>
       <a class="pulsante pulsante-primario" href="/contatti">Parliamo del progetto</a>
     </aside>
@@ -105,11 +113,19 @@ const interventi = [
 
   .anteprima {
     flex: 1 1 320px;
-    display: grid;
-    place-items: center;
+    position: relative;
     min-height: 320px;
     background: var(--placeholder);
-    color: var(--grigio-testo-chiaro);
+    border-right: var(--bordo-scuro);
+  }
+
+  .anteprima :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 30% 25%;
   }
 
   .corpo {
@@ -227,7 +243,8 @@ const interventi = [
 
   @media (max-width: 768px) {
     .anteprima {
-      min-height: 220px;
+      min-height: 240px;
+      border-right: 0;
     }
 
     .invito .pulsante {
