@@ -123,7 +123,8 @@ Metà nera con titolo e dati; metà bianca con form (tipo di progetto a pulsanti
 - Lingua: italiano. Tono professionale, diretto, senza superlativi.
 
 Dati di contatto (pubblici):
-- Oscar Costanzelli — Sviluppatore software
+- Oscar Costanzelli — Sviluppatore software, laureato in Ingegneria Informatica
+  (senza abilitazione da esame di Stato: mai scrivere "Ingegnere", "Ing." o "ingegnere informatico" come titolo)
 - Tel +39 347 310 8273
 - Email di contatto: oscarcostanzelli@gmail.com (canale preferito per i contatti)
 - PEC oscar.costanzelli@pec.it (solo uso amministrativo: non mostrarla come canale di contatto)

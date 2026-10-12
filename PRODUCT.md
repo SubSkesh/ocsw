@@ -42,6 +42,7 @@ The Laboratorio holds demos and personal projects with sample data, which show c
 ## Brand Commitments
 
 - Name: OCSW — Oscar Costanzelli Software. Logo "OCSW." with a gold dot.
+- Oscar holds a degree in Ingegneria Informatica but is not abilitato (no esame di Stato): say "laureato in Ingegneria Informatica", never "Ingegnere"/"Ing.".
 - Slogans (verbatim): "Innovazione digitale per le imprese" · "Soluzioni web e software progettate ad hoc".
 - Tone: professional, direct, no superlatives.
 - The visual identity "Dual-Tone Architetturale" is binding and defined in CLAUDE.md (palette, Poppins, layout, anti-patterns).
