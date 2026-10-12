@@ -18,7 +18,9 @@ interface Props {
 
 const { title, description } = Astro.props;
 const titoloCompleto = title === "OCSW" ? title : `${title} — OCSW`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+// Con build.format "file" il percorso finisce in .html: lo togliamo per l'URL pubblico
+const percorso = Astro.url.pathname.replace(/\.html$/, "").replace(/\/index$/, "/") || "/";
+const canonical = new URL(percorso, Astro.site ?? Astro.url);
 ---
 
 <!doctype html>
@@ -39,6 +41,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
     <meta property="og:title" content={titoloCompleto} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL("/og.png", Astro.site ?? Astro.url)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="OCSW — Oscar Costanzelli Software. Innovazione digitale per le imprese." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="generator" content={Astro.generator} />
   </head>
   <body>

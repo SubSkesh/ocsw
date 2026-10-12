@@ -6,7 +6,7 @@ const voci = [
   // Laboratorio: da aggiungere quando c'è una demo funzionante (vedi CLAUDE.md)
 ];
 
-const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const path = Astro.url.pathname.replace(/\.html$/, "").replace(/\/(index)?$/, "") || "/";
 const attiva = (href: string) => {
   const sezione = href.replace("/#", "/");
   return path === sezione || path.startsWith(`${sezione}/`);
