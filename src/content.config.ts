@@ -9,6 +9,8 @@ const servizi = defineCollection({
     ordine: z.number(),
     titolo: z.string(),
     sommario: z.string(),
+    intro: z.string(),
+    prova: z.boolean().default(false),
     descrizione: z.string(),
     cosa: z.array(z.object({ titolo: z.string(), testo: z.string() })).length(4),
     faq: z.array(z.object({ domanda: z.string(), risposta: z.string() })),

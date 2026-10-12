@@ -1,6 +1,8 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import catalogo from "../../assets/progetti/carandina/catalogo.png";
 
 export async function getStaticPaths() {
   const servizi = (await getCollection("servizi")).sort((a, b) => a.data.ordine - b.data.ordine);
@@ -8,16 +10,16 @@ export async function getStaticPaths() {
     params: { slug: s.id },
     props: {
       servizio: s,
-      precedente: servizi[(i - 1 + servizi.length) % servizi.length],
-      successivo: servizi[(i + 1) % servizi.length],
+      precedente: servizi[i - 1],
+      successivo: servizi[i + 1],
     },
   }));
 }
 
 interface Props {
   servizio: CollectionEntry<"servizi">;
-  precedente: CollectionEntry<"servizi">;
-  successivo: CollectionEntry<"servizi">;
+  precedente?: CollectionEntry<"servizi">;
+  successivo?: CollectionEntry<"servizi">;
 }
 
 const { servizio, precedente, successivo } = Astro.props;
@@ -40,7 +42,7 @@ const s = servizio.data;
     <div class="titolo-box su-bianco">
       <span class="quadratino" aria-hidden="true"></span>
       <h1>{s.titolo}<span class="punto">.</span></h1>
-      <p class="intro">{s.sommario}</p>
+      <p class="intro">{s.intro}</p>
       <a class="pulsante pulsante-primario" href="/contatti">Parliamo del progetto</a>
     </div>
   </section>
@@ -59,6 +61,30 @@ const s = servizio.data;
       }
     </ul>
   </section>
+
+  {
+    s.prova && (
+      <section class="prova" aria-labelledby="prova-titolo">
+        <div class="prova-testo">
+          <p class="etichetta prova-tipo">Lavoro reale</p>
+          <h2 id="prova-titolo">Carandina: restyling e catalogo prodotti</h2>
+          <p>
+            Un sito fermo da anni e nessun catalogo online. Oggi i prodotti sono
+            organizzati per famiglia, con schede tecniche PDF e modelli 3D.
+          </p>
+          <a class="pulsante pulsante-chiaro" href="/progetti/carandina">Leggi il caso studio</a>
+        </div>
+        <div class="prova-img">
+          <Image
+            src={catalogo}
+            alt="Il catalogo del nuovo sito Carandina, con menu per famiglie e schede prodotto"
+            widths={[600, 900, 1200]}
+            sizes="(max-width: 900px) 100vw, 55vw"
+          />
+        </div>
+      </section>
+    )
+  }
 
   <section class="faq" aria-labelledby="faq-titolo">
     <h2 id="faq-titolo">Domande frequenti<span class="punto">.</span></h2>
@@ -80,14 +106,26 @@ const s = servizio.data;
   </section>
 
   <nav class="altri" aria-label="Altri servizi">
-    <a class="altro su-bianco" href={`/servizi/${precedente.id}`}>
-      <span class="etichetta">← Servizio precedente</span>
-      <span class="altro-titolo">{precedente.data.numero} {precedente.data.titolo}</span>
-    </a>
-    <a class="altro su-bianco destra" href={`/servizi/${successivo.id}`}>
-      <span class="etichetta">Servizio successivo →</span>
-      <span class="altro-titolo">{successivo.data.numero} {successivo.data.titolo}</span>
-    </a>
+    {
+      precedente ? (
+        <a class="altro su-bianco" href={`/servizi/${precedente.id}`}>
+          <span class="etichetta">← Servizio precedente</span>
+          <span class="altro-titolo">{precedente.data.numero} {precedente.data.titolo}</span>
+        </a>
+      ) : (
+        <span class="altro vuoto" aria-hidden="true" />
+      )
+    }
+    {
+      successivo ? (
+        <a class="altro su-bianco destra" href={`/servizi/${successivo.id}`}>
+          <span class="etichetta">Servizio successivo →</span>
+          <span class="altro-titolo">{successivo.data.numero} {successivo.data.titolo}</span>
+        </a>
+      ) : (
+        <span class="altro vuoto" aria-hidden="true" />
+      )
+    }
   </nav>
 </BaseLayout>
 
@@ -237,6 +275,56 @@ const s = servizio.data;
     color: var(--grigio-testo-chiaro);
   }
 
+  /* Lavoro reale */
+  .prova {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--nero);
+    color: var(--bianco);
+    border-bottom: var(--bordo-scuro);
+  }
+
+  .prova-testo {
+    flex: 1 1 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .prova-tipo {
+    color: var(--oro);
+  }
+
+  .prova h2 {
+    max-width: 14ch;
+    margin-top: 1rem;
+    font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem);
+  }
+
+  .prova-testo p:not(.prova-tipo) {
+    max-width: 40ch;
+    margin-top: 1rem;
+    color: var(--grigio-testo-scuro);
+  }
+
+  .prova-testo .pulsante {
+    align-self: flex-start;
+    margin-top: 2rem;
+  }
+
+  .prova-img {
+    flex: 1 1 55%;
+    min-width: 0;
+    padding: var(--pad-y) var(--pad-x);
+    border-left: var(--bordo-scuro);
+  }
+
+  .prova-img :global(img) {
+    width: 100%;
+    border: var(--bordo-scuro);
+  }
+
   /* FAQ */
   .faq {
     display: flex;
@@ -335,6 +423,10 @@ const s = servizio.data;
     background: var(--placeholder);
   }
 
+  .vuoto {
+    background: var(--bianco);
+  }
+
   .destra {
     align-items: flex-end;
     text-align: right;
@@ -358,6 +450,16 @@ const s = servizio.data;
     .numero {
       font-size: 6rem;
     }
+
+    .prova-testo,
+    .prova-img {
+      flex-basis: 100%;
+    }
+
+    .prova-img {
+      border-left: 0;
+      border-top: var(--bordo-scuro);
+    }
   }
 
   @media (max-width: 768px) {
@@ -372,6 +474,14 @@ const s = servizio.data;
     .altro + .altro {
       border-left: 0;
       border-top: var(--bordo);
+    }
+
+    .vuoto {
+      display: none;
+    }
+
+    .prova-testo .pulsante {
+      align-self: stretch;
     }
 
     .destra {

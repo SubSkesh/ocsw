@@ -11,6 +11,8 @@ import famiglie3d from "../../assets/progetti/carandina/famiglie-3d.png";
 import catalogo from "../../assets/progetti/carandina/catalogo.png";
 import schedaProdotto from "../../assets/progetti/carandina/scheda-prodotto.png";
 import betek from "../../assets/progetti/carandina/betek.png";
+import primaMobile from "../../assets/progetti/carandina/prima-mobile.png";
+import categoriaCfa from "../../assets/progetti/carandina/categoria-cfa.png";
 
 const meta = [
   { voce: "Settore", valore: "Utensili di perforazione per fondazioni speciali" },
@@ -22,7 +24,7 @@ const meta = [
 const galleria = [
   { src: famiglie3d, alt: "Le quattro famiglie di prodotti in homepage, ognuna con il proprio modello 3D", didascalia: "Le famiglie di prodotto in homepage, ciascuna con il suo modello 3D." },
   { src: catalogo, alt: "Pagina Catalogue con menu per famiglie e schede prodotto a griglia", didascalia: "Il catalogo: menu per famiglie e sottocategorie, schede a griglia." },
-  { src: schedaProdotto, alt: "Scheda del prodotto Bucket HD ACS con pulsanti 3D View e Scheda tecnica PDF", didascalia: "La scheda prodotto: descrizione, vista 3D, scheda tecnica PDF e foto dall'officina." },
+  { src: categoriaCfa, alt: "Sottocategoria C.F.A. Augers del catalogo, con le schede dei prodotti a griglia", didascalia: "Una sottocategoria del catalogo: ogni prodotto con la sua immagine 3D." },
   { src: betek, alt: "Sezione dedicata agli utensili di taglio Betek con i codici dei pezzi", didascalia: "La sezione dedicata agli utensili di taglio Betek." },
 ];
 ---
@@ -70,12 +72,14 @@ const galleria = [
       <h2 id="confronto-titolo">Prima e dopo<span class="punto">.</span></h2>
       <p>
         A sinistra la homepage precedente, a destra quella nuova, alla stessa
-        larghezza. Sposta il cursore per confrontarle.
+        larghezza. Su telefono il confronto mostra la versione mobile.
       </p>
     </div>
     <PrimaDopo
       prima={primaHome}
       dopo={dopoHome}
+      primaMobile={primaMobile}
+      dopoMobile={dopoMobile}
       altPrima="La vecchia homepage di Carandina: slider fotografico e testi in due lingue uno sotto l'altro"
       altDopo="La nuova homepage di Carandina: titolo Drilling Equipment & Drilling Tools e due pulsanti verso prodotti e consulenza"
     />

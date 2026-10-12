@@ -63,15 +63,15 @@ const passi = [
         <input type="hidden" name="subject" value="Nuova richiesta dal sito ocsw.it" />
         <input type="hidden" name="from_name" value="ocsw.it" />
         <!-- Trappola per bot: gli utenti non la vedono -->
-        <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
+        <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
         <fieldset class="tipi">
           <legend class="etichetta">Di cosa hai bisogno?</legend>
           <div class="opzioni">
             {
-              tipi.map((t, i) => (
+              tipi.map((t) => (
                 <label class="opzione">
-                  <input type="radio" name="tipo_progetto" value={t} checked={i === 0} />
+                  <input type="radio" name="tipo_progetto" value={t} />
                   <span>{t}</span>
                 </label>
               ))
@@ -79,6 +79,7 @@ const passi = [
           </div>
         </fieldset>
 
+        <p class="nota">I campi con * sono obbligatori.</p>
         <div class="campi">
           <div class="campo">
             <label for="nome">Nome e cognome *</label>
@@ -203,7 +204,7 @@ const passi = [
 
         form.reset();
         esito.className = "esito inviato";
-        esito.textContent = "Richiesta inviata. Ti rispondo personalmente al più presto.";
+        esito.textContent = "Richiesta inviata. Ti rispondo personalmente entro 48 ore.";
       } catch {
         esito.className = "esito errore-invio";
         esito.innerHTML = fallback;
@@ -356,11 +357,17 @@ const passi = [
     outline-offset: 3px;
   }
 
+  .nota {
+    margin-top: 2.5rem;
+    font-size: var(--testo-small);
+    color: var(--grigio-testo-chiaro);
+  }
+
   .campi {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem var(--gap);
-    margin-top: 2.5rem;
+    margin-top: 1rem;
   }
 
   .intero {

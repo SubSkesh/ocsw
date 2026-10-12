@@ -3,6 +3,7 @@ numero: "03"
 ordine: 3
 titolo: "Software su misura"
 sommario: "Gestionali e integrazioni scritti per un'esigenza precisa, quando i programmi pronti non bastano."
+intro: "Alcune esigenze non trovano risposta nei programmi in commercio, o li costringono a passaggi manuali. In quei casi scrivo software dedicato: gestionali, automazioni e collegamenti tra i sistemi che usate già."
 descrizione: "Software su misura per le imprese: gestionali, automazioni e integrazioni tra programmi, scritti per un'esigenza precisa e collegati ai sistemi già in uso."
 cosa:
   - titolo: "Gestionali"

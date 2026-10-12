@@ -147,6 +147,18 @@ textarea {
   border-color: var(--linea-scura);
 }
 
+/* Su fondo nero */
+.pulsante-chiaro {
+  background: var(--bianco);
+  border-color: var(--bianco);
+  color: var(--nero);
+}
+
+.pulsante-chiaro:hover {
+  background: transparent;
+  color: var(--bianco);
+}
+
 .pulsante-secondario {
   background: transparent;
   color: var(--nero);

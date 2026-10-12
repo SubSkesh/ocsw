@@ -3,6 +3,7 @@ numero: "02"
 ordine: 2
 titolo: "Applicazioni web"
 sommario: "Strumenti che si usano dal browser, disegnati sui processi interni di chi li usa ogni giorno."
+intro: "Quando un foglio Excel condiviso o un continuo scambio di email non bastano più, serve uno strumento dedicato. Un'applicazione web si usa dal browser, senza installare nulla, ed è costruita sul modo in cui lavora il vostro team."
 descrizione: "Applicazioni web su misura per le imprese: aree riservate, portali e strumenti per gestire dati e documenti, utilizzabili dal browser senza installare nulla."
 cosa:
   - titolo: "Aree riservate"
