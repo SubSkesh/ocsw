@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Pagina non trovata"
+  description="La pagina cercata non esiste su ocsw.it."
+>
+  <section class="errore">
+    <div class="numero-box" aria-hidden="true">
+      <span class="numero">404</span>
+    </div>
+    <div class="testo su-bianco">
+      <span class="quadratino" aria-hidden="true"></span>
+      <h1>Pagina non trovata<span class="punto">.</span></h1>
+      <p>L'indirizzo potrebbe essere sbagliato o la pagina non esiste più.</p>
+      <div class="azioni">
+        <a class="pulsante pulsante-primario" href="/">Torna alla home</a>
+        <a class="pulsante pulsante-secondario" href="/contatti">Contatti</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .errore {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: var(--bordo);
+  }
+
+  .numero-box {
+    flex: 1 1 40%;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--pad-y) var(--pad-x);
+    background: var(--nero);
+  }
+
+  .numero {
+    font-size: var(--testo-display);
+    font-weight: var(--peso-extrabold);
+    line-height: var(--interlinea-display);
+    letter-spacing: var(--spaziatura-display);
+    color: var(--grigio-numeri-scuro);
+  }
+
+  .testo {
+    flex: 1 1 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--pad-y) var(--pad-x);
+    border-left: var(--bordo);
+  }
+
+  .quadratino {
+    width: 12px;
+    height: 12px;
+    margin-bottom: 2rem;
+    background: var(--oro);
+  }
+
+  h1 {
+    font-size: var(--testo-h1);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  p {
+    max-width: 38ch;
+    margin-top: 1.5rem;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .azioni {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .numero-box,
+    .testo {
+      flex-basis: 100%;
+    }
+
+    .testo {
+      border-left: 0;
+      border-top: var(--bordo);
+    }
+
+    .numero {
+      font-size: 6rem;
+    }
+  }
+</style>
