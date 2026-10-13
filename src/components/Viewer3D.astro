@@ -11,8 +11,9 @@ const { src, alt } = Astro.props;
 ---
 
 <div class="viewer" data-src={src}>
-  <!-- Immagine fissa: si vede subito e resta se il 3D non si carica -->
-  <Image class="poster" src={poster} alt={alt} widths={[400, 800]} sizes="(max-width: 900px) 100vw, 40vw" />
+  <!-- Immagine fissa: si vede subito e resta se il 3D non si carica.
+       alt vuoto finché c'è il modello, che ha già la sua descrizione -->
+  <Image class="poster" src={poster} alt="" data-alt={alt} widths={[400, 800]} sizes="(max-width: 900px) 100vw, 40vw" />
   <model-viewer
     alt={alt}
     camera-controls
@@ -35,6 +36,9 @@ const { src, alt } = Astro.props;
 
   const fallito = (box: HTMLElement) => {
     box.classList.add("errore");
+    // Il modello non c'è: la descrizione passa all'immagine fissa
+    const img = box.querySelector<HTMLImageElement>(".poster")!;
+    img.alt = img.dataset.alt ?? "";
     box.querySelector(".stato")!.textContent = "Anteprima statica · 3D non disponibile";
   };
 
