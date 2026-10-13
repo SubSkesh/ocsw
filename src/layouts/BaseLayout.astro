@@ -37,6 +37,8 @@ const canonical = new URL(percorso, Astro.site ?? Astro.url);
     <title>{titoloCompleto}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -54,6 +56,34 @@ const canonical = new URL(percorso, Astro.site ?? Astro.url);
     <meta property="og:image:alt" content="OCSW — Oscar Costanzelli Software. Innovazione digitale per le imprese." />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "@id": "https://ocsw.it/#attivita",
+      name: "OCSW — Oscar Costanzelli Software",
+      alternateName: "OCSW",
+      url: "https://ocsw.it/",
+      logo: "https://ocsw.it/icon-512.png",
+      image: "https://ocsw.it/og.png",
+      description: "Siti web, applicazioni web e software su misura per aziende e professionisti, con un unico referente dall'analisi al supporto.",
+      email: "oscarcostanzelli@gmail.com",
+      telephone: "+39 347 310 8273",
+      vatID: "IT02210020380",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Via per Burana 137",
+        postalCode: "44012",
+        addressLocality: "Bondeno",
+        addressRegion: "FE",
+        addressCountry: "IT",
+      },
+      areaServed: ["Provincia di Ferrara", "Emilia-Romagna", "Italia"],
+      founder: {
+        "@type": "Person",
+        name: "Oscar Costanzelli",
+        jobTitle: "Sviluppatore software",
+      },
+    })} />
     <meta name="generator" content={Astro.generator} />
   </head>
   <body>
