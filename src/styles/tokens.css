@@ -60,6 +60,7 @@
   /* Movimento: solo transizioni brevi di opacità/colore */
   --durata: 200ms;
   --easing: ease-out;
+  --uscita: cubic-bezier(0.16, 1, 0.3, 1); /* esponenziale in uscita: movimenti di ingresso */
 }
 
 @media (max-width: 768px) {

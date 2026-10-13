@@ -3,7 +3,11 @@
 
 <section class="hero" aria-labelledby="hero-titolo">
   <div class="marchio">
-    <p class="display" aria-hidden="true">OC<br />SW<span class="punto">.</span></p>
+    <p class="display" aria-hidden="true">
+      <span class="riga"><span class="l" style="--n: 0">O</span><span class="l" style="--n: 1">C</span></span><br /><span
+        class="riga"><span class="l" style="--n: 2">S</span><span class="l" style="--n: 3">W</span></span><span
+        class="punto">.</span>
+    </p>
     <p class="etichetta nome">Oscar Costanzelli Software</p>
   </div>
 
@@ -156,6 +160,76 @@
 
   .freccia {
     flex: none;
+  }
+
+  /*
+   * Momento d'apertura (solo con html.anima, vedi CLAUDE.md › Movimento):
+   * il pannello nero scorre, le lettere salgono, il punto oro arriva per ultimo,
+   * la colonna bianca entra a cascata.
+   */
+  .riga {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.04em;
+  }
+
+  .l {
+    display: inline-block;
+  }
+
+  .punto {
+    display: inline-block;
+  }
+
+  :global(html.anima) .marchio {
+    animation: pannello 900ms var(--uscita) both;
+  }
+
+  :global(html.anima) .l {
+    animation: lettera 800ms var(--uscita) both;
+    animation-delay: calc(250ms + var(--n) * 90ms);
+  }
+
+  :global(html.anima) .punto {
+    animation: punto 500ms var(--uscita) both;
+    animation-delay: 850ms;
+  }
+
+  :global(html.anima) .nome {
+    animation: entra 700ms var(--uscita) both;
+    animation-delay: 700ms;
+  }
+
+  :global(html.anima) .testo > * {
+    animation: entra 800ms var(--uscita) both;
+  }
+
+  :global(html.anima) .testo > :nth-child(1) { animation-delay: 300ms; }
+  :global(html.anima) .testo > :nth-child(2) { animation-delay: 380ms; }
+  :global(html.anima) .testo > :nth-child(3) { animation-delay: 460ms; }
+  :global(html.anima) .testo > :nth-child(4) { animation-delay: 540ms; }
+  :global(html.anima) .testo > :nth-child(5) { animation-delay: 620ms; }
+  :global(html.anima) .testo > :nth-child(6) { animation-delay: 700ms; }
+
+  @keyframes pannello {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+
+  @keyframes lettera {
+    from { transform: translateY(105%); }
+    to { transform: none; }
+  }
+
+  @keyframes punto {
+    from { transform: scale(0); }
+    to { transform: none; }
+  }
+
+  @keyframes entra {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
   }
 
   @media (max-width: 768px) {

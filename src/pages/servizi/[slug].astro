@@ -48,11 +48,11 @@ const s = servizio.data;
   </section>
 
   <section class="cosa su-bianco" aria-labelledby="cosa-titolo">
-    <h2 id="cosa-titolo">Cosa realizzo<span class="punto">.</span></h2>
+    <h2 id="cosa-titolo" data-rivela>Cosa realizzo<span class="punto">.</span></h2>
     <ul class="griglia">
       {
-        s.cosa.map((c) => (
-          <li>
+        s.cosa.map((c, i) => (
+          <li data-rivela style={`--i: ${i}`}>
             <span class="quadratino piccolo" aria-hidden="true" />
             <h3>{c.titolo}</h3>
             <p>{c.testo}</p>
@@ -65,7 +65,7 @@ const s = servizio.data;
   {
     s.prova && (
       <section class="prova" aria-labelledby="prova-titolo">
-        <div class="prova-testo">
+        <div class="prova-testo" data-rivela>
           <p class="etichetta prova-tipo">Lavoro reale</p>
           <h2 id="prova-titolo">Carandina: restyling e catalogo prodotti</h2>
           <p>
@@ -74,7 +74,7 @@ const s = servizio.data;
           </p>
           <a class="pulsante pulsante-chiaro" href="/progetti/carandina">Leggi il caso studio</a>
         </div>
-        <div class="prova-img">
+        <div class="prova-img" data-rivela style="--i: 1">
           <Image
             src={catalogo}
             alt="Il catalogo del nuovo sito Carandina, con menu per famiglie e schede prodotto"
@@ -87,7 +87,7 @@ const s = servizio.data;
   }
 
   <section class="faq" aria-labelledby="faq-titolo">
-    <h2 id="faq-titolo">Domande frequenti<span class="punto">.</span></h2>
+    <h2 id="faq-titolo" data-rivela>Domande frequenti<span class="punto">.</span></h2>
     <div class="domande">
       {
         s.faq.map((f) => (

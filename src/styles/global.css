@@ -174,3 +174,72 @@ textarea {
     width: 100%;
   }
 }
+
+/*
+ * Movimento allo scroll (vedi CLAUDE.md › Movimento).
+ * Senza la classe "anima" su <html> (niente JS o riduci movimento) tutto è già visibile.
+ */
+html.anima [data-rivela] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 600ms var(--uscita),
+    transform 800ms var(--uscita);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+html.anima [data-rivela].visibile {
+  opacity: 1;
+  transform: none;
+}
+
+/* I numeri grandi salgono un po' di più, poco dopo il loro blocco */
+html.anima [data-rivela] .numero {
+  display: inline-block;
+  transform: translateY(35%);
+  transition: transform 900ms var(--uscita);
+  transition-delay: calc(var(--i, 0) * 90ms + 120ms);
+}
+
+html.anima [data-rivela].visibile .numero {
+  transform: none;
+}
+
+/* Linee strutturali che si disegnano da sinistra */
+html.anima [data-linea] {
+  position: relative;
+}
+
+html.anima [data-linea="sotto"] {
+  border-bottom-color: transparent;
+}
+
+html.anima [data-linea="sopra"] {
+  border-top-color: transparent;
+}
+
+html.anima [data-linea]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--colore-linea, var(--nero));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1100ms var(--uscita);
+  transition-delay: calc(var(--i, 0) * 90ms);
+  pointer-events: none;
+}
+
+html.anima [data-linea="sotto"]::after {
+  bottom: -1px;
+}
+
+html.anima [data-linea="sopra"]::after {
+  top: -1px;
+}
+
+html.anima [data-linea].visibile::after {
+  transform: scaleX(1);
+}

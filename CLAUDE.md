@@ -76,7 +76,15 @@ Regole per l'oro:
 - Emoji, icone decorative a caso, illustrazioni generiche, foto stock.
 - Colori fuori palette (niente viola, blu, ecc.).
 - Testo grigio chiaro su fondi colorati, testo oro su bianco.
-- Animazioni vistose. Ammesse solo transizioni brevi (opacity, 150–250ms) e sempre rispettando `prefers-reduced-motion`.
+- Animazioni decorative fini a se stesse (rimbalzi, parallax, effetti continui). Vedi "Movimento" sotto.
+
+### Movimento (deciso il 13/10/2026)
+
+- **Un solo momento forte**: all'apertura della Home, nell'hero il pannello nero scorre, le lettere di "OC / SW" si compongono, il punto oro arriva per ultimo (~1 s, una volta).
+- **Durante lo scroll**: le linee strutturali si disegnano, i contenuti salgono di poco in sequenza, i numeri grandi si alzano in posizione. Easing esponenziale in uscita, 500–900ms.
+- Solo transform, opacity e clip-path. Niente librerie: CSS + poche righe di JS (`data-rivela`, `data-linea`).
+- Lo stato di partenza è il sito completo: le animazioni partono solo se il JS gira (classe `anima` su `<html>`) e **mai** con `prefers-reduced-motion`.
+- Micro-interazioni (hover, focus) restano transizioni brevi 150–250ms.
 
 ---
 

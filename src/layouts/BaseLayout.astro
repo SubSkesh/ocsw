@@ -27,7 +27,12 @@ const canonical = new URL(percorso, Astro.site ?? Astro.url);
 <html lang="it">
   <head>
     <meta charset="utf-8" />
-    <script is:inline>document.documentElement.classList.add("js");</script>
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("anima");
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titoloCompleto}</title>
     <meta name="description" content={description} />
@@ -56,5 +61,38 @@ const canonical = new URL(percorso, Astro.site ?? Astro.url);
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      // Rivela blocchi e linee quando entrano nello schermo (una volta sola).
+      // Anche ciò che sta già sopra lo schermo (salti con ancore, tasto Fine) viene mostrato.
+      (function () {
+        var restanti = Array.prototype.slice.call(document.querySelectorAll("[data-rivela], [data-linea]"));
+        if (!document.documentElement.classList.contains("anima")) {
+          restanti.forEach(function (e) { e.classList.add("visibile"); });
+          return;
+        }
+        var inAttesa = false;
+        function controlla() {
+          inAttesa = false;
+          var soglia = window.innerHeight * 0.92;
+          restanti = restanti.filter(function (e) {
+            if (e.getBoundingClientRect().top < soglia) {
+              e.classList.add("visibile");
+              return false;
+            }
+            return true;
+          });
+          if (!restanti.length) {
+            window.removeEventListener("scroll", programma);
+            window.removeEventListener("resize", programma);
+          }
+        }
+        function programma() {
+          if (!inAttesa) { inAttesa = true; setTimeout(controlla, 60); }
+        }
+        window.addEventListener("scroll", programma, { passive: true });
+        window.addEventListener("resize", programma);
+        controlla();
+      })();
+    </script>
   </body>
 </html>

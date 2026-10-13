@@ -9,16 +9,16 @@ const interventi = [
 ---
 
 <section id="progetti" class="progetti" aria-labelledby="progetti-titolo">
-  <div class="intestazione">
-    <h2 id="progetti-titolo">Progetti<span class="punto" aria-hidden="true">.</span></h2>
-    <p class="intro">
+  <div class="intestazione" data-linea="sotto" style="--colore-linea: var(--linea-scura)">
+    <h2 id="progetti-titolo" data-rivela>Progetti<span class="punto" aria-hidden="true">.</span></h2>
+    <p class="intro" data-rivela style="--i: 1">
       Ogni progetto raccontato per quello che è: il problema, le scelte, il
       risultato.
     </p>
   </div>
 
   <div class="griglia">
-    <article class="caso">
+    <article class="caso" data-rivela>
       <div class="anteprima">
         <Viewer3D
           src="/modelli/carandina-bkt100.glb"
@@ -48,7 +48,7 @@ const interventi = [
       </div>
     </article>
 
-    <aside class="invito su-bianco" aria-labelledby="invito-titolo">
+    <aside class="invito su-bianco" aria-labelledby="invito-titolo" data-rivela style="--i: 2">
       <span class="quadratino" aria-hidden="true"></span>
       <h3 id="invito-titolo">Il prossimo potrebbe essere il tuo.</h3>
       <p>

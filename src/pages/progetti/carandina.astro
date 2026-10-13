@@ -69,7 +69,7 @@ const galleria = [
   <!-- Prima / dopo -->
   <section class="confronto-sezione" aria-labelledby="confronto-titolo">
     <div class="testa">
-      <h2 id="confronto-titolo">Prima e dopo<span class="punto">.</span></h2>
+      <h2 id="confronto-titolo" data-rivela>Prima e dopo<span class="punto">.</span></h2>
       <p>
         A sinistra la homepage precedente, a destra quella nuova, alla stessa
         larghezza. Su telefono il confronto mostra la versione mobile.
@@ -87,7 +87,7 @@ const galleria = [
 
   <!-- 01 — Visualizzatore 3D -->
   <section class="intervento scuro" aria-labelledby="int-1">
-    <div class="intervento-testo">
+    <div class="intervento-testo" data-rivela>
       <span class="numero" aria-hidden="true">01</span>
       <h2 id="int-1">Visualizzatore 3D</h2>
       <p>
@@ -112,7 +112,7 @@ const galleria = [
 
   <!-- 02 — Restyling -->
   <section class="intervento chiaro su-bianco" aria-labelledby="int-2">
-    <div class="intervento-testo">
+    <div class="intervento-testo" data-rivela>
       <span class="numero" aria-hidden="true">02</span>
       <h2 id="int-2">Restyling</h2>
       <p>
@@ -139,7 +139,7 @@ const galleria = [
 
   <!-- 03 — Catalogo e schede PDF -->
   <section class="intervento chiaro su-bianco bordo-alto" aria-labelledby="int-3">
-    <div class="intervento-testo">
+    <div class="intervento-testo" data-rivela>
       <span class="numero" aria-hidden="true">03</span>
       <h2 id="int-3">Catalogo e schede PDF</h2>
       <p>
@@ -165,11 +165,11 @@ const galleria = [
 
   <!-- Galleria -->
   <section class="galleria" aria-labelledby="galleria-titolo">
-    <h2 id="galleria-titolo">Galleria<span class="punto">.</span></h2>
+    <h2 id="galleria-titolo" data-rivela>Galleria<span class="punto">.</span></h2>
     <div class="griglia">
       {
-        galleria.map((g) => (
-          <figure>
+        galleria.map((g, i) => (
+          <figure data-rivela style={`--i: ${i % 2}`}>
             <Image src={g.src} alt={g.alt} widths={[600, 900, 1200]} sizes="(max-width: 900px) 100vw, 50vw" />
             <figcaption>{g.didascalia}</figcaption>
           </figure>

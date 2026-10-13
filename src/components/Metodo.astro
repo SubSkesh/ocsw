@@ -29,8 +29,8 @@ const fasi = [
 
 <section id="metodo" class="metodo" aria-labelledby="metodo-titolo">
   <div class="lato">
-    <h2 id="metodo-titolo">Metodo<span class="punto" aria-hidden="true">.</span></h2>
-    <p class="intro">
+    <h2 id="metodo-titolo" data-rivela>Metodo<span class="punto" aria-hidden="true">.</span></h2>
+    <p class="intro" data-rivela style="--i: 1">
       Quattro fasi, un solo referente: chi analizza il problema è la stessa
       persona che scrive il codice e lo segue nel tempo.
     </p>
@@ -38,8 +38,8 @@ const fasi = [
 
   <ol class="fasi su-bianco">
     {
-      fasi.map((f) => (
-        <li class="fase">
+      fasi.map((f, i) => (
+        <li class="fase" data-rivela style={`--i: ${i}`}>
           <p class="sigla etichetta">
             <span class="quadratino" aria-hidden="true" />
             {f.sigla}

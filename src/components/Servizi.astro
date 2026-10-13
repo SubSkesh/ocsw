@@ -25,9 +25,9 @@ const servizi = [
 ---
 
 <section id="servizi" class="servizi" aria-labelledby="servizi-titolo">
-  <div class="intestazione su-bianco">
-    <h2 id="servizi-titolo">Servizi<span class="punto" aria-hidden="true">.</span></h2>
-    <p class="intro">
+  <div class="intestazione su-bianco" data-linea="sotto">
+    <h2 id="servizi-titolo" data-rivela>Servizi<span class="punto" aria-hidden="true">.</span></h2>
+    <p class="intro" data-rivela style="--i: 1">
       Tre ambiti, un solo modo di lavorare: capire il problema prima di
       scrivere il codice.
     </p>
@@ -36,7 +36,7 @@ const servizi = [
   <ol class="colonne">
     {
       servizi.map((s, i) => (
-        <li class:list={["colonna", i === 1 ? "scura" : "chiara su-bianco"]}>
+        <li class:list={["colonna", i === 1 ? "scura" : "chiara su-bianco"]} data-rivela style={`--i: ${i}`}>
           <span class="numero" aria-hidden="true">{s.numero}</span>
           <h3>{s.titolo}</h3>
           <p class="testo">{s.testo}</p>
