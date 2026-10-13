@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import poster from "../assets/progetti/carandina/poster-3d.png";
+import { linguaDa } from "../i18n";
 
 interface Props {
   src: string;
@@ -8,11 +9,15 @@ interface Props {
 }
 
 const { src, alt } = Astro.props;
+const t = {
+  it: { caricamento: "Modello 3D · caricamento", ruota: "Trascina per ruotare", errore: "Anteprima statica · 3D non disponibile" },
+  en: { caricamento: "3D model · loading", ruota: "Drag to rotate", errore: "Static preview · 3D not available" },
+}[linguaDa(Astro.url)];
 ---
 
-<div class="viewer" data-src={src}>
-  <!-- Immagine fissa: si vede subito e resta se il 3D non si carica.
-       alt vuoto finché c'è il modello, che ha già la sua descrizione -->
+<div class="viewer" data-src={src} data-errore={t.errore}>
+  {/* Immagine fissa: si vede subito e resta se il 3D non si carica.
+      alt vuoto finché c'è il modello, che ha già la sua descrizione */}
   <Image class="poster" src={poster} alt="" data-alt={alt} widths={[400, 800]} sizes="(max-width: 900px) 100vw, 40vw" />
   <model-viewer
     alt={alt}
@@ -26,8 +31,8 @@ const { src, alt } = Astro.props;
     reveal="auto"
   >
   </model-viewer>
-  <p class="stato etichetta" aria-live="polite">Modello 3D · caricamento</p>
-  <p class="aiuto etichetta">Trascina per ruotare</p>
+  <p class="stato etichetta" aria-live="polite">{t.caricamento}</p>
+  <p class="aiuto etichetta">{t.ruota}</p>
 </div>
 
 <script>
@@ -39,7 +44,7 @@ const { src, alt } = Astro.props;
     // Il modello non c'è: la descrizione passa all'immagine fissa
     const img = box.querySelector<HTMLImageElement>(".poster")!;
     img.alt = img.dataset.alt ?? "";
-    box.querySelector(".stato")!.textContent = "Anteprima statica · 3D non disponibile";
+    box.querySelector(".stato")!.textContent = box.dataset.errore ?? "";
   };
 
   const avvia = async (box: HTMLElement) => {

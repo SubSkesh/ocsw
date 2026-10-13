@@ -14,6 +14,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <span class="quadratino" aria-hidden="true"></span>
       <h1>Pagina non trovata<span class="punto">.</span></h1>
       <p>L'indirizzo potrebbe essere sbagliato o la pagina non esiste più.</p>
+      <p class="en" lang="en">Page not found. <a href="/en">Go to the English version</a>.</p>
       <div class="azioni">
         <a class="pulsante pulsante-primario" href="/">Torna alla home</a>
         <a class="pulsante pulsante-secondario" href="/contatti">Contatti</a>
@@ -83,6 +84,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 2.5rem;
+  }
+
+  .en {
+    margin-top: 0.75rem;
+    font-size: var(--testo-base);
+  }
+
+  .en a {
+    color: var(--nero);
+    font-weight: var(--peso-semibold);
+    text-underline-offset: 4px;
   }
 
   @media (max-width: 900px) {

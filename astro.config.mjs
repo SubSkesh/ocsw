@@ -8,5 +8,9 @@ export default defineConfig({
   // URL senza barra finale: Cloudflare Pages serve contatti.html come /contatti
   trailingSlash: 'never',
   build: { format: 'file' },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      i18n: { defaultLocale: 'it', locales: { it: 'it-IT', en: 'en-GB' } },
+    }),
+  ],
 });

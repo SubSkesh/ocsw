@@ -1,14 +1,29 @@
 ---
+import { linguaDa, percorsi } from "../i18n";
+
+const lingua = linguaDa(Astro.url);
+const t = {
+  it: {
+    titolo: "Costruiamo qualcosa di solido.",
+    intro: "Scrivimi cosa ti serve, anche in poche righe. Ti rispondo personalmente.",
+    pulsante: "Scrivi la tua richiesta",
+    telefono: "Telefono", referente: "Referente", ruolo: "Sviluppatore software,", laurea: "laureato in Ingegneria Informatica", piva: "P.IVA",
+  },
+  en: {
+    titolo: "Let's build something solid.",
+    intro: "Tell me what you need, even in a few lines. I reply personally.",
+    pulsante: "Send your request",
+    telefono: "Phone", referente: "Contact", ruolo: "Software developer,", laurea: "degree in Computer Engineering", piva: "VAT no.",
+  },
+}[lingua];
 ---
 
 <section id="contatti" class="contatti" aria-labelledby="contatti-titolo">
   <div class="invito su-bianco">
     <span class="quadratino" aria-hidden="true"></span>
-    <h2 id="contatti-titolo" data-rivela>Costruiamo qualcosa di solido.</h2>
-    <p class="intro" data-rivela style="--i: 1">
-      Scrivimi cosa ti serve, anche in poche righe. Ti rispondo personalmente.
-    </p>
-    <a class="pulsante pulsante-primario" href="/contatti" data-rivela style="--i: 2">Scrivi la tua richiesta</a>
+    <h2 id="contatti-titolo" data-rivela>{t.titolo}</h2>
+    <p class="intro" data-rivela style="--i: 1">{t.intro}</p>
+    <a class="pulsante pulsante-primario" href={percorsi.contatti[lingua]} data-rivela style="--i: 2">{t.pulsante}</a>
   </div>
 
   <div class="dati">
@@ -18,15 +33,15 @@
         <dd><a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a></dd>
       </div>
       <div class="riga" data-linea="sotto" style="--colore-linea: var(--linea-scura); --i: 1">
-        <dt class="etichetta">Telefono</dt>
+        <dt class="etichetta">{t.telefono}</dt>
         <dd><a href="tel:+393473108273">+39 347 310 8273</a></dd>
       </div>
       <div class="riga" data-linea="sotto" style="--colore-linea: var(--linea-scura); --i: 2">
-        <dt class="etichetta">Referente</dt>
-        <dd>Oscar Costanzelli — Sviluppatore software,<br />laureato in Ingegneria Informatica</dd>
+        <dt class="etichetta">{t.referente}</dt>
+        <dd>Oscar Costanzelli — {t.ruolo}<br />{t.laurea}</dd>
       </div>
       <div class="riga" data-linea="sotto" style="--colore-linea: var(--linea-scura); --i: 3">
-        <dt class="etichetta">P.IVA</dt>
+        <dt class="etichetta">{t.piva}</dt>
         <dd>02210020380</dd>
       </div>
     </dl>

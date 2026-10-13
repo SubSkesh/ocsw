@@ -1,4 +1,23 @@
 ---
+import { linguaDa, percorsi } from "../i18n";
+
+const lingua = linguaDa(Astro.url);
+const t = {
+  it: {
+    h1: "Innovazione digitale per le imprese.",
+    lead: "Siti web, applicazioni web e software su misura per aziende e professionisti. Parli direttamente con chi scrive il codice, dall'analisi al supporto.",
+    primario: "Parliamo del progetto", secondario: "Vedi i servizi",
+    scrivi: "Oppure scrivi a", chiama: "o chiama il",
+    ultimo: "Ultimo progetto", prova: "Carandina — restyling, catalogo e visualizzatore 3D",
+  },
+  en: {
+    h1: "Digital innovation for businesses.",
+    lead: "Websites, web applications and custom software for companies and professionals. You talk directly to the person who writes the code, from analysis to support.",
+    primario: "Let's talk about your project", secondario: "See the services",
+    scrivi: "Or email", chiama: "or call",
+    ultimo: "Latest project", prova: "Carandina — redesign, product catalogue and 3D viewer",
+  },
+}[lingua];
 ---
 
 <section class="hero" aria-labelledby="hero-titolo">
@@ -13,25 +32,21 @@
 
   <div class="testo su-bianco">
     <span class="quadratino" aria-hidden="true"></span>
-    <h1 id="hero-titolo">Innovazione digitale per le imprese.</h1>
-    <p class="lead">
-      Siti web, applicazioni web e software su misura per aziende e
-      professionisti. Parli direttamente con chi scrive il codice,
-      dall'analisi al supporto.
-    </p>
+    <h1 id="hero-titolo">{t.h1}</h1>
+    <p class="lead">{t.lead}</p>
     <div class="azioni">
-      <a class="pulsante pulsante-primario" href="/contatti">Parliamo del progetto</a>
-      <a class="pulsante pulsante-secondario" href="#servizi">Vedi i servizi</a>
+      <a class="pulsante pulsante-primario" href={percorsi.contatti[lingua]}>{t.primario}</a>
+      <a class="pulsante pulsante-secondario" href="#servizi">{t.secondario}</a>
     </div>
     <p class="diretto">
-      Oppure scrivi a <a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a>{" "}
-      o chiama il <a href="tel:+393473108273">+39 347 310 8273</a>
+      {t.scrivi} <a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a>{" "}
+      {t.chiama} <a href="tel:+393473108273">+39 347 310 8273</a>
     </p>
 
-    <a class="prova" href="/progetti/carandina">
-      <span class="etichetta prova-etichetta">Ultimo progetto</span>
+    <a class="prova" href={percorsi.carandina[lingua]}>
+      <span class="etichetta prova-etichetta">{t.ultimo}</span>
       <span class="prova-testo">
-        Carandina — restyling, catalogo e visualizzatore 3D
+        {t.prova}
         <svg class="freccia" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
           <path d="M2 8h12M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"></path>
         </svg>

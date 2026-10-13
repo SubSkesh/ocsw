@@ -36,7 +36,7 @@ The Laboratorio holds demos and personal projects with sample data, which show c
 ## Capabilities and Constraints
 
 - Astro static site, content in Markdown/MDX (content collections); no CMS. Details are in CLAUDE.md.
-- Language: Italian.
+- Languages: Italian (main) and English (/en). The English privacy notice is a translation; the Italian one is authoritative.
 - Response time promised to visitors: 48 hours. Form sent via Web3Forms to oscarcostanzelli@gmail.com (key in .env as PUBLIC_WEB3FORMS_KEY).
 
 ## Brand Commitments

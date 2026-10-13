@@ -1,5 +1,6 @@
 ---
 numero: "03"
+chiave: "software-su-misura"
 ordine: 3
 titolo: "Software su misura"
 sommario: "Gestionali e integrazioni scritti per un'esigenza precisa, quando i programmi pronti non bastano."

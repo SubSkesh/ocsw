@@ -1,5 +1,22 @@
 ---
+import { link, linguaDa, percorsi } from "../i18n";
+
 const anno = new Date().getFullYear();
+const lingua = linguaDa(Astro.url);
+const t = {
+  it: {
+    metodo: "Metodo di lavoro", fasi: ["Analisi", "Progetto", "Sviluppo", "Supporto"],
+    slogan: "Un unico referente, dall'analisi al supporto.",
+    pie: "Piè di pagina", sito: "Sito", servizi: "Servizi", metodoV: "Metodo", progetti: "Progetti", contatti: "Contatti",
+    ruolo: "Sviluppatore software,", laurea: "laureato in Ingegneria Informatica", piva: "P.IVA",
+  },
+  en: {
+    metodo: "How I work", fasi: ["Analysis", "Design", "Development", "Support"],
+    slogan: "One point of contact, from analysis to support.",
+    pie: "Footer", sito: "Site", servizi: "Services", metodoV: "Method", progetti: "Projects", contatti: "Contact",
+    ruolo: "Software developer,", laurea: "degree in Computer Engineering", piva: "VAT no.",
+  },
+}[lingua];
 ---
 
 <footer class="footer">
@@ -7,29 +24,26 @@ const anno = new Date().getFullYear();
     <div class="colonna marchio">
       <p class="logo" aria-hidden="true">OCSW<span class="punto">.</span></p>
       <p class="etichetta nome">Oscar Costanzelli Software</p>
-      <ol class="metodo" aria-label="Metodo di lavoro">
-        <li>Analisi</li>
-        <li>Progetto</li>
-        <li>Sviluppo</li>
-        <li>Supporto</li>
+      <ol class="metodo" aria-label={t.metodo}>
+        {t.fasi.map((f) => <li>{f}</li>)}
       </ol>
-      <p class="slogan">Un unico referente, dall'analisi al supporto.</p>
+      <p class="slogan">{t.slogan}</p>
     </div>
 
-    <nav class="colonna" aria-label="Piè di pagina">
-      <p class="etichetta titolo">Sito</p>
+    <nav class="colonna" aria-label={t.pie}>
+      <p class="etichetta titolo">{t.sito}</p>
       <ul>
-        <li><a href="/#servizi">Servizi</a></li>
-        <li><a href="/#metodo">Metodo</a></li>
-        <li><a href="/#progetti">Progetti</a></li>
-        <li><a href="/contatti">Contatti</a></li>
+        <li><a href={link("home", lingua, "servizi")}>{t.servizi}</a></li>
+        <li><a href={link("home", lingua, "metodo")}>{t.metodoV}</a></li>
+        <li><a href={link("home", lingua, "progetti")}>{t.progetti}</a></li>
+        <li><a href={percorsi.contatti[lingua]}>{t.contatti}</a></li>
       </ul>
     </nav>
 
     <div class="colonna">
-      <p class="etichetta titolo">Contatti</p>
+      <p class="etichetta titolo">{t.contatti}</p>
       <address>
-        <p>Oscar Costanzelli — Sviluppatore software,<br />laureato in Ingegneria Informatica</p>
+        <p>Oscar Costanzelli — {t.ruolo}<br />{t.laurea}</p>
         <p><a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a></p>
         <p><a href="tel:+393473108273">+39 347 310 8273</a></p>
       </address>
@@ -38,7 +52,7 @@ const anno = new Date().getFullYear();
 
   <div class="base">
     <p>© {anno} OCSW — Oscar Costanzelli Software</p>
-    <p>P.IVA 02210020380 · <a href="/privacy">Privacy</a></p>
+    <p>{t.piva} 02210020380 · <a href={percorsi.privacy[lingua]}>Privacy</a></p>
   </div>
 </footer>
 

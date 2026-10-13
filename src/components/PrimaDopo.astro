@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { linguaDa } from "../i18n";
 
 interface Props {
   prima: ImageMetadata;
@@ -12,10 +13,14 @@ interface Props {
 }
 
 const { prima, dopo, primaMobile, dopoMobile, altPrima, altDopo } = Astro.props;
+const t = {
+  it: { prima: "Prima", dopo: "Dopo", label: "Trascina sull'immagine o sposta il cursore", nuova: "versione nuova" },
+  en: { prima: "Before", dopo: "After", label: "Drag on the image or move the slider", nuova: "new version" },
+}[linguaDa(Astro.url)];
 const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
-<figure class="confronto" style="--pos: 50%">
+<figure class="confronto" style="--pos: 50%" data-nuova={t.nuova}>
   <div class="cornice">
     <!-- Desktop: homepage a 1440px; telefono: homepage a 390px -->
     <div class="livello prima">
@@ -27,13 +32,13 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
       <Image class="img mob" src={dopoMobile} alt={altDopo} widths={[390, 780]} sizes="100vw" />
     </div>
     <span class="linea" aria-hidden="true"></span>
-    <span class="etichetta tag tag-prima" aria-hidden="true">Prima</span>
-    <span class="etichetta tag tag-dopo" aria-hidden="true">Dopo</span>
+    <span class="etichetta tag tag-prima" aria-hidden="true">{t.prima}</span>
+    <span class="etichetta tag tag-dopo" aria-hidden="true">{t.dopo}</span>
   </div>
 
   <div class="controllo">
-    <label class="etichetta" for={id}>Trascina sull'immagine o sposta il cursore</label>
-    <input id={id} type="range" min="0" max="100" value="50" aria-valuetext="50% versione nuova" />
+    <label class="etichetta" for={id}>{t.label}</label>
+    <input id={id} type="range" min="0" max="100" value="50" aria-valuetext={`50% ${t.nuova}`} />
   </div>
 </figure>
 
@@ -45,7 +50,7 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
     const imposta = (v: number) => {
       range.value = String(Math.round(Math.min(100, Math.max(0, v))));
       box.style.setProperty("--pos", `${range.value}%`);
-      range.setAttribute("aria-valuetext", `${100 - Number(range.value)}% versione nuova`);
+      range.setAttribute("aria-valuetext", `${100 - Number(range.value)}% ${box.dataset.nuova}`);
     };
 
     range.addEventListener("input", () => imposta(Number(range.value)));

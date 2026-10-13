@@ -1,36 +1,37 @@
 ---
-const servizi = [
-  {
-    numero: "01",
-    slug: "siti-web",
-    titolo: "Siti web",
-    testo:
-      "Siti aziendali e cataloghi prodotti chiari, veloci e facili da aggiornare. Costruiti sui contenuti dell'azienda, non su un tema preconfezionato.",
+import { linguaDa, percorsi } from "../i18n";
+
+const lingua = linguaDa(Astro.url);
+const t = {
+  it: {
+    titolo: "Servizi",
+    intro: "Tre ambiti, un solo modo di lavorare: capire il problema prima di scrivere il codice.",
+    scopri: "Scopri",
+    servizi: [
+      { titolo: "Siti web", testo: "Siti aziendali e cataloghi prodotti chiari, veloci e facili da aggiornare. Costruiti sui contenuti dell'azienda, non su un tema preconfezionato." },
+      { titolo: "Applicazioni web", testo: "Strumenti che si usano dal browser: aree riservate, portali, gestione di dati e documenti. Disegnati sui processi interni di chi li usa ogni giorno." },
+      { titolo: "Software su misura", testo: "Gestionali e integrazioni scritti per un'esigenza precisa, quando i programmi pronti non bastano. Collegati ai sistemi che l'azienda usa già." },
+    ],
   },
-  {
-    numero: "02",
-    slug: "applicazioni-web",
-    titolo: "Applicazioni web",
-    testo:
-      "Strumenti che si usano dal browser: aree riservate, portali, gestione di dati e documenti. Disegnati sui processi interni di chi li usa ogni giorno.",
+  en: {
+    titolo: "Services",
+    intro: "Three areas, one way of working: understand the problem before writing the code.",
+    scopri: "Learn more",
+    servizi: [
+      { titolo: "Websites", testo: "Company websites and product catalogues that are clear, fast and easy to update. Built around the company's own content, not a ready-made theme." },
+      { titolo: "Web applications", testo: "Tools used in the browser: client areas, portals, data and document management. Designed around the internal processes of the people who use them every day." },
+      { titolo: "Custom software", testo: "Management software and integrations written for a specific need, when off-the-shelf programs aren't enough. Connected to the systems the company already uses." },
+    ],
   },
-  {
-    numero: "03",
-    slug: "software-su-misura",
-    titolo: "Software su misura",
-    testo:
-      "Gestionali e integrazioni scritti per un'esigenza precisa, quando i programmi pronti non bastano. Collegati ai sistemi che l'azienda usa già.",
-  },
-];
+}[lingua];
+const chiavi = ["siti-web", "applicazioni-web", "software-su-misura"] as const;
+const servizi = t.servizi.map((s, i) => ({ ...s, numero: `0${i + 1}`, href: percorsi[chiavi[i]][lingua] }));
 ---
 
 <section id="servizi" class="servizi" aria-labelledby="servizi-titolo">
   <div class="intestazione su-bianco" data-linea="sotto">
-    <h2 id="servizi-titolo" data-rivela>Servizi<span class="punto" aria-hidden="true">.</span></h2>
-    <p class="intro" data-rivela style="--i: 1">
-      Tre ambiti, un solo modo di lavorare: capire il problema prima di
-      scrivere il codice.
-    </p>
+    <h2 id="servizi-titolo" data-rivela>{t.titolo}<span class="punto" aria-hidden="true">.</span></h2>
+    <p class="intro" data-rivela style="--i: 1">{t.intro}</p>
   </div>
 
   <ol class="colonne">
@@ -40,8 +41,8 @@ const servizi = [
           <span class="numero" aria-hidden="true">{s.numero}</span>
           <h3>{s.titolo}</h3>
           <p class="testo">{s.testo}</p>
-          <a class="scopri" href={`/servizi/${s.slug}`}>
-            Scopri<span class="visually-hidden"> {s.titolo}</span>
+          <a class="scopri" href={s.href}>
+            {t.scopri}<span class="visually-hidden"> {s.titolo}</span>
             <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
               <path d="M2 8h12M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"></path>
             </svg>

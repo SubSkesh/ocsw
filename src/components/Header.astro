@@ -1,40 +1,55 @@
 ---
+import { link, linguaDa, paginaDa, percorsoPulito, percorsi, type Lingua } from "../i18n";
+
+const lingua = linguaDa(Astro.url);
+const altra: Lingua = lingua === "it" ? "en" : "it";
+const pagina = paginaDa(Astro.url);
+// Stessa pagina nell'altra lingua (la home se la pagina non ha equivalente, es. 404)
+const linkAltra = percorsi[pagina ?? "home"][altra];
+
+const t = {
+  it: { servizi: "Servizi", metodo: "Metodo", progetti: "Progetti", contatti: "Contatti", principale: "Principale", menu: "Menu", chiudi: "Chiudi", cambia: "English version" },
+  en: { servizi: "Services", metodo: "Method", progetti: "Projects", contatti: "Contact", principale: "Main", menu: "Menu", chiudi: "Close", cambia: "Versione italiana" },
+}[lingua];
+
 const voci = [
-  { href: "/#servizi", label: "Servizi" },
-  { href: "/#metodo", label: "Metodo" },
-  { href: "/#progetti", label: "Progetti" },
+  { href: link("home", lingua, "servizi"), label: t.servizi, sezione: "servizi" },
+  { href: link("home", lingua, "metodo"), label: t.metodo, sezione: "metodo" },
+  { href: link("home", lingua, "progetti"), label: t.progetti, sezione: "progetti" },
   // Laboratorio: da aggiungere quando c'è una demo funzionante (vedi CLAUDE.md)
 ];
 
-const path = Astro.url.pathname.replace(/\.html$/, "").replace(/\/(index)?$/, "") || "/";
-const attiva = (href: string) => {
-  const sezione = href.replace("/#", "/");
-  return path === sezione || path.startsWith(`${sezione}/`);
-};
-const contattiAttivo = path === "/contatti";
+const path = percorsoPulito(Astro.url.pathname);
+const attiva = (sezione: string) =>
+  (sezione === "servizi" && path.includes("/servizi/")) ||
+  (sezione === "servizi" && path.includes("/services/")) ||
+  (sezione === "progetti" && (path.includes("/progetti/") || path.includes("/projects/")));
+const contattiAttivo = pagina === "contatti";
 ---
 
 <header class="header">
-  <a class="logo" href="/" aria-label="OCSW — Home">OCSW<span class="punto">.</span></a>
+  <a class="logo" href={percorsi.home[lingua]} aria-label="OCSW — Home">OCSW<span class="punto">.</span></a>
 
   <button
     class="toggle"
     type="button"
     aria-expanded="false"
     aria-controls="nav-principale"
+    data-menu={t.menu}
+    data-chiudi={t.chiudi}
   >
-    <span class="toggle-testo">Menu</span>
+    <span class="toggle-testo">{t.menu}</span>
   </button>
 
-  <nav id="nav-principale" class="nav" aria-label="Principale">
+  <nav id="nav-principale" class="nav" aria-label={t.principale}>
     <ul>
       {
         voci.map((v) => (
           <li>
             <a
               href={v.href}
-              class:list={["voce", { attiva: attiva(v.href) }]}
-              aria-current={attiva(v.href) ? "page" : undefined}
+              class:list={["voce", { attiva: attiva(v.sezione) }]}
+              aria-current={attiva(v.sezione) ? "page" : undefined}
             >
               {v.label}
             </a>
@@ -42,12 +57,17 @@ const contattiAttivo = path === "/contatti";
         ))
       }
       <li>
+        <a class="voce lingua" href={linkAltra} hreflang={altra} lang={altra} aria-label={t.cambia}>
+          <span class:list={{ corrente: lingua === "it" }}>IT</span><span class="barra" aria-hidden="true">/</span><span class:list={{ corrente: lingua === "en" }}>EN</span>
+        </a>
+      </li>
+      <li>
         <a
-          href="/contatti"
+          href={percorsi.contatti[lingua]}
           class:list={["contatti", { attiva: contattiAttivo }]}
           aria-current={contattiAttivo ? "page" : undefined}
         >
-          Contatti
+          {t.contatti}
         </a>
       </li>
     </ul>
@@ -61,7 +81,7 @@ const contattiAttivo = path === "/contatti";
   if (toggle && nav) {
     const imposta = (aperto: boolean) => {
       toggle.setAttribute("aria-expanded", String(aperto));
-      toggle.querySelector(".toggle-testo")!.textContent = aperto ? "Chiudi" : "Menu";
+      toggle.querySelector(".toggle-testo")!.textContent = (aperto ? toggle.dataset.chiudi : toggle.dataset.menu) ?? "";
       nav.classList.toggle("aperta", aperto);
     };
 
@@ -159,6 +179,22 @@ const contattiAttivo = path === "/contatti";
     bottom: 6px;
     height: 2px;
     background: var(--oro);
+  }
+
+  .lingua {
+    gap: 0.35rem;
+  }
+
+  .lingua .barra {
+    color: var(--linea-scura);
+  }
+
+  .lingua .corrente {
+    color: var(--bianco);
+  }
+
+  .lingua:hover span:not(.corrente):not(.barra) {
+    color: var(--oro);
   }
 
   .contatti {

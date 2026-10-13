@@ -1,5 +1,6 @@
 ---
 numero: "02"
+chiave: "applicazioni-web"
 ordine: 2
 titolo: "Applicazioni web"
 sommario: "Strumenti che si usano dal browser, disegnati sui processi interni di chi li usa ogni giorno."

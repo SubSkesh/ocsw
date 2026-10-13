@@ -1,39 +1,36 @@
 ---
-const fasi = [
-  {
-    sigla: "P1",
-    titolo: "Analisi",
-    testo:
-      "Capisco come lavora l'azienda e cosa deve risolvere il progetto. Ne esce una proposta scritta con obiettivi e priorità.",
+import { linguaDa } from "../i18n";
+
+const lingua = linguaDa(Astro.url);
+const t = {
+  it: {
+    titolo: "Metodo",
+    intro: "Quattro fasi, un solo referente: chi analizza il problema è la stessa persona che scrive il codice e lo segue nel tempo.",
+    fasi: [
+      { titolo: "Analisi", testo: "Capisco come lavora l'azienda e cosa deve risolvere il progetto. Ne esce una proposta scritta con obiettivi e priorità." },
+      { titolo: "Progetto", testo: "Struttura, contenuti e interfaccia si definiscono prima del codice, quando cambiare idea costa poco." },
+      { titolo: "Sviluppo", testo: "Scrivo il software e mostro i progressi durante il lavoro, non solo alla consegna." },
+      { titolo: "Supporto", testo: "Dopo la consegna resto il riferimento per manutenzione, aggiornamenti e nuove esigenze." },
+    ],
   },
-  {
-    sigla: "P2",
-    titolo: "Progetto",
-    testo:
-      "Struttura, contenuti e interfaccia si definiscono prima del codice, quando cambiare idea costa poco.",
+  en: {
+    titolo: "Method",
+    intro: "Four phases, one point of contact: the person who analyses the problem is the same one who writes the code and looks after it over time.",
+    fasi: [
+      { titolo: "Analysis", testo: "I learn how the company works and what the project needs to solve. The result is a written proposal with goals and priorities." },
+      { titolo: "Design", testo: "Structure, content and interface are defined before the code, when changing your mind costs little." },
+      { titolo: "Development", testo: "I write the software and show progress along the way, not only at delivery." },
+      { titolo: "Support", testo: "After delivery I remain your contact for maintenance, updates and new needs." },
+    ],
   },
-  {
-    sigla: "P3",
-    titolo: "Sviluppo",
-    testo:
-      "Scrivo il software e mostro i progressi durante il lavoro, non solo alla consegna.",
-  },
-  {
-    sigla: "P4",
-    titolo: "Supporto",
-    testo:
-      "Dopo la consegna resto il riferimento per manutenzione, aggiornamenti e nuove esigenze.",
-  },
-];
+}[lingua];
+const fasi = t.fasi.map((f, i) => ({ ...f, sigla: `P${i + 1}` }));
 ---
 
 <section id="metodo" class="metodo" aria-labelledby="metodo-titolo">
   <div class="lato">
-    <h2 id="metodo-titolo" data-rivela>Metodo<span class="punto" aria-hidden="true">.</span></h2>
-    <p class="intro" data-rivela style="--i: 1">
-      Quattro fasi, un solo referente: chi analizza il problema è la stessa
-      persona che scrive il codice e lo segue nel tempo.
-    </p>
+    <h2 id="metodo-titolo" data-rivela>{t.titolo}<span class="punto" aria-hidden="true">.</span></h2>
+    <p class="intro" data-rivela style="--i: 1">{t.intro}</p>
   </div>
 
   <ol class="fasi su-bianco">

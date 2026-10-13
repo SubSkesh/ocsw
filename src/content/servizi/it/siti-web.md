@@ -1,5 +1,6 @@
 ---
 numero: "01"
+chiave: "siti-web"
 ordine: 1
 titolo: "Siti web"
 sommario: "Siti aziendali e cataloghi prodotti chiari, veloci e facili da aggiornare."

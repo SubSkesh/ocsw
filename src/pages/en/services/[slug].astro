@@ -1,0 +1,8 @@
+---
+import Servizio from "../../../views/Servizio.astro";
+import { percorsiServizi } from "../../../views/servizi";
+
+export const getStaticPaths = () => percorsiServizi("en");
+---
+
+<Servizio {...Astro.props} />

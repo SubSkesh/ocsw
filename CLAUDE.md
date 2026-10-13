@@ -96,6 +96,8 @@ Regole per l'oro:
 /progetti/carandina  Caso studio Carandina
 /laboratorio/[slug]  Demo e progetti personali (vedi regole sotto)
 /contatti            Contatti con form
+/privacy             Informativa privacy
+/en/...              Versione inglese: /en, /en/services/[slug], /en/projects/carandina, /en/contact, /en/privacy
 ```
 
 ### Home (in ordine)
@@ -128,7 +130,8 @@ Metà nera con titolo e dati; metà bianca con form (tipo di progetto a pulsanti
 - L'unico progetto cliente pubblicabile è **Carandina** (carandina.it).
 - Le demo del Laboratorio devono essere sempre etichettate come demo/progetti personali, con dati di esempio. Una card del Laboratorio si pubblica solo quando la demo funziona davvero.
 - Non pubblicare dati interni dei clienti o informazioni che possano metterli in difficoltà.
-- Lingua: italiano. Tono professionale, diretto, senza superlativi.
+- Lingue: **italiano** (principale, URL senza prefisso) e **inglese** (`/en/...`). Ogni testo esiste in entrambe; i componenti leggono la lingua dall'URL (`src/i18n.ts`) e hanno un oggetto `t = { it, en }`. Le pagine servizio stanno in `src/content/servizi/it|en/`. Una pagina nuova va aggiunta in `percorsi` (i18n.ts) con i due URL.
+- Tono professionale, diretto, senza superlativi, in entrambe le lingue.
 
 Dati di contatto (pubblici):
 - Oscar Costanzelli — Sviluppatore software, laureato in Ingegneria Informatica

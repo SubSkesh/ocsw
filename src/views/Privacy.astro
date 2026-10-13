@@ -1,0 +1,134 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { linguaDa, percorsi } from "../i18n";
+
+/*
+ * BOZZA da far verificare a un professionista prima della pubblicazione.
+ * Descrive il funzionamento reale del sito: form inoltrato da Web3Forms
+ * alla casella Gmail, nessun cookie di profilazione, nessuna statistica.
+ * La versione inglese è una traduzione: fa fede quella italiana.
+ */
+const email = '<a href="mailto:oscarcostanzelli@gmail.com">oscarcostanzelli@gmail.com</a>';
+const pec = '<a href="mailto:oscar.costanzelli@pec.it">oscar.costanzelli@pec.it</a>';
+const garante = '<a href="https://www.garanteprivacy.it" rel="noopener">garanteprivacy.it</a>';
+
+const lingua = linguaDa(Astro.url);
+const t = {
+  it: {
+    title: "Informativa privacy",
+    description: "Informativa sul trattamento dei dati personali raccolti dal sito ocsw.it di Oscar Costanzelli.",
+    h1: "Informativa privacy",
+    aggiornamento: "Ultimo aggiornamento: 11 ottobre 2026",
+    lead: "Questa pagina spiega quali dati personali raccoglie il sito ocsw.it, perché, e quali diritti hai, ai sensi del Regolamento UE 2016/679 (GDPR).",
+    nota: "",
+    sezioni: [
+      { titolo: "Titolare del trattamento", html: `Oscar Costanzelli — OCSW, P.IVA 02210020380, Via per Burana 137, 44012 Bondeno (FE).<br />Email: ${email} · PEC: ${pec}` },
+      { titolo: "Quali dati raccolgo", html: "Solo quelli che inserisci nel modulo della pagina Contatti: nome e cognome, email, messaggio e tipo di progetto; facoltativamente azienda e telefono. Se mi scrivi o mi chiami direttamente, tratto i dati contenuti nella comunicazione." },
+      { titolo: "Perché li uso e su quale base", html: "Per rispondere alla tua richiesta ed eventualmente preparare una proposta. La base giuridica è l'esecuzione di misure precontrattuali adottate su tua richiesta (art. 6.1.b GDPR). Non uso i dati per newsletter o pubblicità e non li cedo a terzi." },
+      { titolo: "Chi altro li tratta", html: "Il messaggio del modulo viene inoltrato alla mia casella email tramite il servizio Web3Forms e conservato nella casella Gmail (Google). Il sito è ospitato da Cloudflare (servizio Cloudflare Pages). Questi fornitori trattano i dati solo per erogare il servizio; alcuni possono trovarsi fuori dall'Unione Europea, nel rispetto delle garanzie previste dal GDPR." },
+      { titolo: "Per quanto tempo", html: "Per il tempo necessario a gestire la richiesta e, se non nasce una collaborazione, non oltre 12 mesi. Se nasce un incarico, i dati seguono i tempi di conservazione previsti dalla normativa fiscale." },
+      { titolo: "Cookie", html: "Il sito non usa cookie di profilazione né strumenti di statistica. Font e contenuti sono serviti direttamente dal sito, senza collegamenti a servizi di tracciamento." },
+      { titolo: "I tuoi diritti", html: `Puoi chiedere in qualsiasi momento di accedere ai tuoi dati, correggerli, cancellarli, limitarne il trattamento, opporti o riceverli in un formato portabile (artt. 15–22 GDPR), scrivendo a ${email}. Hai anche diritto di presentare reclamo al Garante per la protezione dei dati personali (${garante}).` },
+    ],
+  },
+  en: {
+    title: "Privacy notice",
+    description: "Notice on the processing of personal data collected by the website ocsw.it of Oscar Costanzelli.",
+    h1: "Privacy notice",
+    aggiornamento: "Last updated: 11 October 2026",
+    lead: "This page explains what personal data the website ocsw.it collects, why, and what rights you have under EU Regulation 2016/679 (GDPR).",
+    nota: `This is a translation for convenience; the <a href="${percorsi.privacy.it}" hreflang="it">Italian version</a> is the authoritative one.`,
+    sezioni: [
+      { titolo: "Data controller", html: `Oscar Costanzelli — OCSW, VAT no. IT02210020380, Via per Burana 137, 44012 Bondeno (FE), Italy.<br />Email: ${email} · Certified email (PEC): ${pec}` },
+      { titolo: "What data I collect", html: "Only what you enter in the form on the Contact page: full name, email, message and project type; optionally company and phone number. If you email or call me directly, I process the data contained in that communication." },
+      { titolo: "Why I use it and on what legal basis", html: "To reply to your request and, where relevant, prepare a proposal. The legal basis is taking steps at your request prior to entering into a contract (Art. 6(1)(b) GDPR). I don't use the data for newsletters or advertising and I don't share it with third parties." },
+      { titolo: "Who else processes it", html: "Messages sent through the form are forwarded to my mailbox by the Web3Forms service and stored in my Gmail mailbox (Google). The website is hosted by Cloudflare (Cloudflare Pages). These providers process the data only to deliver their service; some may be located outside the European Union, subject to the safeguards required by the GDPR." },
+      { titolo: "How long I keep it", html: "For as long as needed to handle your request and, if no collaboration follows, no longer than 12 months. If an engagement follows, the data is kept for the periods required by Italian tax law." },
+      { titolo: "Cookies", html: "The website uses no profiling cookies and no analytics tools. Fonts and content are served directly by the site, with no connections to tracking services." },
+      { titolo: "Your rights", html: `You can at any time ask to access, rectify or erase your data, restrict or object to its processing, or receive it in a portable format (Arts. 15–22 GDPR), by writing to ${email}. You also have the right to lodge a complaint with the Italian Data Protection Authority, the Garante per la protezione dei dati personali (${garante}).` },
+    ],
+  },
+}[lingua];
+---
+
+<BaseLayout title={t.title} description={t.description}>
+  <section class="testata">
+    <h1>{t.h1}<span class="punto">.</span></h1>
+    <p class="etichetta agg">{t.aggiornamento}</p>
+  </section>
+
+  <article class="testo su-bianco">
+    <p class="lead">{t.lead}</p>
+    {t.nota && <p class="nota-traduzione" set:html={t.nota} />}
+
+    {
+      t.sezioni.map((s) => (
+        <>
+          <h2>{s.titolo}</h2>
+          <p set:html={s.html} />
+        </>
+      ))
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .testata {
+    padding: var(--pad-y) var(--pad-x);
+    background: var(--nero);
+    color: var(--bianco);
+    border-bottom: var(--bordo);
+  }
+
+  h1 {
+    font-size: var(--testo-h1);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  .agg {
+    margin-top: 1.5rem;
+    color: var(--grigio-testo-scuro);
+  }
+
+  .testo {
+    max-width: calc(62ch + 2 * var(--pad-x));
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .lead {
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  h2 {
+    margin-top: 2.75rem;
+    padding-top: 1.25rem;
+    border-top: var(--bordo);
+    font-size: var(--testo-h3);
+    font-weight: var(--peso-bold);
+  }
+
+  .testo p:not(.lead) {
+    margin-top: 0.75rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .nota-traduzione {
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
+    border: var(--bordo);
+    font-size: var(--testo-small);
+  }
+
+  .testo a {
+    color: var(--nero);
+    font-weight: var(--peso-medium);
+    text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+</style>

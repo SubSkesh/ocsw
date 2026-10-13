@@ -1,37 +1,52 @@
 ---
 import Viewer3D from "./Viewer3D.astro";
+import { linguaDa, percorsi } from "../i18n";
 
-const interventi = [
-  "Restyling del sito",
-  "Visualizzatore 3D dei prodotti",
-  "Catalogo e schede tecniche PDF",
-];
+const lingua = linguaDa(Astro.url);
+const t = {
+  it: {
+    titolo: "Progetti",
+    intro: "Ogni progetto raccontato per quello che è: il problema, le scelte, il risultato.",
+    alt: "Modello 3D interattivo di un utensile di perforazione Carandina, come mostrato sul sito del cliente",
+    tipo: "Caso studio · Cliente",
+    interventi: ["Restyling del sito", "Visualizzatore 3D dei prodotti", "Catalogo e schede tecniche PDF"],
+    leggi: "Leggi il caso studio",
+    invito: "Il prossimo potrebbe essere il tuo.",
+    invitoTesto: "Raccontami cosa deve fare il tuo sito o il tuo software. Dal primo contatto capiamo se e come posso aiutarti; l'analisi vera e propria è la prima fase del lavoro.",
+    pulsante: "Parliamo del progetto",
+  },
+  en: {
+    titolo: "Projects",
+    intro: "Each project told as it is: the problem, the choices, the result.",
+    alt: "Interactive 3D model of a Carandina drilling tool, as shown on the client's website",
+    tipo: "Case study · Client",
+    interventi: ["Website redesign", "3D product viewer", "Catalogue and PDF data sheets"],
+    leggi: "Read the case study",
+    invito: "The next one could be yours.",
+    invitoTesto: "Tell me what your website or software needs to do. The first conversation is to understand whether and how I can help; the actual analysis is the first phase of the work.",
+    pulsante: "Let's talk about your project",
+  },
+}[lingua];
 ---
 
 <section id="progetti" class="progetti" aria-labelledby="progetti-titolo">
   <div class="intestazione" data-linea="sotto" style="--colore-linea: var(--linea-scura)">
-    <h2 id="progetti-titolo" data-rivela>Progetti<span class="punto" aria-hidden="true">.</span></h2>
-    <p class="intro" data-rivela style="--i: 1">
-      Ogni progetto raccontato per quello che è: il problema, le scelte, il
-      risultato.
-    </p>
+    <h2 id="progetti-titolo" data-rivela>{t.titolo}<span class="punto" aria-hidden="true">.</span></h2>
+    <p class="intro" data-rivela style="--i: 1">{t.intro}</p>
   </div>
 
   <div class="griglia">
     <article class="caso" data-rivela>
       <div class="anteprima">
-        <Viewer3D
-          src="/modelli/carandina-bkt100.glb"
-          alt="Modello 3D interattivo di un utensile di perforazione Carandina, come mostrato sul sito del cliente"
-        />
+        <Viewer3D src="/modelli/carandina-bkt100.glb" alt={t.alt} />
       </div>
 
       <div class="corpo">
-        <p class="etichetta tipo">Caso studio · Cliente</p>
+        <p class="etichetta tipo">{t.tipo}</p>
         <h3>Carandina</h3>
         <ol class="interventi">
           {
-            interventi.map((v, i) => (
+            t.interventi.map((v, i) => (
               <li>
                 <span class="n" aria-hidden="true">0{i + 1}</span>
                 {v}
@@ -39,8 +54,8 @@ const interventi = [
             ))
           }
         </ol>
-        <a class="link" href="/progetti/carandina">
-          Leggi il caso studio
+        <a class="link" href={percorsi.carandina[lingua]}>
+          {t.leggi}
           <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
             <path d="M2 8h12M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"></path>
           </svg>
@@ -50,13 +65,9 @@ const interventi = [
 
     <aside class="invito su-bianco" aria-labelledby="invito-titolo" data-rivela style="--i: 2">
       <span class="quadratino" aria-hidden="true"></span>
-      <h3 id="invito-titolo">Il prossimo potrebbe essere il tuo.</h3>
-      <p>
-        Raccontami cosa deve fare il tuo sito o il tuo software. Dal primo
-        contatto capiamo se e come posso aiutarti; l'analisi vera e propria è
-        la prima fase del lavoro.
-      </p>
-      <a class="pulsante pulsante-primario" href="/contatti">Parliamo del progetto</a>
+      <h3 id="invito-titolo">{t.invito}</h3>
+      <p>{t.invitoTesto}</p>
+      <a class="pulsante pulsante-primario" href={percorsi.contatti[lingua]}>{t.pulsante}</a>
     </aside>
   </div>
 </section>
