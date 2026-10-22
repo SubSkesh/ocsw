@@ -7,13 +7,13 @@ const t = {
   it: {
     metodo: "Metodo di lavoro", fasi: ["Analisi", "Progetto", "Sviluppo", "Supporto"],
     slogan: "Un unico referente, dall'analisi al supporto.",
-    pie: "Piè di pagina", sito: "Sito", servizi: "Servizi", metodoV: "Metodo", progetti: "Progetti", contatti: "Contatti",
+    pie: "Piè di pagina", sito: "Sito", servizi: "Servizi", metodoV: "Metodo", progetti: "Progetti", anteprima: "Anteprima clienti", contatti: "Contatti",
     ruolo: "Sviluppatore software,", laurea: "laureato in Ingegneria Informatica", piva: "P.IVA",
   },
   en: {
     metodo: "How I work", fasi: ["Analysis", "Design", "Development", "Support"],
     slogan: "One point of contact, from analysis to support.",
-    pie: "Footer", sito: "Site", servizi: "Services", metodoV: "Method", progetti: "Projects", contatti: "Contact",
+    pie: "Footer", sito: "Site", servizi: "Services", metodoV: "Method", progetti: "Projects", anteprima: "Client preview", contatti: "Contact",
     ruolo: "Software developer,", laurea: "degree in Computer Engineering", piva: "VAT no.",
   },
 }[lingua];
@@ -36,6 +36,7 @@ const t = {
         <li><a href={link("home", lingua, "servizi")}>{t.servizi}</a></li>
         <li><a href={link("home", lingua, "metodo")}>{t.metodoV}</a></li>
         <li><a href={link("home", lingua, "progetti")}>{t.progetti}</a></li>
+        <li><a href={percorsi.anteprima[lingua]}>{t.anteprima}</a></li>
         <li><a href={percorsi.contatti[lingua]}>{t.contatti}</a></li>
       </ul>
     </nav>

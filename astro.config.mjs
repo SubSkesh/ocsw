@@ -11,6 +11,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'it', locales: { it: 'it-IT', en: 'en-GB' } },
+      filter: (url) => !/anteprima-clienti|client-preview/.test(url),
     }),
   ],
 });

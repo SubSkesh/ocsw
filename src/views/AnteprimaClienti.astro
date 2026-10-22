@@ -1,0 +1,224 @@
+---
+/*
+ * ANTEPRIMA CLIENTI
+ * Il cliente inserisce l'ID e la password ricevuti: il modulo li invia direttamente
+ * alla bozza del cliente (POST /login), che li verifica e apre le pagine.
+ * Questo sito non conosce né salva nessuna password.
+ *
+ * Per aggiungere un cliente: una riga in PREVIEWS (script in fondo), con l'ID
+ * (lo stesso valore di BASIC_AUTH_USER su Cloudflare) e l'indirizzo della sua bozza.
+ * Attenzione: l'elenco è leggibile nel codice della pagina.
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { linguaDa, percorsi } from "../i18n";
+
+const lingua = linguaDa(Astro.url);
+const t = {
+  it: {
+    title: "Anteprima clienti",
+    description: "Accesso riservato ai clienti OCSW per vedere l'anteprima del proprio progetto.",
+    h2: "Anteprima clienti",
+    intro: "Inserisci l'ID e la password che ti ho inviato per vedere l'anteprima del tuo progetto.",
+    nota: "La password viene verificata dall'anteprima del tuo progetto: questo sito non la conserva.",
+    invia: "Vedi l'anteprima",
+    vuoti: "Inserisci ID e password.",
+    sconosciuto: "ID non riconosciuto. Controlla quello che ti ho inviato.",
+    aiuto: "Non hai le credenziali o non funzionano?",
+    scrivimi: "Scrivimi",
+  },
+  en: {
+    title: "Client preview",
+    description: "Restricted access for OCSW clients to view the preview of their project.",
+    h2: "Client preview",
+    intro: "Enter the ID and password I sent you to view the preview of your project.",
+    nota: "Your password is checked by your project preview: this website does not store it.",
+    invia: "View the preview",
+    vuoti: "Please enter your ID and password.",
+    sconosciuto: "ID not recognised. Please check the one I sent you.",
+    aiuto: "Don't have your credentials, or they don't work?",
+    scrivimi: "Get in touch",
+  },
+}[lingua];
+---
+
+<BaseLayout title={t.title} description={t.description} noindex>
+  <section class="csw-preview" id="anteprima-clienti" aria-labelledby="csw-preview-title">
+    <div class="lato">
+      <span class="quadratino" aria-hidden="true"></span>
+      <h1 id="csw-preview-title">{t.h2}<span class="punto" aria-hidden="true">.</span></h1>
+      <p class="intro">{t.intro}</p>
+      <p class="nota">{t.nota}</p>
+    </div>
+
+    <div class="modulo su-bianco">
+      <form
+        id="csw-preview-form"
+        method="post"
+        novalidate
+        data-msg-vuoti={t.vuoti}
+        data-msg-sconosciuto={t.sconosciuto}
+      >
+        <input type="hidden" name="next" value="/" />
+        <label for="csw-preview-user">ID</label>
+        <input id="csw-preview-user" name="user" autocomplete="username" autocapitalize="none" spellcheck="false" required />
+        <label for="csw-preview-pass">Password</label>
+        <input id="csw-preview-pass" name="pass" type="password" autocomplete="current-password" required />
+        <button class="pulsante pulsante-primario" type="submit">{t.invia}</button>
+        <p class="csw-preview-msg" id="csw-preview-msg" role="alert"></p>
+      </form>
+      <p class="aiuto">{t.aiuto} <a href={percorsi.contatti[lingua]}>{t.scrivimi}</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+(function () {
+  // ID cliente -> indirizzo della sua anteprima su Cloudflare Pages
+  var PREVIEWS = {
+    'ripamonticsw': 'https://ripamonti.pages.dev'
+  };
+
+  var form = document.getElementById('csw-preview-form');
+  var msg = document.getElementById('csw-preview-msg');
+  form.addEventListener('submit', function (e) {
+    var id = form.user.value.trim().toLowerCase();
+    var base = PREVIEWS[id];
+    if (!id || !form.pass.value) { e.preventDefault(); msg.textContent = form.dataset.msgVuoti; return; }
+    if (!base) { e.preventDefault(); msg.textContent = form.dataset.msgSconosciuto; return; }
+    form.user.value = id;
+    form.action = base + '/login'; // invio normale: la bozza imposta l'accesso e mostra le pagine
+    msg.textContent = '';
+  });
+})();
+</script>
+
+<style>
+  .csw-preview {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: var(--bordo);
+  }
+
+  .lato,
+  .modulo {
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .lato {
+    flex: 1 1 40%;
+    background: var(--nero);
+    color: var(--bianco);
+  }
+
+  .modulo {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--bianco);
+  }
+
+  .quadratino {
+    display: block;
+    width: 12px;
+    height: 12px;
+    margin-bottom: 2rem;
+    background: var(--oro);
+  }
+
+  h1 {
+    font-size: var(--testo-h1);
+    font-weight: var(--peso-extrabold);
+  }
+
+  .punto {
+    color: var(--oro);
+  }
+
+  .intro {
+    max-width: 34ch;
+    margin-top: 1.5rem;
+    font-size: var(--testo-lead);
+    font-weight: var(--peso-light);
+    color: var(--grigio-testo-scuro);
+  }
+
+  .nota {
+    max-width: 40ch;
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: var(--bordo-scuro);
+    font-size: var(--testo-small);
+    color: var(--grigio-testo-scuro);
+  }
+
+  form {
+    display: grid;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 440px;
+  }
+
+  label {
+    margin-top: 0.75rem;
+    font-size: var(--testo-small);
+    font-weight: var(--peso-semibold);
+  }
+
+  input {
+    width: 100%;
+    min-height: var(--altezza-pulsante);
+    padding: 14px 16px;
+    background: var(--bianco);
+    border: var(--bordo);
+    font-size: 1rem;
+    caret-color: var(--nero);
+  }
+
+  input:focus-visible {
+    outline: 2px solid var(--nero);
+    outline-offset: 0;
+  }
+
+  .pulsante {
+    margin-top: 1.5rem;
+  }
+
+  .csw-preview-msg {
+    min-height: 1.5em;
+    font-size: var(--testo-small);
+    font-weight: var(--peso-semibold);
+    color: var(--nero);
+  }
+
+  .csw-preview-msg:not(:empty)::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 0.5rem;
+    background: var(--oro);
+  }
+
+  .aiuto {
+    max-width: 440px;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: var(--bordo);
+    font-size: var(--testo-small);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .aiuto a {
+    color: var(--nero);
+    font-weight: var(--peso-semibold);
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .lato,
+    .modulo {
+      flex-basis: 100%;
+    }
+  }
+</style>

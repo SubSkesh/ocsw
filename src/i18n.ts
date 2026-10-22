@@ -10,6 +10,7 @@ export const percorsi = {
   home: { it: "/", en: "/en" },
   contatti: { it: "/contatti", en: "/en/contact" },
   privacy: { it: "/privacy", en: "/en/privacy" },
+  anteprima: { it: "/anteprima-clienti", en: "/en/client-preview" },
   carandina: { it: "/progetti/carandina", en: "/en/projects/carandina" },
   "siti-web": { it: "/servizi/siti-web", en: "/en/services/websites" },
   "applicazioni-web": { it: "/servizi/applicazioni-web", en: "/en/services/web-applications" },

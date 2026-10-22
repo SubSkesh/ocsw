@@ -8,8 +8,8 @@ const pagina = paginaDa(Astro.url);
 const linkAltra = percorsi[pagina ?? "home"][altra];
 
 const t = {
-  it: { servizi: "Servizi", metodo: "Metodo", progetti: "Progetti", contatti: "Contatti", principale: "Principale", menu: "Menu", chiudi: "Chiudi", cambia: "English version" },
-  en: { servizi: "Services", metodo: "Method", progetti: "Projects", contatti: "Contact", principale: "Main", menu: "Menu", chiudi: "Close", cambia: "Versione italiana" },
+  it: { servizi: "Servizi", metodo: "Metodo", progetti: "Progetti", anteprima: "Anteprima clienti", contatti: "Contatti", principale: "Principale", menu: "Menu", chiudi: "Chiudi", cambia: "English version" },
+  en: { servizi: "Services", metodo: "Method", progetti: "Projects", anteprima: "Client preview", contatti: "Contact", principale: "Main", menu: "Menu", chiudi: "Close", cambia: "Versione italiana" },
 }[lingua];
 
 const voci = [
@@ -17,13 +17,15 @@ const voci = [
   { href: link("home", lingua, "metodo"), label: t.metodo, sezione: "metodo" },
   { href: link("home", lingua, "progetti"), label: t.progetti, sezione: "progetti" },
   // Laboratorio: da aggiungere quando c'è una demo funzionante (vedi CLAUDE.md)
+  { href: percorsi.anteprima[lingua], label: t.anteprima, sezione: "anteprima" },
 ];
 
 const path = percorsoPulito(Astro.url.pathname);
 const attiva = (sezione: string) =>
   (sezione === "servizi" && path.includes("/servizi/")) ||
   (sezione === "servizi" && path.includes("/services/")) ||
-  (sezione === "progetti" && (path.includes("/progetti/") || path.includes("/projects/")));
+  (sezione === "progetti" && (path.includes("/progetti/") || path.includes("/projects/"))) ||
+  (sezione === "anteprima" && pagina === "anteprima");
 const contattiAttivo = pagina === "contatti";
 ---
 
@@ -220,7 +222,7 @@ const contattiAttivo = pagina === "contatti";
     display: none;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 960px) {
     .header {
       min-height: 72px;
     }
