@@ -3,35 +3,40 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import { linguaDa } from "../i18n";
 
+/*
+ * Confronto prima/dopo. Le due immagini devono avere lo stesso formato
+ * (qui 1760×800, 2,2:1) e la stessa inquadratura: così la linea divide
+ * davvero la stessa pagina in due epoche.
+ * Desktop: cursore trascinabile sull'immagine + range accessibile.
+ * Telefono: le due versioni una sopra l'altra, stessa dimensione.
+ */
 interface Props {
   prima: ImageMetadata;
   dopo: ImageMetadata;
-  primaMobile: ImageMetadata;
-  dopoMobile: ImageMetadata;
   altPrima: string;
   altDopo: string;
+  /** Tono della sezione che lo contiene: cambia solo i colori del controllo */
+  tono?: "chiaro" | "scuro";
 }
 
-const { prima, dopo, primaMobile, dopoMobile, altPrima, altDopo } = Astro.props;
+const { prima, dopo, altPrima, altDopo, tono = "chiaro" } = Astro.props;
 const t = {
   it: { prima: "Prima", dopo: "Dopo", label: "Trascina sull'immagine o sposta il cursore", nuova: "versione nuova" },
   en: { prima: "Before", dopo: "After", label: "Drag on the image or move the slider", nuova: "new version" },
 }[linguaDa(Astro.url)];
 const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
+const misure = { widths: [880, 1320, 1760], sizes: "(max-width: 768px) 100vw, min(100vw, 1360px)" };
 ---
 
-<figure class="confronto" style="--pos: 50%" data-nuova={t.nuova}>
+<figure class:list={["confronto", tono]} style="--pos: 50%" data-nuova={t.nuova}>
   <div class="cornice">
-    <!-- Desktop: homepage a 1440px; telefono: homepage a 390px -->
-    <div class="livello prima">
-      <Image class="img desk" src={prima} alt={altPrima} widths={[960, 1440]} sizes="100vw" />
-      <Image class="img mob" src={primaMobile} alt={altPrima} widths={[390, 780]} sizes="100vw" />
+    <div class="livello">
+      <Image class="img" src={prima} alt={altPrima} {...misure} />
     </div>
     <div class="livello dopo">
-      <Image class="img desk" src={dopo} alt={altDopo} widths={[960, 1440]} sizes="100vw" />
-      <Image class="img mob" src={dopoMobile} alt={altDopo} widths={[390, 780]} sizes="100vw" />
+      <Image class="img" src={dopo} alt={altDopo} {...misure} />
     </div>
-    <span class="linea" aria-hidden="true"></span>
+    <span class="linea" aria-hidden="true"><span class="maniglia"></span></span>
     <span class="etichetta tag tag-prima" aria-hidden="true">{t.prima}</span>
     <span class="etichetta tag tag-dopo" aria-hidden="true">{t.dopo}</span>
   </div>
@@ -39,6 +44,18 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
   <div class="controllo">
     <label class="etichetta" for={id}>{t.label}</label>
     <input id={id} type="range" min="0" max="100" value="50" aria-valuetext={`50% ${t.nuova}`} />
+  </div>
+
+  {/* Telefono: coppia impilata */}
+  <div class="coppia" aria-hidden="true">
+    <div class="pannello">
+      <span class="etichetta tag">{t.prima}</span>
+      <Image class="img" src={prima} alt="" widths={[440, 880]} sizes="100vw" />
+    </div>
+    <div class="pannello">
+      <span class="etichetta tag tag-oro">{t.dopo}</span>
+      <Image class="img" src={dopo} alt="" widths={[440, 880]} sizes="100vw" />
+    </div>
   </div>
 </figure>
 
@@ -62,11 +79,15 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
     };
     cornice.addEventListener("pointerdown", (e) => {
       cornice.setPointerCapture(e.pointerId);
+      box.classList.add("trascina");
       daPuntatore(e);
     });
     cornice.addEventListener("pointermove", (e) => {
       if (cornice.hasPointerCapture(e.pointerId)) daPuntatore(e);
     });
+    const fine = () => box.classList.remove("trascina");
+    cornice.addEventListener("pointerup", fine);
+    cornice.addEventListener("pointercancel", fine);
 
     imposta(Number(range.value));
   });
@@ -74,17 +95,24 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
 
 <style>
   .confronto {
+    --bordo-cornice: var(--bordo);
+    --testo-controllo: var(--grigio-testo-chiaro);
+    --traccia: var(--grigio-numeri-chiaro);
     margin: 0;
+  }
+
+  .confronto.scuro {
+    --bordo-cornice: var(--bordo-scuro);
+    --testo-controllo: var(--grigio-testo-scuro);
+    --traccia: var(--linea-scura);
   }
 
   .cornice {
     position: relative;
     overflow: hidden;
-    max-width: calc(70vh * 1440 / 900);
-    margin-inline: auto;
-    aspect-ratio: 1440 / 900;
-    border: var(--bordo-scuro);
-    background: var(--nero);
+    aspect-ratio: 1760 / 800;
+    border: var(--bordo-cornice);
+    background: var(--placeholder);
     cursor: ew-resize;
     touch-action: pan-y;
     user-select: none;
@@ -101,12 +129,7 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center;
     pointer-events: none;
-  }
-
-  .cornice :global(.mob) {
-    display: none;
   }
 
   /* La versione nuova copre la vecchia a destra del cursore */
@@ -123,6 +146,44 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
     margin-left: -1px;
     background: var(--oro);
     pointer-events: none;
+  }
+
+  /* Maniglia quadrata al centro della linea: dice "trascinami" */
+  .maniglia {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 36px;
+    height: 36px;
+    background: var(--nero);
+    border: 2px solid var(--oro);
+    transform: translate(-50%, -50%);
+    transition: transform var(--durata) var(--easing);
+  }
+
+  .maniglia::before,
+  .maniglia::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-block: 5px solid transparent;
+    transform: translateY(-50%);
+  }
+
+  .maniglia::before {
+    left: 7px;
+    border-right: 6px solid var(--oro);
+  }
+
+  .maniglia::after {
+    right: 7px;
+    border-left: 6px solid var(--oro);
+  }
+
+  .trascina .maniglia {
+    transform: translate(-50%, -50%) scale(1.12);
   }
 
   .tag {
@@ -148,12 +209,11 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem 1.5rem;
-    max-width: calc(70vh * 1440 / 900);
-    margin: 1rem auto 0;
+    margin-top: 1rem;
   }
 
   .controllo label {
-    color: var(--grigio-testo-scuro);
+    color: var(--testo-controllo);
   }
 
   input[type="range"] {
@@ -167,12 +227,12 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
 
   input[type="range"]::-webkit-slider-runnable-track {
     height: 2px;
-    background: var(--linea-scura);
+    background: var(--traccia);
   }
 
   input[type="range"]::-moz-range-track {
     height: 2px;
-    background: var(--linea-scura);
+    background: var(--traccia);
   }
 
   input[type="range"]::-webkit-slider-thumb {
@@ -198,24 +258,47 @@ const id = `confronto-${Math.random().toString(36).slice(2, 8)}`;
     outline-offset: 2px;
   }
 
-  /* Telefono: confronto tra le due homepage viste da telefono */
-  @media (max-width: 768px) {
-    .cornice {
-      max-width: 100%;
-      aspect-ratio: 390 / 844;
-      max-height: 75vh;
-    }
+  .coppia {
+    display: none;
+  }
 
-    .cornice :global(.desk) {
+  /* Telefono: due pannelli uguali, uno sopra l'altro */
+  @media (max-width: 768px) {
+    .cornice,
+    .controllo {
       display: none;
     }
 
-    .cornice :global(.mob) {
-      display: block;
+    .coppia {
+      display: grid;
+      gap: 12px;
     }
 
-    .controllo {
-      max-width: 100%;
+    .pannello {
+      position: relative;
+      aspect-ratio: 1760 / 800;
+      overflow: hidden;
+      border: var(--bordo-cornice);
+      background: var(--placeholder);
+    }
+
+    .pannello :global(.img) {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pannello .tag {
+      top: 10px;
+      left: 10px;
+      padding: 4px 8px;
+      z-index: 1;
+    }
+
+    .tag-oro {
+      color: var(--oro);
     }
   }
 </style>

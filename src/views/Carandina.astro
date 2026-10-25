@@ -1,106 +1,174 @@
 ---
-import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PrimaDopo from "../components/PrimaDopo.astro";
 import Viewer3D from "../components/Viewer3D.astro";
 import { link, linguaDa, percorsi } from "../i18n";
 
-import primaHome from "../assets/progetti/carandina/prima-home.png";
-import dopoHome from "../assets/progetti/carandina/dopo-home.png";
-import dopoMobile from "../assets/progetti/carandina/dopo-mobile.png";
-import famiglie3d from "../assets/progetti/carandina/famiglie-3d.png";
-import catalogo from "../assets/progetti/carandina/catalogo.png";
-import schedaProdotto from "../assets/progetti/carandina/scheda-prodotto.png";
-import betek from "../assets/progetti/carandina/betek.png";
-import primaMobile from "../assets/progetti/carandina/prima-mobile.png";
-import categoriaCfa from "../assets/progetti/carandina/categoria-cfa.png";
+import homePrima from "../assets/progetti/carandina/confronti/home-prima.png";
+import homeDopo from "../assets/progetti/carandina/confronti/home-dopo.png";
+import catalogoPrima from "../assets/progetti/carandina/confronti/catalogo-prima.png";
+import catalogoDopo from "../assets/progetti/carandina/confronti/catalogo-dopo.png";
+import prodottoPrima from "../assets/progetti/carandina/confronti/prodotto-prima.png";
+import prodottoDopo from "../assets/progetti/carandina/confronti/prodotto-dopo.png";
 
 const lingua = linguaDa(Astro.url);
 const t = {
   it: {
     title: "Caso studio Carandina",
-    description: "Come è stato rifatto il sito di Carandina, produttore di utensili di perforazione: restyling, catalogo prodotti con schede tecniche PDF e visualizzatore 3D. WordPress con codice su misura.",
+    description: "Il nuovo sito di Carandina, produttore di utensili di perforazione: homepage, catalogo e schede prodotto a confronto prima e dopo. WordPress con codice su misura e modelli 3D.",
     percorso: "Percorso", progetti: "Progetti",
     tipo: "Caso studio · Cliente",
-    intro: "Un'azienda manifatturiera dal 1968, con un sito fermo a molti anni fa e nessun catalogo online. Il nuovo sito presenta i prodotti come li cercano i clienti: per famiglia, con schede tecniche e modelli 3D.",
+    intro: "Un'azienda manifatturiera dal 1968, con un sito fermo a molti anni fa. Il nuovo sito presenta i prodotti come li cercano i clienti: per famiglia, con schede tecniche e modelli 3D.",
     meta: [
       { voce: "Settore", valore: "Utensili di perforazione per fondazioni speciali" },
-      { voce: "Ambito", valore: "Restyling, catalogo prodotti, visualizzatore 3D" },
+      { voce: "Ambito", valore: "Homepage, catalogo, schede prodotto, 3D" },
       { voce: "Piattaforma", valore: "WordPress con codice su misura" },
       { voce: "Anno", valore: "2026" },
     ],
     sito: "Sito",
-    confronto: "Prima e dopo",
-    confrontoTesto: "A sinistra la homepage precedente, a destra quella nuova, alla stessa larghezza. Su telefono il confronto mostra la versione mobile.",
-    altPrima: "La vecchia homepage di Carandina: slider fotografico e testi in due lingue uno sotto l'altro",
-    altDopo: "La nuova homepage di Carandina: titolo Drilling Equipment & Drilling Tools e due pulsanti verso prodotti e consulenza",
-    i1: "Visualizzatore 3D",
-    i1Testo: "Gli utensili Carandina sono pezzi tecnici: una foto non basta a capirne la geometria. Ho integrato i modelli 3D (.glb) nel sito, così ogni prodotto si può ruotare ed esaminare direttamente nel browser, senza installare nulla.",
-    i1Punti: ["Modelli 3D nelle famiglie di prodotto in homepage e nelle schede", 'Pulsante "3D View" in ogni scheda prodotto', "Funziona da computer e da telefono"],
-    i1Alt: "Modello 3D interattivo di un utensile di perforazione Carandina",
-    i2: "Restyling",
-    i2Testo: "Il vecchio sito si apriva con uno slider di foto e lunghi testi in inglese e italiano, uno sotto l'altro. Il nuovo parte da cosa fa l'azienda e porta subito alle due azioni che contano: vedere i prodotti o chiedere una consulenza tecnica.",
-    i2Punti: ["Messaggio chiaro in apertura e due percorsi principali", "Famiglie di prodotto subito visibili", "Impaginazione pensata anche per il telefono"],
-    i2Alt: "La nuova homepage di Carandina vista da telefono",
-    i3: "Catalogo e schede PDF",
-    i3Testo: "Prima il sito non aveva un catalogo. Ora ogni prodotto ha la sua scheda, organizzata per famiglia e sottocategoria, con descrizione, vista 3D, scheda tecnica in PDF da scaricare e foto reali dall'officina.",
-    i3Punti: ["Catalogo per famiglie: Big Diameter, C.F.A. System, Small Diameter, Spare Parts", "Scheda tecnica PDF scaricabile da ogni prodotto", "Elenco del materiale pronto in magazzino in PDF"],
-    i3Alt: "Scheda prodotto con pulsanti 3D View e Scheda tecnica PDF",
-    galleria: "Galleria",
-    foto: [
-      { alt: "Le quattro famiglie di prodotti in homepage, ognuna con il proprio modello 3D", didascalia: "Le famiglie di prodotto in homepage, ciascuna con il suo modello 3D." },
-      { alt: "Pagina Catalogue con menu per famiglie e schede prodotto a griglia", didascalia: "Il catalogo: menu per famiglie e sottocategorie, schede a griglia." },
-      { alt: "Sottocategoria C.F.A. Augers del catalogo, con le schede dei prodotti a griglia", didascalia: "Una sottocategoria del catalogo: ogni prodotto con la sua immagine 3D." },
-      { alt: "Sezione dedicata agli utensili di taglio Betek con i codici dei pezzi", didascalia: "La sezione dedicata agli utensili di taglio Betek." },
+    cambiato: "Cosa è cambiato",
+    cambiatoTesto: "Tre punti del sito, prima e dopo. Ogni confronto mette le due versioni alla stessa inquadratura: sposta il cursore per vedere la differenza.",
+    prima: "Prima", dopo: "Dopo", obiettivo: "Obiettivo",
+    capitoli: [
+      {
+        titolo: "Homepage",
+        obiettivo: "Far capire in pochi secondi chi è Carandina e dove andare.",
+        altPrima: "La vecchia homepage: barra blu con otto voci di menu, slider fotografico con un riquadro di testo in inglese",
+        altDopo: "La nuova homepage: titolo Drilling Equipment & Drilling Tools su video di officina, con due pulsanti",
+        prima: [
+          "Menu con otto voci, compresa la privacy",
+          "Slider di foto con un lungo testo in inglese su riquadro chiaro",
+          "Nessuna azione suggerita: i prodotti vanno cercati",
+        ],
+        dopo: [
+          "Menu ridotto alle voci che servono",
+          "Un titolo diretto su un video di lavorazione in officina",
+          "Due azioni in primo piano: vedere i prodotti o chiedere una consulenza",
+        ],
+      },
+      {
+        titolo: "Catalogo",
+        obiettivo: "Trovare un prodotto come lo cerca un tecnico: per famiglia e per tipo.",
+        altPrima: "Il vecchio catalogo: pagina Shop su fondo grigio con quattro schede prodotto",
+        altDopo: "Il nuovo catalogo: pagina Catalogue con menu laterale per famiglie e schede con render 3D",
+        prima: [
+          "Pagina «Shop» standard del negozio online",
+          "Prodotti in un'unica lista, senza famiglie",
+          "Schede su fondo grigio, con immagini di dimensioni diverse",
+        ],
+        dopo: [
+          "Pagina «Catalogue» con il percorso di navigazione",
+          "Menu laterale per famiglia e sottocategoria",
+          "Schede uniformi, ognuna con il render 3D del prodotto",
+        ],
+      },
+      {
+        titolo: "Scheda prodotto",
+        obiettivo: "Dare a chi valuta un acquisto le informazioni tecniche in ordine.",
+        altPrima: "La vecchia scheda prodotto: immagine, pulsante 3D View e un visualizzatore PDF incorporato al posto della descrizione",
+        altDopo: "La nuova scheda prodotto: descrizione in testo, pulsanti 3D View e Scheda tecnica PDF, foto dall'officina",
+        prima: [
+          "Al posto della descrizione, un PDF incorporato nella pagina",
+          "Dati tecnici da leggere scorrendo il PDF",
+          "Il pulsante 3D View come unico elemento accanto al titolo",
+        ],
+        dopo: [
+          "Una descrizione breve, con la famiglia del prodotto in evidenza",
+          "«3D View» e «Scheda tecnica (PDF)» affiancati",
+          "Foto reali dall'officina accanto al modello",
+        ],
+      },
     ],
+    i3d: "Il 3D in primo piano",
+    i3dTesto: "Gli utensili Carandina sono pezzi tecnici: una foto non basta a capirne la geometria. I modelli 3D (.glb) si ruotano direttamente nel browser, senza installare nulla, e nel nuovo sito accompagnano anche le famiglie di prodotto in homepage.",
+    i3dPunti: ["Famiglie di prodotto in homepage con il loro modello 3D", "«3D View» in ogni scheda prodotto", "Funziona da computer e da telefono"],
+    i3dAlt: "Modello 3D interattivo di un utensile di perforazione Carandina",
     invito: "Hai un catalogo da portare online?",
     invitoTesto: "Prodotti tecnici, schede da aggiornare, modelli 3D: raccontami da dove parti.",
     pulsante: "Parliamo del progetto",
   },
   en: {
     title: "Carandina case study",
-    description: "How the website of Carandina, a drilling tools manufacturer, was rebuilt: redesign, product catalogue with PDF data sheets and a 3D viewer. WordPress with custom code.",
+    description: "The new website of Carandina, a drilling tools manufacturer: homepage, catalogue and product pages compared before and after. WordPress with custom code and 3D models.",
     percorso: "Breadcrumb", progetti: "Projects",
     tipo: "Case study · Client",
-    intro: "A manufacturing company founded in 1968, with a website that hadn't changed in years and no online catalogue. The new site presents the products the way customers look for them: by family, with data sheets and 3D models.",
+    intro: "A manufacturing company founded in 1968, with a website that hadn't changed in years. The new site presents the products the way customers look for them: by family, with data sheets and 3D models.",
     meta: [
       { voce: "Industry", valore: "Drilling tools for special foundations" },
-      { voce: "Scope", valore: "Redesign, product catalogue, 3D viewer" },
+      { voce: "Scope", valore: "Homepage, catalogue, product pages, 3D" },
       { voce: "Platform", valore: "WordPress with custom code" },
       { voce: "Year", valore: "2026" },
     ],
     sito: "Website",
-    confronto: "Before and after",
-    confrontoTesto: "On the left the previous homepage, on the right the new one, at the same width. On a phone the comparison shows the mobile version.",
-    altPrima: "The old Carandina homepage: photo slider and texts in two languages, one below the other",
-    altDopo: "The new Carandina homepage: the headline Drilling Equipment & Drilling Tools and two buttons to products and consultation",
-    i1: "3D viewer",
-    i1Testo: "Carandina's tools are technical parts: a photo isn't enough to understand their geometry. I integrated the 3D models (.glb) into the site, so every product can be rotated and examined right in the browser, with nothing to install.",
-    i1Punti: ["3D models in the product families on the homepage and in the product pages", '"3D View" button on every product page', "Works on desktop and on mobile"],
-    i1Alt: "Interactive 3D model of a Carandina drilling tool",
-    i2: "Redesign",
-    i2Testo: "The old site opened with a photo slider and long texts in English and Italian, one below the other. The new one starts from what the company does and leads straight to the two actions that matter: viewing the products or asking for technical advice.",
-    i2Punti: ["A clear opening message and two main paths", "Product families visible right away", "Layout designed for phones as well"],
-    i2Alt: "The new Carandina homepage on a phone",
-    i3: "Catalogue and PDF data sheets",
-    i3Testo: "The site used to have no catalogue. Now every product has its own page, organised by family and sub-category, with a description, a 3D view, a downloadable PDF data sheet and real photos from the workshop.",
-    i3Punti: ["Catalogue by family: Big Diameter, C.F.A. System, Small Diameter, Spare Parts", "Downloadable PDF data sheet for every product", "PDF list of items in stock"],
-    i3Alt: "Product page with 3D View and PDF data sheet buttons",
-    galleria: "Gallery",
-    foto: [
-      { alt: "The four product families on the homepage, each with its own 3D model", didascalia: "The product families on the homepage, each with its 3D model." },
-      { alt: "Catalogue page with a menu by family and a grid of product cards", didascalia: "The catalogue: menu by family and sub-category, product cards in a grid." },
-      { alt: "The C.F.A. Augers sub-category of the catalogue, with a grid of product cards", didascalia: "A catalogue sub-category: each product with its 3D image." },
-      { alt: "Section dedicated to Betek cutting tools with the part codes", didascalia: "The section dedicated to Betek cutting tools." },
+    cambiato: "What changed",
+    cambiatoTesto: "Three parts of the site, before and after. Each comparison shows both versions with the same framing: move the slider to see the difference.",
+    prima: "Before", dopo: "After", obiettivo: "Goal",
+    capitoli: [
+      {
+        titolo: "Homepage",
+        obiettivo: "Make it clear in a few seconds who Carandina is and where to go next.",
+        altPrima: "The old homepage: blue bar with eight menu items, photo slider with a text box in English",
+        altDopo: "The new homepage: the headline Drilling Equipment & Drilling Tools over a workshop video, with two buttons",
+        prima: [
+          "A menu with eight items, privacy included",
+          "A photo slider with a long English text on a light box",
+          "No suggested action: products had to be searched for",
+        ],
+        dopo: [
+          "A menu reduced to the items that matter",
+          "A direct headline over a video from the workshop",
+          "Two actions up front: view the products or ask for technical advice",
+        ],
+      },
+      {
+        titolo: "Catalogue",
+        obiettivo: "Find a product the way an engineer looks for it: by family and by type.",
+        altPrima: "The old catalogue: a Shop page on a grey background with four product cards",
+        altDopo: "The new catalogue: a Catalogue page with a side menu by family and cards with 3D renders",
+        prima: [
+          "A standard online-shop «Shop» page",
+          "Products in a single list, with no families",
+          "Cards on a grey background, with images of different sizes",
+        ],
+        dopo: [
+          "A «Catalogue» page with breadcrumb navigation",
+          "A side menu by family and sub-category",
+          "Consistent cards, each with the product's 3D render",
+        ],
+      },
+      {
+        titolo: "Product page",
+        obiettivo: "Give buyers the technical information in a clear order.",
+        altPrima: "The old product page: image, a 3D View button and an embedded PDF viewer instead of a description",
+        altDopo: "The new product page: text description, 3D View and PDF data sheet buttons, workshop photos",
+        prima: [
+          "An embedded PDF instead of a description",
+          "Technical data read by scrolling through the PDF",
+          "The 3D View button as the only element next to the title",
+        ],
+        dopo: [
+          "A short description, with the product family highlighted",
+          "«3D View» and «Data sheet (PDF)» side by side",
+          "Real workshop photos next to the model",
+        ],
+      },
     ],
+    i3d: "3D up front",
+    i3dTesto: "Carandina's tools are technical parts: a photo isn't enough to understand their geometry. The 3D models (.glb) can be rotated right in the browser, with nothing to install, and on the new site they also accompany the product families on the homepage.",
+    i3dPunti: ["Product families on the homepage with their 3D model", "«3D View» on every product page", "Works on desktop and on mobile"],
+    i3dAlt: "Interactive 3D model of a Carandina drilling tool",
     invito: "Have a catalogue to bring online?",
     invitoTesto: "Technical products, data sheets to keep updated, 3D models: tell me where you're starting from.",
     pulsante: "Let's talk about your project",
   },
 }[lingua];
 
-const immagini = [famiglie3d, catalogo, categoriaCfa, betek];
-const galleria = t.foto.map((f, i) => ({ ...f, src: immagini[i] }));
+const immagini = [
+  { imgPrima: homePrima, imgDopo: homeDopo },
+  { imgPrima: catalogoPrima, imgDopo: catalogoDopo },
+  { imgPrima: prodottoPrima, imgDopo: prodottoDopo },
+];
+const capitoli = t.capitoli.map((c, i) => ({ ...c, ...immagini[i], numero: `0${i + 1}` }));
 ---
 
 <BaseLayout title={t.title} description={t.description}>
@@ -119,102 +187,84 @@ const galleria = t.foto.map((f, i) => ({ ...f, src: immagini[i] }));
     <p class="intro">{t.intro}</p>
     <dl class="meta">
       {
-        t.meta.map((m) => (
-          <div class="riga">
+        t.meta.map((m, i) => (
+          <div class="riga" data-linea="sotto" style={`--colore-linea: var(--linea-scura); --i: ${i}`}>
             <dt class="etichetta">{m.voce}</dt>
             <dd>{m.valore}</dd>
           </div>
         ))
       }
-      <div class="riga">
+      <div class="riga" data-linea="sotto" style="--colore-linea: var(--linea-scura); --i: 4">
         <dt class="etichetta">{t.sito}</dt>
         <dd><a href="https://carandina.it" rel="noopener">carandina.it ↗</a></dd>
       </div>
     </dl>
   </section>
 
-  <!-- Prima / dopo -->
-  <section class="confronto-sezione" aria-labelledby="confronto-titolo">
-    <div class="testa">
-      <h2 id="confronto-titolo" data-rivela>{t.confronto}<span class="punto">.</span></h2>
-      <p>{t.confrontoTesto}</p>
+  <!-- Cosa è cambiato -->
+  <section class="cambiato su-bianco" aria-labelledby="cambiato-titolo">
+    <div class="cambiato-testa" data-linea="sotto">
+      <h2 id="cambiato-titolo" data-rivela>{t.cambiato}<span class="punto">.</span></h2>
+      <p data-rivela style="--i: 1">{t.cambiatoTesto}</p>
     </div>
-    <PrimaDopo
-      prima={primaHome}
-      dopo={dopoHome}
-      primaMobile={primaMobile}
-      dopoMobile={dopoMobile}
-      altPrima={t.altPrima}
-      altDopo={t.altDopo}
-    />
+
+    {
+      capitoli.map((c, i) => (
+        <article class="capitolo" aria-labelledby={`cap-${i}`}>
+          <header class="capo" data-rivela>
+            <span class="numero" aria-hidden="true">{c.numero}</span>
+            <div>
+              <h3 id={`cap-${i}`}>{c.titolo}</h3>
+              <p class="obiettivo">
+                <span class="etichetta">{t.obiettivo}</span> {c.obiettivo}
+              </p>
+            </div>
+          </header>
+
+          <div data-rivela style="--i: 1">
+            <PrimaDopo prima={c.imgPrima} dopo={c.imgDopo} altPrima={c.altPrima} altDopo={c.altDopo} />
+          </div>
+
+          <div class="colonne">
+            <div class="colonna" data-rivela style="--i: 2">
+              <p class="etichetta col-titolo">{t.prima}</p>
+              <ol>
+                {c.prima.map((p) => <li>{p}</li>)}
+              </ol>
+            </div>
+            <div class="colonna dopo" data-rivela style="--i: 3">
+              <p class="etichetta col-titolo">{t.dopo}</p>
+              <ol>
+                {c.dopo.map((p) => <li>{p}</li>)}
+              </ol>
+            </div>
+          </div>
+        </article>
+      ))
+    }
   </section>
 
-  <!-- 01 — Visualizzatore 3D -->
-  <section class="intervento scuro" aria-labelledby="int-1">
-    <div class="intervento-testo" data-rivela>
-      <span class="numero" aria-hidden="true">01</span>
-      <h2 id="int-1">{t.i1}</h2>
-      <p>{t.i1Testo}</p>
+  <!-- Il 3D -->
+  <section class="tre-d" aria-labelledby="tre-d-titolo">
+    <div class="tre-d-testo" data-rivela>
+      <span class="numero" aria-hidden="true">3D</span>
+      <h2 id="tre-d-titolo">{t.i3d}<span class="punto">.</span></h2>
+      <p>{t.i3dTesto}</p>
       <ul class="punti">
-        {t.i1Punti.map((p) => <li>{p}</li>)}
+        {t.i3dPunti.map((p) => <li>{p}</li>)}
       </ul>
     </div>
-    <div class="intervento-media viewer-box">
-      <Viewer3D src="/modelli/carandina-bkt100.glb" alt={t.i1Alt} />
-    </div>
-  </section>
-
-  <!-- 02 — Restyling -->
-  <section class="intervento chiaro su-bianco" aria-labelledby="int-2">
-    <div class="intervento-testo" data-rivela>
-      <span class="numero" aria-hidden="true">02</span>
-      <h2 id="int-2">{t.i2}</h2>
-      <p>{t.i2Testo}</p>
-      <ul class="punti">
-        {t.i2Punti.map((p) => <li>{p}</li>)}
-      </ul>
-    </div>
-    <div class="intervento-media mobile-box">
-      <Image src={dopoMobile} alt={t.i2Alt} widths={[390, 780]} sizes="390px" />
-    </div>
-  </section>
-
-  <!-- 03 — Catalogo e schede PDF -->
-  <section class="intervento chiaro su-bianco bordo-alto" aria-labelledby="int-3">
-    <div class="intervento-testo" data-rivela>
-      <span class="numero" aria-hidden="true">03</span>
-      <h2 id="int-3">{t.i3}</h2>
-      <p>{t.i3Testo}</p>
-      <ul class="punti">
-        {t.i3Punti.map((p) => <li>{p}</li>)}
-      </ul>
-    </div>
-    <div class="intervento-media">
-      <Image src={schedaProdotto} alt={t.i3Alt} widths={[600, 900, 1200]} sizes="(max-width: 900px) 100vw, 55vw" />
-    </div>
-  </section>
-
-  <!-- Galleria -->
-  <section class="galleria" aria-labelledby="galleria-titolo">
-    <h2 id="galleria-titolo" data-rivela>{t.galleria}<span class="punto">.</span></h2>
-    <div class="griglia">
-      {
-        galleria.map((g, i) => (
-          <figure data-rivela style={`--i: ${i % 2}`}>
-            <Image src={g.src} alt={g.alt} widths={[600, 900, 1200]} sizes="(max-width: 900px) 100vw, 50vw" />
-            <figcaption>{g.didascalia}</figcaption>
-          </figure>
-        ))
-      }
+    <div class="tre-d-media">
+      <Viewer3D src="/modelli/carandina-bkt100.glb" alt={t.i3dAlt} />
     </div>
   </section>
 
   <!-- Invito -->
   <section class="invito su-bianco">
     <span class="quadratino" aria-hidden="true"></span>
-    <h2>{t.invito}</h2>
-    <p>{t.invitoTesto}</p>
-    <a class="pulsante pulsante-primario" href={percorsi.contatti[lingua]}>{t.pulsante}</a>
+    <h2 data-rivela>{t.invito}</h2>
+    <p data-rivela style="--i: 1">{t.invitoTesto}</p>
+    <a class="pulsante pulsante-primario" href={percorsi.contatti[lingua]} data-rivela style="--i: 2">{t.pulsante}</a>
   </section>
 </BaseLayout>
 
@@ -255,6 +305,7 @@ const galleria = t.foto.map((f, i) => ({ ...f, src: immagini[i] }));
     display: inline-flex;
     align-items: center;
     min-height: 44px;
+    min-width: 44px;
     color: var(--bianco);
     text-decoration: none;
   }
@@ -326,97 +377,157 @@ const galleria = t.foto.map((f, i) => ({ ...f, src: immagini[i] }));
     text-decoration-color: var(--oro);
   }
 
-  /* Prima / dopo */
-  .confronto-sezione {
-    padding: 0 var(--pad-x) var(--pad-y);
-    background: var(--nero);
-    color: var(--bianco);
+  /* Cosa è cambiato */
+  .cambiato {
+    background: var(--bianco);
     border-bottom: var(--bordo);
   }
 
-  .testa {
+  .cambiato-testa {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
     justify-content: space-between;
     gap: 1rem var(--gap);
-    padding: var(--pad-y) 0 2rem;
-    border-top: var(--bordo-scuro);
+    padding: var(--pad-y) var(--pad-x) calc(var(--pad-y) * 0.6);
+    border-bottom: var(--bordo);
   }
 
-  .testa h2,
-  .galleria h2 {
+  h2 {
     font-size: var(--testo-h2);
     font-weight: var(--peso-extrabold);
   }
 
-  .testa p {
-    max-width: 40ch;
-    color: var(--grigio-testo-scuro);
+  .cambiato-testa p {
+    max-width: 44ch;
+    color: var(--grigio-testo-chiaro);
   }
 
-  /* Interventi */
-  .intervento {
-    display: flex;
-    flex-wrap: wrap;
-    border-bottom: var(--bordo);
-  }
-
-  .intervento-testo {
-    flex: 1 1 40%;
+  .capitolo {
+    max-width: calc(1360px + 2 * var(--pad-x));
+    margin-inline: auto;
     padding: var(--pad-y) var(--pad-x);
   }
 
-  .intervento-media {
-    flex: 1 1 55%;
-    min-width: 0;
-    padding: var(--pad-y) var(--pad-x);
+  .capitolo + .capitolo {
+    border-top: var(--bordo);
   }
 
-  .scuro {
-    background: var(--nero);
-    color: var(--bianco);
-  }
-
-  .chiaro {
-    background: var(--bianco);
-  }
-
-  .scuro .intervento-media {
-    border-left: var(--bordo-scuro);
-  }
-
-  .chiaro .intervento-media {
-    background: var(--placeholder);
-    border-left: var(--bordo);
+  .capo {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: end;
+    gap: 0 clamp(1.25rem, 0.5rem + 2vw, 2.5rem);
+    margin-bottom: 2rem;
   }
 
   .numero {
     display: block;
-    font-size: clamp(4rem, 2.5rem + 5vw, 8rem);
+    font-size: clamp(3.5rem, 2rem + 4.5vw, 7rem);
     font-weight: var(--peso-extrabold);
     line-height: 0.85;
     letter-spacing: -0.05em;
     color: var(--grigio-numeri-chiaro);
   }
 
-  .scuro .numero {
-    color: var(--grigio-numeri-scuro);
+  h3 {
+    font-size: var(--testo-h3);
+    font-weight: var(--peso-bold);
   }
 
-  .intervento h2 {
-    margin-top: 2rem;
-    font-size: var(--testo-h2);
-    font-weight: var(--peso-extrabold);
-  }
-
-  .intervento-testo > p {
-    max-width: 44ch;
-    margin-top: 1.25rem;
+  .obiettivo {
+    max-width: 60ch;
+    margin-top: 0.4rem;
     color: var(--grigio-testo-chiaro);
   }
 
-  .scuro .intervento-testo > p {
+  .obiettivo .etichetta {
+    margin-right: 0.5rem;
+    color: var(--nero);
+  }
+
+  /* Prima | Dopo: due colonne speculari con una linea al centro */
+  .colonne {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 2rem;
+    border-top: var(--bordo);
+  }
+
+  .colonna {
+    padding: 1.5rem clamp(1rem, 0.5rem + 2vw, 2.5rem) 0 0;
+  }
+
+  .colonna.dopo {
+    padding: 1.5rem 0 0 clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    border-left: var(--bordo);
+  }
+
+  .col-titolo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .col-titolo::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    border: var(--bordo);
+  }
+
+  .dopo .col-titolo {
+    color: var(--nero);
+  }
+
+  .dopo .col-titolo::before {
+    background: var(--oro);
+    border-color: var(--oro);
+  }
+
+  .colonna ol {
+    margin-top: 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .colonna li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--grigio-numeri-chiaro);
+    color: var(--grigio-testo-chiaro);
+  }
+
+  .colonna.dopo li {
+    color: var(--nero);
+    font-weight: var(--peso-medium);
+  }
+
+  /* Il 3D */
+  .tre-d {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--nero);
+    color: var(--bianco);
+    border-bottom: var(--bordo);
+  }
+
+  .tre-d-testo {
+    flex: 1 1 40%;
+    padding: var(--pad-y) var(--pad-x);
+  }
+
+  .tre-d-testo .numero {
+    color: var(--grigio-numeri-scuro);
+  }
+
+  .tre-d-testo h2 {
+    margin-top: 2rem;
+  }
+
+  .tre-d-testo > p {
+    max-width: 44ch;
+    margin-top: 1.25rem;
     color: var(--grigio-testo-scuro);
   }
 
@@ -425,23 +536,15 @@ const galleria = t.foto.map((f, i) => ({ ...f, src: immagini[i] }));
     margin-top: 2rem;
     padding: 0;
     list-style: none;
-    border-top: var(--bordo);
-  }
-
-  .scuro .punti {
-    border-top-color: var(--linea-scura);
+    border-top: var(--bordo-scuro);
   }
 
   .punti li {
     display: flex;
     gap: 0.85rem;
     padding: 0.85rem 0;
-    border-bottom: var(--bordo);
+    border-bottom: var(--bordo-scuro);
     font-weight: var(--peso-medium);
-  }
-
-  .scuro .punti li {
-    border-bottom-color: var(--linea-scura);
   }
 
   .punti li::before {
@@ -453,53 +556,12 @@ const galleria = t.foto.map((f, i) => ({ ...f, src: immagini[i] }));
     background: var(--oro);
   }
 
-  .viewer-box {
+  .tre-d-media {
     position: relative;
+    flex: 1 1 55%;
+    min-width: 0;
     min-height: 520px;
-    padding: 0;
-  }
-
-  .mobile-box {
-    display: flex;
-    justify-content: center;
-  }
-
-  .mobile-box :global(img) {
-    width: min(100%, 360px);
-    border: var(--bordo);
-  }
-
-  .intervento-media :global(img) {
-    border: var(--bordo);
-  }
-
-  /* Galleria */
-  .galleria {
-    padding: var(--pad-y) var(--pad-x);
-    background: var(--nero);
-    color: var(--bianco);
-  }
-
-  .griglia {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
-    gap: var(--gap);
-    margin-top: 2.5rem;
-  }
-
-  figure {
-    margin: 0;
-  }
-
-  figure :global(img) {
-    width: 100%;
-    border: var(--bordo-scuro);
-  }
-
-  figcaption {
-    margin-top: 0.75rem;
-    font-size: var(--testo-small);
-    color: var(--grigio-testo-scuro);
+    border-left: var(--bordo-scuro);
   }
 
   /* Invito */
@@ -518,8 +580,6 @@ const galleria = t.foto.map((f, i) => ({ ...f, src: immagini[i] }));
 
   .invito h2 {
     max-width: 16ch;
-    font-size: var(--testo-h2);
-    font-weight: var(--peso-extrabold);
   }
 
   .invito p {
@@ -535,26 +595,36 @@ const galleria = t.foto.map((f, i) => ({ ...f, src: immagini[i] }));
   }
 
   @media (max-width: 900px) {
-    .intervento-testo,
-    .intervento-media {
+    .tre-d-testo,
+    .tre-d-media {
       flex-basis: 100%;
     }
 
-    .scuro .intervento-media,
-    .chiaro .intervento-media {
+    .tre-d-media {
+      min-height: 380px;
+      border-left: 0;
+      border-top: var(--bordo-scuro);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .colonne {
+      grid-template-columns: 1fr;
+    }
+
+    .colonna,
+    .colonna.dopo {
+      padding: 1.25rem 0 0;
       border-left: 0;
     }
 
-    .scuro .intervento-media {
-      border-top: var(--bordo-scuro);
-    }
-
-    .chiaro .intervento-media {
+    .colonna.dopo {
+      margin-top: 1rem;
       border-top: var(--bordo);
     }
 
-    .viewer-box {
-      min-height: 380px;
+    .invito .pulsante {
+      width: 100%;
     }
   }
 </style>
