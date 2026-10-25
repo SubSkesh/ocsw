@@ -26,6 +26,8 @@ const t = {
     apertura: "Apertura dell'anteprima…",
     vuoti: "Inserisci ID e password.",
     sconosciuto: "ID non riconosciuto. Controlla quello che ti ho inviato.",
+    errate: "ID o password non corretti. Controlla e riprova.",
+    nonAttiva: "L'anteprima non è ancora attiva. Scrivimi e ti aiuto.",
     aiuto: "Non hai le credenziali o non funzionano?",
     scrivimi: "Scrivimi",
   },
@@ -41,6 +43,8 @@ const t = {
     apertura: "Opening the preview…",
     vuoti: "Please enter your ID and password.",
     sconosciuto: "ID not recognised. Please check the one I sent you.",
+    errate: "Incorrect ID or password. Please check and try again.",
+    nonAttiva: "This preview is not active yet. Get in touch and I'll help.",
     aiuto: "Don't have your credentials, or they don't work?",
     scrivimi: "Get in touch",
   },
@@ -84,6 +88,8 @@ const t = {
         data-msg-vuoti={t.vuoti}
         data-msg-sconosciuto={t.sconosciuto}
         data-apertura={t.apertura}
+        data-msg-errate={t.errate}
+        data-msg-non-attiva={t.nonAttiva}
       >
         <input type="hidden" name="next" value="/" />
         <div class="campo" style="--n: 0">
@@ -111,7 +117,7 @@ const t = {
 (function () {
   // ID cliente -> indirizzo della sua anteprima su Cloudflare Pages
   var PREVIEWS = {
-    'ripamontiocsw': 'https://ripamonti.pages.dev'
+    'ripamontiocsw': 'https://ripamonti.ocsw.it'
   };
 
   var form = document.getElementById('csw-preview-form');
@@ -146,6 +152,17 @@ const t = {
     form.classList.add('in-invio');
     testo.textContent = form.dataset.apertura;
   });
+  // La bozza rimanda qui dopo un accesso non riuscito: ?errore=1 (ID o password errati),
+  // ?errore=0 (credenziali non configurate). Mostro il messaggio e pulisco l'indirizzo.
+  var esito = new URLSearchParams(location.search).get('errore');
+  if (esito === '1' || esito === '0') {
+    msg.textContent = esito === '1' ? form.dataset.msgErrate : form.dataset.msgNonAttiva;
+    msg.classList.add('nuovo');
+    form.pass.value = '';
+    form.user.focus();
+    history.replaceState(null, '', location.pathname + location.hash);
+  }
+
   // Tornando indietro dalla bozza il modulo deve essere di nuovo utilizzabile
   window.addEventListener('pageshow', function () {
     form.classList.remove('in-invio');
