@@ -127,7 +127,9 @@ Metà nera con titolo e dati; metà bianca con form (tipo di progetto a pulsanti
 ## Regole sui contenuti (importanti)
 
 - **Mai inventare** progetti, clienti, numeri, recensioni, loghi di clienti o risultati. Se un dato manca, usa un segnaposto tra parentesi quadre, es. `[TEMPI DI RISPOSTA]`, e segnalalo.
-- L'unico progetto cliente pubblicabile è **Carandina** (carandina.it).
+- Progetti cliente pubblicabili:
+  - **Carandina** (carandina.it): caso studio completo (sito, catalogo, 3D).
+  - **Ripamonti** (Ripamonti Dr. Gianni Srl, Ornavasso): **solo** il modello 3D dell'Eagle 1025 preparato per il web. Il sito di Ripamonti NON è un lavoro OCSW: dirlo sempre. Niente logo. Permesso del cliente confermato da Oscar (novembre 2026).
 - Le demo del Laboratorio devono essere sempre etichettate come demo/progetti personali, con dati di esempio. Una card del Laboratorio si pubblica solo quando la demo funziona davvero.
 - Non pubblicare dati interni dei clienti o informazioni che possano metterli in difficoltà.
 - Lingue: **italiano** (principale, URL senza prefisso) e **inglese** (`/en/...`). Ogni testo esiste in entrambe; i componenti leggono la lingua dall'URL (`src/i18n.ts`) e hanno un oggetto `t = { it, en }`. Le pagine servizio stanno in `src/content/servizi/it|en/`. Una pagina nuova va aggiunta in `percorsi` (i18n.ts) con i due URL.

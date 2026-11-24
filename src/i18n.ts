@@ -12,6 +12,7 @@ export const percorsi = {
   privacy: { it: "/privacy", en: "/en/privacy" },
   anteprima: { it: "/anteprima-clienti", en: "/en/client-preview" },
   carandina: { it: "/progetti/carandina", en: "/en/projects/carandina" },
+  ripamonti: { it: "/progetti/ripamonti", en: "/en/projects/ripamonti" },
   "siti-web": { it: "/servizi/siti-web", en: "/en/services/websites" },
   "applicazioni-web": { it: "/servizi/applicazioni-web", en: "/en/services/web-applications" },
   "software-su-misura": { it: "/servizi/software-su-misura", en: "/en/services/custom-software" },

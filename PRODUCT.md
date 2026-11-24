@@ -50,7 +50,7 @@ The Laboratorio holds demos and personal projects with sample data, which show c
 
 ## Evidence on Hand
 
-- The only publishable client project: **Carandina** (carandina.it). It covers a restyling, a .glb 3D viewer, and a catalog with PDF data sheets, plus before/after homepages.
+- Publishable client work: **Carandina** (carandina.it), full case study; **Ripamonti** (Ripamonti Dr. Gianni Srl), only the web-ready 3D model of the Eagle 1025 drilling rig (conversion, optimisation, materials, viewer). Not the Ripamonti website. No logo. Carandina covers a restyling, a .glb 3D viewer, a catalog with PDF data sheets and before/after comparisons.
 - Laboratorio demos: publish one only once it really works, always labeled DEMO/PERSONALE.
 - Absent, never to be invented: other clients, client logos, reviews/testimonials, numbers, results, awards.
 

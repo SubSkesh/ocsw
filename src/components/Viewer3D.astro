@@ -1,14 +1,17 @@
 ---
 import { Image } from "astro:assets";
-import poster from "../assets/progetti/carandina/poster-3d.png";
+import type { ImageMetadata } from "astro";
+import posterCarandina from "../assets/progetti/carandina/poster-3d.png";
 import { linguaDa } from "../i18n";
 
 interface Props {
   src: string;
   alt: string;
+  /** Immagine fissa mostrata prima e al posto del 3D */
+  poster?: ImageMetadata;
 }
 
-const { src, alt } = Astro.props;
+const { src, alt, poster = posterCarandina } = Astro.props;
 const t = {
   it: { caricamento: "Modello 3D · caricamento", ruota: "Trascina per ruotare", errore: "Anteprima statica · 3D non disponibile" },
   en: { caricamento: "3D model · loading", ruota: "Drag to rotate", errore: "Static preview · 3D not available" },
@@ -50,6 +53,9 @@ const t = {
   const avvia = async (box: HTMLElement) => {
     try {
       await import("@google/model-viewer");
+      // Decodificatore per i modelli compressi con meshopt (es. Eagle 1025), ospitato sul sito
+      const Mv = customElements.get("model-viewer") as unknown as { meshoptDecoderLocation: string };
+      Mv.meshoptDecoderLocation = "/js/meshopt_decoder.js";
     } catch {
       fallito(box);
       return;
